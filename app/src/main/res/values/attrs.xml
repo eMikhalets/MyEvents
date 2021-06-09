@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorBackMain" format="color" />
+    <attr name="colorBackCard" format="color" />
+    <attr name="colorBackAddBtn" format="color" />
+    <attr name="colorIconLight" format="color" />
+</resources>

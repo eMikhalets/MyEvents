@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="@string/bottom_home" />
+
+    <item
+        android:id="@+id/bottom_groups"
+        android:enabled="true"
+        android:icon="@drawable/ic_list"
+        android:title="@string/bottom_groups" />
+
+    <item
+        android:id="@+id/bottom_add"
+        android:enabled="true"
+        android:title="Add" />
+
+    <item
+        android:id="@+id/bottom_search"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
+        android:title="@string/bottom_search" />
+
+    <item
+        android:id="@+id/bottom_calendar"
+        android:enabled="true"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/bottom_calendar" />
+
+</menu>

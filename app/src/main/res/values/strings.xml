@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">MyDates</string>
 
+    <!-- Bottom Menu -->
+    <string name="bottom_home">Home</string>
+    <string name="bottom_groups">Groups</string>
+    <string name="bottom_search">Search</string>
+    <string name="bottom_calendar">Calendar</string>
+
     <!-- Dates List Screen -->
     <string name="dates_list_today">Сегодня</string>
     <string name="dates_list_text_item_info">Birthday %s</string>
