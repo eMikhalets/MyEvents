@@ -13,14 +13,12 @@ abstract class MviViewModel<I : MviIntent, A : MviAction, S : MviState>
     protected val state = MutableLiveData<S>()
     override val stateImmutable: LiveData<S> get() = state
 
-    private fun launch(block: suspend CoroutineScope.() -> Unit) {
+    fun launch(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch { block() }
     }
 
     final override fun dispatchIntent(intent: I) {
-        launch {
-            handleAction(intentToAction(intent))
-        }
+        handleAction(intentToAction(intent))
     }
 
     abstract fun intentToAction(intent: I): A
