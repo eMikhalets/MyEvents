@@ -5,6 +5,7 @@ import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.data.repositories.RoomRepository
 import com.emikhalets.mydates.mvi.MviViewModel
+import com.emikhalets.mydates.utils.computeDaysLeft
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -28,6 +29,7 @@ class DatesListViewModel @Inject constructor(
                     state.postValue(result.reduce())
                 }
                 is DatesListAction.AddDateItem -> {
+                    action.dateItem.computeDaysLeft()
                     val result = repository.insertDate(action.dateItem)
                     state.postValue(result.reduce())
                 }

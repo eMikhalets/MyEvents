@@ -19,7 +19,7 @@ class DialogHelper {
         dialog.setContentView(binding.root)
 
         var name = ""
-        var date = 0L
+        var date = Calendar.getInstance().timeInMillis
         val dateItem = DateItem(name)
 
         binding.apply {
@@ -53,25 +53,24 @@ class DialogHelper {
         dialog.show()
     }
 
-    private fun startDatePickerDialog(context: Context, init: Long = 0L, callback: (Long) -> Unit) {
+    private fun startDatePickerDialog(context: Context, init: Long, callback: (Long) -> Unit) {
         val dialog = Dialog(context)
         val binding = DialogDatePickerBinding.inflate(LayoutInflater.from(context))
         val calendar = Calendar.getInstance()
-        var ts = 0L
         dialog.setContentView(binding.root)
 
-        if (init != 0L) calendar.timeInMillis = init
+        calendar.timeInMillis = init
         val year: Int = calendar.get(Calendar.YEAR)
         val month: Int = calendar.get(Calendar.MONTH)
         val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
         binding.datePicker.init(year, month, day) { _, newYear, newMonth, newDay ->
             val picked = Calendar.getInstance()
             picked.set(newYear, newMonth, newDay)
-            ts = picked.timeInMillis
+            calendar.timeInMillis = picked.timeInMillis
         }
 
         binding.btnAdd.setOnClickListener {
-            callback.invoke(ts)
+            callback.invoke(calendar.timeInMillis)
             dialog.dismiss()
         }
 

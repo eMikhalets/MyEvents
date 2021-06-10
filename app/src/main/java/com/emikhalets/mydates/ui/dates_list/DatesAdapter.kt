@@ -34,8 +34,6 @@ class DatesAdapter(private val click: (DateItem) -> Unit) :
                     item.date.dateFormat("d MMMM")
                 )
 
-// TODO: delete after testing
-                item.daysLeft = 0
                 if (item.daysLeft == 0) textDaysLeft.text = root.context.resources.getString(
                     R.string.dates_list_today
                 )
