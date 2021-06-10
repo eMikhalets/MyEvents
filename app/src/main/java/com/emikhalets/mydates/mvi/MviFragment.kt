@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 
 abstract class MviFragment<I : MviIntent, A : MviAction, S : MviState, VM : MviViewModel<I, A, S>>(
     @LayoutRes val layoutId: Int
 ) : Fragment(layoutId), IViewRenderer<S> {
 
-//    abstract val binding:
+    abstract val binding: ViewBinding
     abstract val viewModel: VM
 
     private lateinit var viewState: S

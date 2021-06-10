@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main.xml"
+    app:startDestination="@id/bottom_home">
+
+    <fragment
+        android:id="@+id/bottom_home"
+        android:name="com.emikhalets.mydates.ui.dates_list.DatesListFragment"
+        android:label="DatesListFragment"
+        tools:layout="@layout/fragment_dates_list" >
+        <action
+            android:id="@+id/action_home_to_dateDetails"
+            app:destination="@id/dateDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bottom_groups"
+        android:name="com.emikhalets.mydates.ui.GroupsListFragment"
+        android:label="GroupsListFragment"
+        tools:layout="@layout/fragment_groups_list" />
+
+    <fragment
+        android:id="@+id/bottom_calendar"
+        android:name="com.emikhalets.mydates.ui.CalendarFragment"
+        android:label="CalendarFragment"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_calendar_to_dateDetails"
+            app:destination="@id/dateDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dateDetailsFragment"
+        android:name="com.emikhalets.mydates.ui.date_details.DateDetailsFragment"
+        android:label="DateDetailsFragment"
+        tools:layout="@layout/fragment_date_details" >
+        <argument
+            android:name="dateItem"
+            app:argType="com.emikhalets.mydates.data.database.entities.DateItem" />
+    </fragment>
+</navigation>

@@ -4,7 +4,6 @@
     <!-- Bottom Menu -->
     <string name="bottom_home">Главная</string>
     <string name="bottom_groups">Группы</string>
-    <string name="bottom_search">Поиск</string>
     <string name="bottom_calendar">Календарь</string>
 
     <!-- Dates List Screen -->
@@ -18,7 +17,18 @@
     </plurals>
 
     <!-- Add Date Dialog -->
-    <string name="add_date_text_new_date">New date</string>
-    <string name="add_date_hint_name">Name</string>
-    <string name="add_date_hint_date">Date</string>
+    <string name="add_date_text_new_date">Новая дата</string>
+    <string name="add_date_hint_name">Имя</string>
+    <string name="add_date_hint_date">Дата</string>
+
+    <!-- Date Details Screen -->
+    <string name="date_details_text_info">День рождения %s</string>
+    <string name="date_details_text_delete">Удалить</string>
+    <string name="date_details_text_save">Сохранить</string>
+    <plurals name="date_details_age">
+        <item quantity="one">Исполнится %d год</item>
+        <item quantity="few">Исполнится %d года</item>
+        <item quantity="many">Исполнится %d лет</item>
+        <item quantity="other">Error</item>
+    </plurals>
 </resources>

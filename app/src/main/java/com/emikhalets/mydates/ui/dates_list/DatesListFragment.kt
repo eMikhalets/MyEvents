@@ -1,7 +1,7 @@
 package com.emikhalets.mydates.ui.dates_list
 
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.DateItem
@@ -17,7 +17,7 @@ class DatesListFragment :
         R.layout.fragment_dates_list
     ) {
 
-    private val binding by viewBinding(FragmentDatesListBinding::bind)
+    override val binding by viewBinding(FragmentDatesListBinding::bind)
     override val viewModel: DatesListViewModel by viewModels()
     private lateinit var datesAdapter: DatesAdapter
 
@@ -58,8 +58,7 @@ class DatesListFragment :
     }
 
     private fun onDateClick(item: DateItem) {
-        Toast.makeText(requireContext(), "clicked on ${item.name}", Toast.LENGTH_SHORT).show()
-//        val action = DatesListFragmentDirections.actionDatesListToDateItem(item)
-//        findNavController().navigate(action)
+        val action = DatesListFragmentDirections.actionHomeToDateDetails(item)
+        findNavController().navigate(action)
     }
 }
