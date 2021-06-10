@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.databinding.ItemDateBinding
-import com.emikhalets.mydates.utils.format
+import com.emikhalets.mydates.utils.dateFormat
 
 class DatesAdapter(private val click: (DateItem) -> Unit) :
     ListAdapter<DateItem, DatesAdapter.ViewHolder>(DatesDiffCallback()) {
@@ -31,7 +31,7 @@ class DatesAdapter(private val click: (DateItem) -> Unit) :
                 textName.text = item.name
                 textInfo.text = root.context.getString(
                     R.string.dates_list_text_item_info,
-                    item.date.format()
+                    item.date.dateFormat("d MMMM")
                 )
 
 // TODO: delete after testing

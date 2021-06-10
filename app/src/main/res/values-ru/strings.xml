@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyDates</string>
 
     <!-- Bottom Menu -->
     <string name="bottom_home">Главная</string>
@@ -17,4 +16,9 @@
         <item quantity="many">Через %d дней</item>
         <item quantity="other">Ошибка</item>
     </plurals>
+
+    <!-- Add Date Dialog -->
+    <string name="add_date_text_new_date">New date</string>
+    <string name="add_date_hint_name">Name</string>
+    <string name="add_date_hint_date">Date</string>
 </resources>

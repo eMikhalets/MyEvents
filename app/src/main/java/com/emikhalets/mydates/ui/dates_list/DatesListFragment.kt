@@ -1,6 +1,5 @@
 package com.emikhalets.mydates.ui.dates_list
 
-import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -8,6 +7,8 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.databinding.FragmentDatesListBinding
 import com.emikhalets.mydates.mvi.MviFragment
+import com.emikhalets.mydates.utils.DialogHelper
+import com.emikhalets.mydates.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,23 +34,25 @@ class DatesListFragment :
     }
 
     override fun initEvent() {
-//        binding.btnAddDateItem.setOnClickListener {
-//            val action = DatesListFragmentDirections.actionDatesListToAddDate()
-//            findNavController().navigate(action)
-//        }
+        binding.btnAddDate.setOnClickListener {
+            DialogHelper().startAddDateDialog(requireContext()) {
+                dispatchIntent(DatesListIntent.ClickAddDateItem(it))
+            }
+        }
     }
 
     override fun render(state: DatesListState) {
         when (state) {
             DatesListState.ResultEmptyList -> {
-                binding.listDates.visibility = View.GONE
             }
             is DatesListState.ResultDatesList -> {
                 datesAdapter.submitList(state.data)
-                binding.listDates.visibility = View.VISIBLE
             }
             is DatesListState.Error -> {
-                binding.listDates.visibility = View.GONE
+                toast(state.message)
+            }
+            DatesListState.ResultDateAdded -> {
+                dispatchIntent(DatesListIntent.LoadDatesList)
             }
         }
     }

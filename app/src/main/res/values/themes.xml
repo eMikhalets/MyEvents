@@ -2,11 +2,7 @@
 
     <style name="Theme.MyDates" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/blue_alice</item>
+        <item name="android:windowBackground">@color/lighter_blue</item>
         <!-- Custom attributes. -->
-        <item name="colorBackMain">@color/blue_alice</item>
-        <item name="colorBackCard">@color/white</item>
-        <item name="colorBackAddBtn">@color/orange</item>
-        <item name="colorIconLight">@color/white</item>
     </style>
 </resources>

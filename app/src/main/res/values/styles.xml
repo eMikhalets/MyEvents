@@ -2,8 +2,13 @@
 <resources>
 
     <style name="Toolbar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="background">?attr/colorBackMain</item>
+        <item name="background">@color/lighter_blue</item>
         <item name="theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+    <style name="AppAddButton">
+        <item name="android:background">@drawable/back_button</item>
+        <item name="android:padding">50dp</item>
     </style>
 </resources>

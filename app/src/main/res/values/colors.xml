@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="blue_alice">#F8FAFB</color>
-    <color name="charcoal">#414141</color>
-    <color name="grey">#888888</color>
-    <color name="grey_light">#eeeeee</color>
-    <color name="fern">#88BC80</color>
-    <color name="orange">#FFB53F</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="lighter_blue">#F7FAFC</color>
+    <color name="light_blue">#61CDE9</color>
+    <color name="blue">#217BE0</color>
+    <color name="dark_grey">#262626</color>
+    <color name="grey">#767676</color>
+    <color name="pink">#B0BEC1</color>
+    <color name="orange">#FFB63E</color>
+    <color name="yellow">#FFD54F</color>
 </resources>

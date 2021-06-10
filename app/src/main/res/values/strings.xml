@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyDates</string>
+    <string name="app_name" translatable="false">MyDates</string>
 
     <!-- Bottom Menu -->
     <string name="bottom_home">Home</string>
@@ -16,4 +16,9 @@
         <item quantity="many">After %d days</item>
         <item quantity="other">Error</item>
     </plurals>
+
+    <!-- Add Date Dialog -->
+    <string name="add_date_text_new_date">Новая дата</string>
+    <string name="add_date_hint_name">Имя</string>
+    <string name="add_date_hint_date">Дата</string>
 </resources>

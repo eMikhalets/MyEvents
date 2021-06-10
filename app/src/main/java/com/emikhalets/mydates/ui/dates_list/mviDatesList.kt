@@ -7,13 +7,16 @@ import com.emikhalets.mydates.mvi.MviState
 
 sealed class DatesListIntent : MviIntent() {
     object LoadDatesList : DatesListIntent()
+    data class ClickAddDateItem(val dateItem: DateItem) : DatesListIntent()
 }
 
 sealed class DatesListAction : MviAction() {
     object GetAllDates : DatesListAction()
+    data class AddDateItem(val dateItem: DateItem) : DatesListAction()
 }
 
 sealed class DatesListState : MviState() {
+    object ResultDateAdded : DatesListState()
     object ResultEmptyList : DatesListState()
     data class ResultDatesList(val data: List<DateItem>) : DatesListState()
     data class Error(val message: String) : DatesListState()

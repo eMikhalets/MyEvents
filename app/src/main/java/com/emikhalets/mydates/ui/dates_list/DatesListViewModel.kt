@@ -1,5 +1,6 @@
 package com.emikhalets.mydates.ui.dates_list
 
+import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.data.repositories.RoomRepository
@@ -15,6 +16,7 @@ class DatesListViewModel @Inject constructor(
     override fun intentToAction(intent: DatesListIntent): DatesListAction {
         return when (intent) {
             DatesListIntent.LoadDatesList -> DatesListAction.GetAllDates
+            is DatesListIntent.ClickAddDateItem -> DatesListAction.AddDateItem(intent.dateItem)
         }
     }
 
@@ -22,15 +24,12 @@ class DatesListViewModel @Inject constructor(
         launch {
             when (action) {
                 DatesListAction.GetAllDates -> {
-//                    val result = repository.getAllDates()
-//                    state.postValue(result.reduce())
-                    // TODO: delete after testing
-                    val result = listOf(
-                        DateItem("asdasdasd"),
-                        DateItem("erteryeryery"),
-                        DateItem("bnmbvnmnbm")
-                    )
-                    state.postValue(DatesListState.ResultDatesList(result))
+                    val result = repository.getAllDates()
+                    state.postValue(result.reduce())
+                }
+                is DatesListAction.AddDateItem -> {
+                    val result = repository.insertDate(action.dateItem)
+                    state.postValue(result.reduce())
                 }
             }
         }
@@ -41,6 +40,13 @@ class DatesListViewModel @Inject constructor(
             ListResult.EmptyList -> DatesListState.ResultEmptyList
             is ListResult.Success -> DatesListState.ResultDatesList(data)
             is ListResult.Error -> DatesListState.Error(message)
+        }
+    }
+
+    private fun CompleteResult<Nothing>.reduce(): DatesListState {
+        return when (this) {
+            CompleteResult.Complete -> DatesListState.ResultDateAdded
+            is CompleteResult.Error -> DatesListState.Error(message)
         }
     }
 }
