@@ -1,5 +1,8 @@
 package com.emikhalets.mydates.utils
 
+import android.annotation.SuppressLint
+import android.view.MotionEvent
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.data.database.entities.DateItem
@@ -29,4 +32,17 @@ fun DateItem.computeDaysLeft() {
     var remaining = now.get(Calendar.DAY_OF_YEAR) - date.get(Calendar.DAY_OF_YEAR)
     if (remaining < 0) remaining += now.getActualMaximum(Calendar.DAY_OF_YEAR)
     this.daysLeft = remaining
+}
+
+@SuppressLint("ClickableViewAccessibility")
+inline fun EditText.setOnDrawableEndClick(crossinline callback: () -> Unit) {
+    this.setOnTouchListener { v, event ->
+        if (event.action == MotionEvent.ACTION_UP) {
+            if (event.rawX >= v.right - this.totalPaddingRight) {
+                event.action = MotionEvent.ACTION_CANCEL
+                callback.invoke()
+            }
+        }
+        true
+    }
 }

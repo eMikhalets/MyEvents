@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.databinding.DialogAddDateBinding
 import com.emikhalets.mydates.databinding.DialogDatePickerBinding
@@ -23,18 +22,11 @@ class DialogHelper {
         val dateItem = DateItem(name)
 
         binding.apply {
-            inputDate.setOnTouchListener { v, event ->
-                v.performClick()
-                if (event.action == MotionEvent.ACTION_UP) {
-                    if (event.rawX >= v.right - inputDate.totalPaddingRight) {
-                        event.action = MotionEvent.ACTION_CANCEL
-                        startDatePickerDialog(context, date) {
-                            date = it
-                            inputDate.setText(it.dateFormat("d MMMM YYYY"))
-                        }
-                    }
+            inputDate.setOnDrawableEndClick {
+                startDatePickerDialog(context, date) {
+                    date = it
+                    inputDate.setText(it.dateFormat("d MMMM YYYY"))
                 }
-                true
             }
 
             btnAdd.setOnClickListener {
@@ -53,7 +45,7 @@ class DialogHelper {
         dialog.show()
     }
 
-    private fun startDatePickerDialog(context: Context, init: Long, callback: (Long) -> Unit) {
+    fun startDatePickerDialog(context: Context, init: Long, callback: (Long) -> Unit) {
         val dialog = Dialog(context)
         val binding = DialogDatePickerBinding.inflate(LayoutInflater.from(context))
         val calendar = Calendar.getInstance()

@@ -15,7 +15,7 @@ class RoomRepository @Inject constructor(
         return try {
             val result = datesDao.getAll()
             if (result.isEmpty()) ListResult.EmptyList
-            else ListResult.Success(result)
+            else ListResult.Success(result.sortedBy { it.daysLeft })
         } catch (ex: Exception) {
             ListResult.Error(ex)
         }

@@ -25,6 +25,12 @@
     <string name="date_details_text_info">Birthday %s</string>
     <string name="date_details_text_delete">Delete</string>
     <string name="date_details_text_save">Save</string>
+    <plurals name="date_details_text_days_left">
+        <item quantity="one">After %d day</item>
+        <item quantity="few">After %d days</item>
+        <item quantity="many">After %d days</item>
+        <item quantity="other">Error</item>
+    </plurals>
     <plurals name="date_details_age">
         <item quantity="other">Will be %d years old</item>
     </plurals>

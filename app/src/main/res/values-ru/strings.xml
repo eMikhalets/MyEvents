@@ -25,6 +25,12 @@
     <string name="date_details_text_info">День рождения %s</string>
     <string name="date_details_text_delete">Удалить</string>
     <string name="date_details_text_save">Сохранить</string>
+    <plurals name="date_details_text_days_left">
+        <item quantity="one">Через %d день</item>
+        <item quantity="few">Через %d дня</item>
+        <item quantity="many">Через %d дней</item>
+        <item quantity="other">Error</item>
+    </plurals>
     <plurals name="date_details_age">
         <item quantity="one">Исполнится %d год</item>
         <item quantity="few">Исполнится %d года</item>
