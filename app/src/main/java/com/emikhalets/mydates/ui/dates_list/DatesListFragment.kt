@@ -7,6 +7,7 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.databinding.FragmentDatesListBinding
 import com.emikhalets.mydates.mvi.MviFragment
+import com.emikhalets.mydates.ui.DatesAdapter
 import com.emikhalets.mydates.utils.startAddDateDialog
 import com.emikhalets.mydates.utils.toast
 import dagger.hilt.android.AndroidEntryPoint

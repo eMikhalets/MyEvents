@@ -29,6 +29,9 @@ fun DateItem.computeDaysLeftAndAge() {
     val date = Calendar.getInstance()
     date.timeInMillis = this.date
 
+    this.day = date.day()
+    this.month = date.month()
+    this.year = date.year()
     this.age = now.year() - date.year()
     date.set(Calendar.YEAR, now.year())
     this.daysLeft = date.dayOfYear() - now.dayOfYear()

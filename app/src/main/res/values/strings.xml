@@ -2,9 +2,10 @@
     <string name="app_name" translatable="false">MyDates</string>
 
     <!-- Bottom Menu -->
-    <string name="bottom_home">Home</string>
-    <string name="bottom_groups">Groups</string>
-    <string name="bottom_calendar">Calendar</string>
+    <string name="title_home">All Dates</string>
+    <string name="title_date_details">Date Details</string>
+    <string name="title_groups">All Groups</string>
+    <string name="title_calendar">Calendar</string>
 
     <!-- Dates List Screen -->
     <string name="dates_list_today">Today</string>
@@ -38,4 +39,8 @@
     <plurals name="date_details_age">
         <item quantity="other">Will be %d years old</item>
     </plurals>
+
+    <!-- Calendar Screen -->
+    <string name="calendar_text_no_saved_dates">No saved dates</string>
+    <string name="calendar_date" translatable="false">%d %s</string>
 </resources>

@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_main.xml"
+    android:id="@+id/bottom_nav"
     app:startDestination="@id/bottom_home">
 
     <fragment
         android:id="@+id/bottom_home"
         android:name="com.emikhalets.mydates.ui.dates_list.DatesListFragment"
-        android:label="DatesListFragment"
+        android:label="@string/title_home"
         tools:layout="@layout/fragment_dates_list" >
         <action
             android:id="@+id/action_home_to_dateDetails"
@@ -18,13 +18,13 @@
     <fragment
         android:id="@+id/bottom_groups"
         android:name="com.emikhalets.mydates.ui.GroupsListFragment"
-        android:label="GroupsListFragment"
+        android:label="@string/title_groups"
         tools:layout="@layout/fragment_groups_list" />
 
     <fragment
         android:id="@+id/bottom_calendar"
-        android:name="com.emikhalets.mydates.ui.CalendarFragment"
-        android:label="CalendarFragment"
+        android:name="com.emikhalets.mydates.ui.calendar.CalendarFragment"
+        android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" >
         <action
             android:id="@+id/action_calendar_to_dateDetails"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/dateDetailsFragment"
         android:name="com.emikhalets.mydates.ui.date_details.DateDetailsFragment"
-        android:label="DateDetailsFragment"
+        android:label="@string/title_date_details"
         tools:layout="@layout/fragment_date_details" >
         <argument
             android:name="dateItem"

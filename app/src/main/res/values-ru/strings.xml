@@ -2,9 +2,10 @@
 <resources>
 
     <!-- Bottom Menu -->
-    <string name="bottom_home">Главная</string>
-    <string name="bottom_groups">Группы</string>
-    <string name="bottom_calendar">Календарь</string>
+    <string name="title_home">Все Даты</string>
+    <string name="title_date_details">Детали Даты</string>
+    <string name="title_groups">Все Группы</string>
+    <string name="title_calendar">Календарь</string>
 
     <!-- Dates List Screen -->
     <string name="dates_list_today">Сегодня</string>
@@ -44,4 +45,7 @@
         <item quantity="many">Исполнится %d лет</item>
         <item quantity="other">Error</item>
     </plurals>
+
+    <!-- Calendar Screen -->
+    <string name="calendar_text_no_saved_dates">Нет сохраненных дат</string>
 </resources>

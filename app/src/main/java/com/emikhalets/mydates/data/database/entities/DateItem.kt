@@ -14,9 +14,12 @@ data class DateItem(
     var name: String,
     var date: Long,
     var daysLeft: Int = 0,
-    var age: Int = 0
+    var age: Int = 0,
+    var day: Int = 0,
+    var month: Int = 0,
+    var year: Int = 0,
 ) : Parcelable {
 
     @Ignore
-    constructor(name: String) : this(0, name, 0, 0, 0)
+    constructor(name: String) : this(0, name, 0, 0, 0, 0, 0, 0)
 }

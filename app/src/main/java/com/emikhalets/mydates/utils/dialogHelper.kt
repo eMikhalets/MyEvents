@@ -21,6 +21,7 @@ inline fun Fragment.startAddDateDialog(crossinline callback: (DateItem) -> Unit)
     val dateItem = DateItem(name)
 
     binding.apply {
+        inputDate.setText(date.dateFormat("d MMMM YYYY"))
         inputDate.setOnDrawableEndClick {
             startDatePickerDialog(requireContext(), date) {
                 date = it
@@ -30,11 +31,9 @@ inline fun Fragment.startAddDateDialog(crossinline callback: (DateItem) -> Unit)
 
         btnAdd.setOnClickListener {
             name = inputName.text.toString()
-            if (name != "" || date != 0L) {
-                dateItem.apply {
-                    this.name = name
-                    this.date = date
-                }
+            if (name.isNotEmpty()) {
+                dateItem.name = name
+                dateItem.date = date
                 callback.invoke(dateItem)
                 dialog.dismiss()
             }
@@ -68,7 +67,11 @@ inline fun Fragment.startDatePickerDialog(init: Long, crossinline callback: (Lon
     dialog.show()
 }
 
-inline fun startDatePickerDialog(context: Context, init: Long, crossinline callback: (Long) -> Unit) {
+inline fun startDatePickerDialog(
+    context: Context,
+    init: Long,
+    crossinline callback: (Long) -> Unit
+) {
     val dialog = Dialog(context)
     val binding = DialogDatePickerBinding.inflate(LayoutInflater.from(context))
     val calendar = Calendar.getInstance()

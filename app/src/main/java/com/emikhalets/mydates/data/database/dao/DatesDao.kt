@@ -9,6 +9,9 @@ interface DatesDao {
     @Query("SELECT * FROM dates_table ORDER BY daysLeft ASC")
     suspend fun getAll(): List<DateItem>
 
+    @Query("SELECT * FROM dates_table WHERE day = :day AND month = :month")
+    suspend fun getItemsByDayMonth(day: Int, month: Int): List<DateItem>
+
     @Query("SELECT * FROM dates_table WHERE id = :id")
     suspend fun getItem(id: Long): DateItem
 

@@ -17,6 +17,18 @@ class RoomRepository @Inject constructor(
             if (result.isEmpty()) ListResult.EmptyList
             else ListResult.Success(result.sortedBy { it.daysLeft })
         } catch (ex: Exception) {
+            ex.printStackTrace()
+            ListResult.Error(ex)
+        }
+    }
+
+    override suspend fun getItemsByDayMonth(day: Int, month: Int): ListResult<List<DateItem>> {
+        return try {
+            val result = datesDao.getItemsByDayMonth(day, month)
+            if (result.isEmpty()) ListResult.EmptyList
+            else ListResult.Success(result.sortedBy { it.name })
+        } catch (ex: Exception) {
+            ex.printStackTrace()
             ListResult.Error(ex)
         }
     }
@@ -26,6 +38,7 @@ class RoomRepository @Inject constructor(
             val result = datesDao.getItem(id)
             SingleResult.Success(result)
         } catch (ex: Exception) {
+            ex.printStackTrace()
             SingleResult.Error(ex)
         }
     }
@@ -35,6 +48,7 @@ class RoomRepository @Inject constructor(
             datesDao.insert(dateItem)
             CompleteResult.Complete
         } catch (ex: Exception) {
+            ex.printStackTrace()
             CompleteResult.Error(ex)
         }
     }
@@ -44,6 +58,7 @@ class RoomRepository @Inject constructor(
             datesDao.update(dateItem)
             CompleteResult.Complete
         } catch (ex: Exception) {
+            ex.printStackTrace()
             CompleteResult.Error(ex)
         }
     }
@@ -53,6 +68,7 @@ class RoomRepository @Inject constructor(
             datesDao.delete(dateItem)
             CompleteResult.Complete
         } catch (ex: Exception) {
+            ex.printStackTrace()
             CompleteResult.Error(ex)
         }
     }

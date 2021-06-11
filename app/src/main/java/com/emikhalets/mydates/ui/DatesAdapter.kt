@@ -1,4 +1,4 @@
-package com.emikhalets.mydates.ui.dates_list
+package com.emikhalets.mydates.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

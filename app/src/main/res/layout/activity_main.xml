@@ -30,7 +30,7 @@
         android:layout_gravity="bottom"
         android:background="@color/white"
         app:itemIconSize="30dp"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav" />
 
