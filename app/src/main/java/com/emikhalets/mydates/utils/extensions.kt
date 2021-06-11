@@ -28,12 +28,29 @@ fun DateItem.computeDaysLeftAndAge() {
     val now = Calendar.getInstance()
     val date = Calendar.getInstance()
     date.timeInMillis = this.date
-    this.age = now.get(Calendar.YEAR) - date.get(Calendar.YEAR)
-    date.set(Calendar.YEAR, now.get(Calendar.YEAR))
-    var remaining = now.get(Calendar.DAY_OF_YEAR) - date.get(Calendar.DAY_OF_YEAR)
-    if (remaining < 0) remaining += now.getActualMaximum(Calendar.DAY_OF_YEAR)
-    this.daysLeft = remaining
+
+    this.age = now.year() - date.year()
+    date.set(Calendar.YEAR, now.year())
+    this.daysLeft = date.dayOfYear() - now.dayOfYear()
+
+    when {
+        date.month() < now.month() -> {
+            this.age++
+            this.daysLeft += now.getActualMaximum(Calendar.DAY_OF_YEAR)
+        }
+        date.month() == now.month() -> {
+            if (date.day() < now.day()) {
+                this.age++
+                this.daysLeft += now.getActualMaximum(Calendar.DAY_OF_YEAR)
+            }
+        }
+    }
 }
+
+fun Calendar.day() = this.get(Calendar.DAY_OF_MONTH)
+fun Calendar.dayOfYear() = this.get(Calendar.DAY_OF_YEAR)
+fun Calendar.month() = this.get(Calendar.MONTH)
+fun Calendar.year() = this.get(Calendar.YEAR)
 
 @SuppressLint("ClickableViewAccessibility")
 inline fun EditText.setOnDrawableEndClick(crossinline callback: () -> Unit) {

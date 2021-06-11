@@ -7,7 +7,7 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.databinding.FragmentDatesListBinding
 import com.emikhalets.mydates.mvi.MviFragment
-import com.emikhalets.mydates.utils.DialogHelper
+import com.emikhalets.mydates.utils.startAddDateDialog
 import com.emikhalets.mydates.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,9 +35,7 @@ class DatesListFragment :
 
     override fun initEvent() {
         binding.btnAddDate.setOnClickListener {
-            DialogHelper().startAddDateDialog(requireContext()) {
-                dispatchIntent(DatesListIntent.ClickAddDateItem(it))
-            }
+            startAddDateDialog { dispatchIntent(DatesListIntent.ClickAddDateItem(it)) }
         }
     }
 

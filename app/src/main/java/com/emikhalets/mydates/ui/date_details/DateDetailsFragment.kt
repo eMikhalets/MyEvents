@@ -23,20 +23,21 @@ class DateDetailsFragment :
 
     override fun initData() {
         val dateItem = args.dateItem
-        with(binding) {
+        binding.apply {
             textName.text = dateItem.name
             textInfo.text = getString(
                 R.string.date_details_info,
                 dateItem.date.dateFormat("d MMMM")
-            )
-            textDaysLeft.text = resources.getQuantityString(
-                R.plurals.date_details_days_left, dateItem.daysLeft, dateItem.daysLeft
             )
             textAge.text = resources.getQuantityString(
                 R.plurals.date_details_age, dateItem.age, dateItem.age
             )
             inputName.setText(dateItem.name)
             inputDate.setText(dateItem.date.dateFormat("d MMMM YYYY"))
+            if (dateItem.daysLeft == 0) textDaysLeft.text = getString(R.string.date_details_today)
+            else textDaysLeft.text = resources.getQuantityString(
+                R.plurals.date_details_days_left, dateItem.daysLeft, dateItem.daysLeft
+            )
         }
     }
 
@@ -56,19 +57,7 @@ class DateDetailsFragment :
                 btnSave.isEnabled = true
             }
             inputDate.setOnDrawableEndClick {
-                DialogHelper().startDatePickerDialog(requireContext(), args.dateItem.date) {
-                    args.dateItem.date = it
-                    args.dateItem.computeDaysLeftAndAge()
-                    inputDate.setText(it.dateFormat("d MMMM YYYY"))
-                    textDaysLeft.text = resources.getQuantityString(
-                        R.plurals.date_details_days_left,
-                        args.dateItem.daysLeft, args.dateItem.daysLeft
-                    )
-                    textAge.text = resources.getQuantityString(
-                        R.plurals.date_details_age, args.dateItem.age, args.dateItem.age
-                    )
-                    btnSave.isEnabled = true
-                }
+                startDatePickerDialog(args.dateItem.date) { applyNewDate(it) }
             }
         }
     }
@@ -78,6 +67,25 @@ class DateDetailsFragment :
             is DateDetailsState.Error -> toast(state.message)
             DateDetailsState.ResultDateDeleted -> findNavController().popBackStack()
             DateDetailsState.ResultDateSaved -> toast("Saved!")
+        }
+    }
+
+    private fun applyNewDate(ts: Long) {
+        val dateItem = args.dateItem
+        dateItem.date = ts
+        dateItem.computeDaysLeftAndAge()
+        binding.apply {
+            inputDate.setText(ts.dateFormat("d MMMM YYYY"))
+            if (dateItem.daysLeft == 0) textDaysLeft.text = getString(
+                R.string.date_details_today
+            )
+            else textDaysLeft.text = resources.getQuantityString(
+                R.plurals.date_details_days_left, dateItem.daysLeft, dateItem.daysLeft
+            )
+            textAge.text = resources.getQuantityString(
+                R.plurals.date_details_age, dateItem.age, dateItem.age
+            )
+            btnSave.isEnabled = true
         }
     }
 }

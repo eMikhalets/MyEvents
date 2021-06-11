@@ -28,6 +28,7 @@
     <string name="add_date_hint_date">Дата</string>
 
     <!-- Date Details Screen -->
+    <string name="date_details_today">Сегодня</string>
     <string name="date_details_text_delete">Удалить</string>
     <string name="date_details_text_save">Сохранить</string>
     <string name="date_details_info">День рождения %s</string>

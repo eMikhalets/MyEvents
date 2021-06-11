@@ -25,6 +25,7 @@
     <string name="add_date_hint_date">Date</string>
 
     <!-- Date Details Screen -->
+    <string name="date_details_today">Today</string>
     <string name="date_details_info">Birthday %s</string>
     <string name="date_details_text_delete">Delete</string>
     <string name="date_details_text_save">Save</string>

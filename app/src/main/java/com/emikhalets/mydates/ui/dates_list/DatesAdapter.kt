@@ -38,7 +38,7 @@ class DatesAdapter(private val click: (DateItem) -> Unit) :
                     item.age, item.age
                 )
 
-                if (item.daysLeft == 0) textDaysLeft.text = root.context.resources.getString(
+                if (item.daysLeft == 0) textDaysLeft.text = root.context.getString(
                     R.string.dates_list_today
                 )
                 else textDaysLeft.text = root.context.resources.getQuantityString(
