@@ -35,7 +35,6 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/text_info"
             app:layout_constraintEnd_toStartOf="@+id/image_forward"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/image_photo"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread"
@@ -51,25 +50,35 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/text_days_left"
             app:layout_constraintEnd_toStartOf="@+id/image_forward"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/image_photo"
             app:layout_constraintTop_toBottomOf="@+id/text_name"
             tools:text="День рождения 21 августа" />
 
         <TextView
             android:id="@+id/text_days_left"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:textColor="@color/orange"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/image_forward"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/image_photo"
             app:layout_constraintTop_toBottomOf="@+id/text_info"
             tools:text="Через 5 дней" />
+
+        <TextView
+            android:id="@+id/text_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/orange"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/text_days_left"
+            app:layout_constraintEnd_toStartOf="@id/image_forward"
+            app:layout_constraintStart_toEndOf="@id/text_days_left"
+            app:layout_constraintTop_toTopOf="@id/text_days_left"
+            tools:text="(57 лет)" />
 
         <ImageView
             android:id="@+id/image_forward"

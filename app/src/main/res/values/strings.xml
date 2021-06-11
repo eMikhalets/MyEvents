@@ -8,8 +8,11 @@
 
     <!-- Dates List Screen -->
     <string name="dates_list_today">Today</string>
-    <string name="dates_list_text_item_info">Birthday %s</string>
-    <plurals name="dates_list_text_days_left">
+    <string name="dates_list_item_info">Birthday %s</string>
+    <plurals name="dates_list_age">
+        <item quantity="other">(%d years)</item>
+    </plurals>
+    <plurals name="dates_list_days_left">
         <item quantity="one">After %d day</item>
         <item quantity="few">After %d days</item>
         <item quantity="many">After %d days</item>
@@ -22,10 +25,10 @@
     <string name="add_date_hint_date">Date</string>
 
     <!-- Date Details Screen -->
-    <string name="date_details_text_info">Birthday %s</string>
+    <string name="date_details_info">Birthday %s</string>
     <string name="date_details_text_delete">Delete</string>
     <string name="date_details_text_save">Save</string>
-    <plurals name="date_details_text_days_left">
+    <plurals name="date_details_days_left">
         <item quantity="one">After %d day</item>
         <item quantity="few">After %d days</item>
         <item quantity="many">After %d days</item>

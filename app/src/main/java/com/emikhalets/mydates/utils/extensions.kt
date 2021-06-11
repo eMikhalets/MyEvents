@@ -24,10 +24,11 @@ fun Fragment.toast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }
 
-fun DateItem.computeDaysLeft() {
+fun DateItem.computeDaysLeftAndAge() {
     val now = Calendar.getInstance()
     val date = Calendar.getInstance()
     date.timeInMillis = this.date
+    this.age = now.get(Calendar.YEAR) - date.get(Calendar.YEAR)
     date.set(Calendar.YEAR, now.get(Calendar.YEAR))
     var remaining = now.get(Calendar.DAY_OF_YEAR) - date.get(Calendar.DAY_OF_YEAR)
     if (remaining < 0) remaining += now.getActualMaximum(Calendar.DAY_OF_YEAR)

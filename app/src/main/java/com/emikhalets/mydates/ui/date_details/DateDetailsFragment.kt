@@ -26,11 +26,11 @@ class DateDetailsFragment :
         with(binding) {
             textName.text = dateItem.name
             textInfo.text = getString(
-                R.string.date_details_text_info,
+                R.string.date_details_info,
                 dateItem.date.dateFormat("d MMMM")
             )
             textDaysLeft.text = resources.getQuantityString(
-                R.plurals.date_details_text_days_left, dateItem.daysLeft, dateItem.daysLeft
+                R.plurals.date_details_days_left, dateItem.daysLeft, dateItem.daysLeft
             )
             textAge.text = resources.getQuantityString(
                 R.plurals.date_details_age, dateItem.age, dateItem.age
@@ -58,11 +58,14 @@ class DateDetailsFragment :
             inputDate.setOnDrawableEndClick {
                 DialogHelper().startDatePickerDialog(requireContext(), args.dateItem.date) {
                     args.dateItem.date = it
-                    args.dateItem.computeDaysLeft()
+                    args.dateItem.computeDaysLeftAndAge()
                     inputDate.setText(it.dateFormat("d MMMM YYYY"))
                     textDaysLeft.text = resources.getQuantityString(
-                        R.plurals.date_details_text_days_left,
+                        R.plurals.date_details_days_left,
                         args.dateItem.daysLeft, args.dateItem.daysLeft
+                    )
+                    textAge.text = resources.getQuantityString(
+                        R.plurals.date_details_age, args.dateItem.age, args.dateItem.age
                     )
                     btnSave.isEnabled = true
                 }

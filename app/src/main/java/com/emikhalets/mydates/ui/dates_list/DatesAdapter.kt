@@ -30,15 +30,19 @@ class DatesAdapter(private val click: (DateItem) -> Unit) :
             with(binding) {
                 textName.text = item.name
                 textInfo.text = root.context.getString(
-                    R.string.dates_list_text_item_info,
+                    R.string.dates_list_item_info,
                     item.date.dateFormat("d MMMM")
+                )
+                textAge.text = root.context.resources.getQuantityString(
+                    R.plurals.dates_list_age,
+                    item.age, item.age
                 )
 
                 if (item.daysLeft == 0) textDaysLeft.text = root.context.resources.getString(
                     R.string.dates_list_today
                 )
                 else textDaysLeft.text = root.context.resources.getQuantityString(
-                    R.plurals.dates_list_text_days_left,
+                    R.plurals.dates_list_days_left,
                     item.daysLeft, item.daysLeft
                 )
 

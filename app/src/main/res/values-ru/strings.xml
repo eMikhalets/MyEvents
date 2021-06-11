@@ -8,8 +8,14 @@
 
     <!-- Dates List Screen -->
     <string name="dates_list_today">Сегодня</string>
-    <string name="dates_list_text_item_info">День рождения %s</string>
-    <plurals name="dates_list_text_days_left">
+    <string name="dates_list_item_info">День рождения %s</string>
+    <plurals name="dates_list_age">
+        <item quantity="one">(%d год)</item>
+        <item quantity="few">(%d года)</item>
+        <item quantity="many">(%d лет)</item>
+        <item quantity="other">Error</item>
+    </plurals>
+    <plurals name="dates_list_days_left">
         <item quantity="one">Через %d день</item>
         <item quantity="few">Через %d дня</item>
         <item quantity="many">Через %d дней</item>
@@ -22,10 +28,10 @@
     <string name="add_date_hint_date">Дата</string>
 
     <!-- Date Details Screen -->
-    <string name="date_details_text_info">День рождения %s</string>
     <string name="date_details_text_delete">Удалить</string>
     <string name="date_details_text_save">Сохранить</string>
-    <plurals name="date_details_text_days_left">
+    <string name="date_details_info">День рождения %s</string>
+    <plurals name="date_details_days_left">
         <item quantity="one">Через %d день</item>
         <item quantity="few">Через %d дня</item>
         <item quantity="many">Через %d дней</item>

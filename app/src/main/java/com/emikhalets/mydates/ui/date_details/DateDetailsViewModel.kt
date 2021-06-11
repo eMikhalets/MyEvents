@@ -3,7 +3,7 @@ package com.emikhalets.mydates.ui.date_details
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.repositories.RoomRepository
 import com.emikhalets.mydates.mvi.MviViewModel
-import com.emikhalets.mydates.utils.computeDaysLeft
+import com.emikhalets.mydates.utils.computeDaysLeftAndAge
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,7 +27,7 @@ class DateDetailsViewModel @Inject constructor(
                     state.postValue(result.reduceDeleting())
                 }
                 is DateDetailsAction.UpdateDateItem -> {
-                    action.dateItem.computeDaysLeft()
+                    action.dateItem.computeDaysLeftAndAge()
                     val result = repository.updateDate(action.dateItem)
                     state.postValue(result.reduceUpdating())
                 }
