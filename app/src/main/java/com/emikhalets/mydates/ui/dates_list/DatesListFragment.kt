@@ -1,5 +1,6 @@
 package com.emikhalets.mydates.ui.dates_list
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -8,9 +9,12 @@ import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.databinding.FragmentDatesListBinding
 import com.emikhalets.mydates.mvi.MviFragment
 import com.emikhalets.mydates.ui.DatesAdapter
+import com.emikhalets.mydates.utils.day
+import com.emikhalets.mydates.utils.month
 import com.emikhalets.mydates.utils.startAddDateDialog
 import com.emikhalets.mydates.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class DatesListFragment :
@@ -35,6 +39,19 @@ class DatesListFragment :
     }
 
     override fun initEvent() {
+        val now = Calendar.getInstance()
+        val lastUpdateTime = requireActivity().getSharedPreferences("MyDates", 0)
+            .getLong("last_update", now.timeInMillis)
+        val last = Calendar.getInstance()
+        last.timeInMillis = lastUpdateTime
+        if ((last.month() < now.month()) ||
+            (last.month() == now.month() && last.day() < now.day())
+        ) {
+            requireActivity().getSharedPreferences("MyDates", 0).edit()
+                .putLong("last_update", now.timeInMillis).apply()
+            dispatchIntent(DatesListIntent.UpdateDatesList)
+        }
+
         binding.btnAddDate.setOnClickListener {
             startAddDateDialog { dispatchIntent(DatesListIntent.ClickAddDateItem(it)) }
         }
@@ -52,6 +69,9 @@ class DatesListFragment :
             }
             DatesListState.ResultDateAdded -> {
                 dispatchIntent(DatesListIntent.LoadDatesList)
+            }
+            is DatesListState.ResultDateUpdated -> {
+                datesAdapter.submitList(state.data)
             }
         }
     }

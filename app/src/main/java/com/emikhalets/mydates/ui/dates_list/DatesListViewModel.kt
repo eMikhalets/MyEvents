@@ -18,6 +18,7 @@ class DatesListViewModel @Inject constructor(
         return when (intent) {
             DatesListIntent.LoadDatesList -> DatesListAction.GetAllDates
             is DatesListIntent.ClickAddDateItem -> DatesListAction.AddDateItem(intent.dateItem)
+            DatesListIntent.UpdateDatesList -> DatesListAction.UpdateDatesList
         }
     }
 
@@ -33,6 +34,10 @@ class DatesListViewModel @Inject constructor(
                     val result = repository.insertDate(action.dateItem)
                     state.postValue(result.reduce())
                 }
+                DatesListAction.UpdateDatesList -> {
+                    val result = repository.updateAllDates()
+                    state.postValue(result.updateReduce())
+                }
             }
         }
     }
@@ -41,6 +46,14 @@ class DatesListViewModel @Inject constructor(
         return when (this) {
             ListResult.EmptyList -> DatesListState.ResultEmptyList
             is ListResult.Success -> DatesListState.ResultDatesList(data)
+            is ListResult.Error -> DatesListState.Error(message)
+        }
+    }
+
+    private fun ListResult<List<DateItem>>.updateReduce(): DatesListState {
+        return when (this) {
+            ListResult.EmptyList -> DatesListState.ResultEmptyList
+            is ListResult.Success -> DatesListState.ResultDateUpdated(data)
             is ListResult.Error -> DatesListState.Error(message)
         }
     }

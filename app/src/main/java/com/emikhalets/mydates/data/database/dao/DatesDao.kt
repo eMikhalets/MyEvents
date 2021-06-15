@@ -21,6 +21,9 @@ interface DatesDao {
     @Update
     suspend fun update(date: DateItem): Int
 
+    @Update
+    suspend fun updateAll(dates: List<DateItem>)
+
     @Delete
     suspend fun delete(date: DateItem): Int
 }

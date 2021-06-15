@@ -50,6 +50,11 @@ fun DateItem.computeDaysLeftAndAge() {
     }
 }
 
+fun DateItem.computeDaysLeftAndAgeReturn(): DateItem {
+    this.computeDaysLeftAndAge()
+    return this
+}
+
 fun Calendar.day() = this.get(Calendar.DAY_OF_MONTH)
 fun Calendar.dayOfYear() = this.get(Calendar.DAY_OF_YEAR)
 fun Calendar.month() = this.get(Calendar.MONTH)

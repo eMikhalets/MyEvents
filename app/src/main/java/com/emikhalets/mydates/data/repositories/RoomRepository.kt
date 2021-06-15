@@ -5,6 +5,7 @@ import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.SingleResult
 import com.emikhalets.mydates.data.database.dao.DatesDao
 import com.emikhalets.mydates.data.database.entities.DateItem
+import com.emikhalets.mydates.utils.computeDaysLeftAndAgeReturn
 import javax.inject.Inject
 
 class RoomRepository @Inject constructor(
@@ -50,6 +51,19 @@ class RoomRepository @Inject constructor(
         } catch (ex: Exception) {
             ex.printStackTrace()
             CompleteResult.Error(ex)
+        }
+    }
+
+    override suspend fun updateAllDates(): ListResult<List<DateItem>> {
+        return try {
+            val list = datesDao.getAll()
+            val newList = mutableListOf<DateItem>()
+            list.forEach { newList.add(it.computeDaysLeftAndAgeReturn()) }
+            datesDao.updateAll(newList)
+            ListResult.Success(newList.sortedBy { it.daysLeft })
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            ListResult.Error(ex)
         }
     }
 
