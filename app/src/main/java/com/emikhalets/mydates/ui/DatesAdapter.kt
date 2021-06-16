@@ -6,27 +6,43 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.data.database.entities.DateItem
+import com.emikhalets.mydates.data.GroupDateItem
 import com.emikhalets.mydates.databinding.ItemDateBinding
+import com.emikhalets.mydates.databinding.ItemDateDividerBinding
 import com.emikhalets.mydates.utils.dateFormat
 
-class DatesAdapter(private val click: (DateItem) -> Unit) :
-    ListAdapter<DateItem, DatesAdapter.ViewHolder>(DatesDiffCallback()) {
+class DatesAdapter(private val click: (GroupDateItem) -> Unit) :
+    ListAdapter<GroupDateItem, RecyclerView.ViewHolder>(DatesDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemDateBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return when (viewType) {
+            1 -> {
+                val binding = ItemDateDividerBinding.inflate(inflater, parent, false)
+                DividerViewHolder(binding)
+            }
+            else -> {
+                val binding = ItemDateBinding.inflate(inflater, parent, false)
+                DateViewHolder(binding)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder.itemViewType) {
+            0 -> (holder as DateViewHolder).bind(getItem(position))
+            1 -> (holder as DividerViewHolder).bind(getItem(position))
+        }
     }
 
-    inner class ViewHolder(private val binding: ItemDateBinding) :
+    override fun getItemViewType(position: Int): Int {
+        return getItem(position).type
+    }
+
+    inner class DateViewHolder(private val binding: ItemDateBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: DateItem) {
+        fun bind(item: GroupDateItem) {
             with(binding) {
                 textName.text = item.name
                 textInfo.text = root.context.getString(
@@ -51,12 +67,21 @@ class DatesAdapter(private val click: (DateItem) -> Unit) :
         }
     }
 
-    class DatesDiffCallback : DiffUtil.ItemCallback<DateItem>() {
+    inner class DividerViewHolder(private val binding: ItemDateDividerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        override fun areItemsTheSame(oldItem: DateItem, newItem: DateItem): Boolean =
-            oldItem.id == newItem.id
+        fun bind(item: GroupDateItem) {
+            binding.textMonth.text =
+                binding.root.context.resources.getStringArray(R.array.months)[item.month]
+        }
+    }
 
-        override fun areContentsTheSame(oldItem: DateItem, newItem: DateItem): Boolean =
+    class DatesDiffCallback : DiffUtil.ItemCallback<GroupDateItem>() {
+
+        override fun areItemsTheSame(oldItem: GroupDateItem, newItem: GroupDateItem): Boolean =
+            oldItem.id == newItem.id && oldItem.name == newItem.name && oldItem.month == newItem.month
+
+        override fun areContentsTheSame(oldItem: GroupDateItem, newItem: GroupDateItem): Boolean =
             oldItem == newItem
     }
 }

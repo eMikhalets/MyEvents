@@ -38,6 +38,6 @@
         tools:layout="@layout/fragment_date_details" >
         <argument
             android:name="dateItem"
-            app:argType="com.emikhalets.mydates.data.database.entities.DateItem" />
+            app:argType="com.emikhalets.mydates.data.GroupDateItem" />
     </fragment>
 </navigation>

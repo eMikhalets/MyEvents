@@ -6,6 +6,7 @@ import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.data.repositories.RoomRepository
 import com.emikhalets.mydates.mvi.MviViewModel
 import com.emikhalets.mydates.utils.computeDaysLeftAndAge
+import com.emikhalets.mydates.utils.groupDateItemList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ class DatesListViewModel @Inject constructor(
 
     override fun handleAction(action: DatesListAction) {
         launch {
+            state.postValue(DatesListState.Loading)
             when (action) {
                 DatesListAction.GetAllDates -> {
                     val result = repository.getAllDates()
@@ -45,7 +47,7 @@ class DatesListViewModel @Inject constructor(
     private fun ListResult<List<DateItem>>.reduce(): DatesListState {
         return when (this) {
             ListResult.EmptyList -> DatesListState.ResultEmptyList
-            is ListResult.Success -> DatesListState.ResultDatesList(data)
+            is ListResult.Success -> DatesListState.ResultDatesList(groupDateItemList(data))
             is ListResult.Error -> DatesListState.Error(message)
         }
     }
@@ -53,7 +55,7 @@ class DatesListViewModel @Inject constructor(
     private fun ListResult<List<DateItem>>.updateReduce(): DatesListState {
         return when (this) {
             ListResult.EmptyList -> DatesListState.ResultEmptyList
-            is ListResult.Success -> DatesListState.ResultDateUpdated(data)
+            is ListResult.Success -> DatesListState.ResultDateUpdated(groupDateItemList(data))
             is ListResult.Error -> DatesListState.Error(message)
         }
     }

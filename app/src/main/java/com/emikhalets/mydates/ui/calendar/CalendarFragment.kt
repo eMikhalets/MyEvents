@@ -5,14 +5,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.data.database.entities.DateItem
+import com.emikhalets.mydates.data.GroupDateItem
 import com.emikhalets.mydates.databinding.FragmentCalendarBinding
 import com.emikhalets.mydates.mvi.MviFragment
 import com.emikhalets.mydates.ui.DatesAdapter
-import com.emikhalets.mydates.utils.dateFormat
-import com.emikhalets.mydates.utils.day
-import com.emikhalets.mydates.utils.month
-import com.emikhalets.mydates.utils.toast
+import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DateFormatSymbols
 import java.util.*
@@ -63,18 +60,16 @@ class CalendarFragment :
                 // TODO: add dots in calendar, if day has dateItems
             }
             is CalendarState.ResultDatesByDate -> {
-                datesAdapter.submitList(state.data)
+                datesAdapter.submitList(groupDateItemList(state.data))
                 binding.textNoDates.visibility = View.GONE
                 binding.textDate.visibility = View.VISIBLE
                 binding.listDates.visibility = View.VISIBLE
             }
-            is CalendarState.Error -> {
-                toast(state.message)
-            }
+            is CalendarState.Error -> toast(state.message)
         }
     }
 
-    private fun onDateClick(item: DateItem) {
+    private fun onDateClick(item: GroupDateItem) {
         val action = CalendarFragmentDirections.actionCalendarToDateDetails(item)
         findNavController().navigate(action)
     }

@@ -1,5 +1,6 @@
 package com.emikhalets.mydates.ui.dates_list
 
+import com.emikhalets.mydates.data.GroupDateItem
 import com.emikhalets.mydates.data.database.entities.DateItem
 import com.emikhalets.mydates.mvi.MviAction
 import com.emikhalets.mydates.mvi.MviIntent
@@ -18,9 +19,10 @@ sealed class DatesListAction : MviAction() {
 }
 
 sealed class DatesListState : MviState() {
+    object Loading : DatesListState()
     object ResultDateAdded : DatesListState()
     object ResultEmptyList : DatesListState()
-    data class ResultDateUpdated(val data: List<DateItem>) : DatesListState()
-    data class ResultDatesList(val data: List<DateItem>) : DatesListState()
+    data class ResultDateUpdated(val data: List<GroupDateItem>) : DatesListState()
+    data class ResultDatesList(val data: List<GroupDateItem>) : DatesListState()
     data class Error(val message: String) : DatesListState()
 }

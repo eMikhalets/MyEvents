@@ -29,4 +29,8 @@
         app:tint="@color/white"
         tools:ignore="ContentDescription" />
 
+    <include
+        android:id="@+id/loader"
+        layout="@layout/layout_loader" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

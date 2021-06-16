@@ -47,10 +47,10 @@ class DateDetailsFragment :
     override fun initEvent() {
         binding.apply {
             btnSave.setOnClickListener {
-                dispatchIntent(DateDetailsIntent.ClickSaveDateItem(args.dateItem))
+                dispatchIntent(DateDetailsIntent.ClickSaveDateItem(parseDateItem(args.dateItem)))
             }
             btnDelete.setOnClickListener {
-                dispatchIntent(DateDetailsIntent.ClickDeleteDateItem(args.dateItem))
+                dispatchIntent(DateDetailsIntent.ClickDeleteDateItem(parseDateItem(args.dateItem)))
             }
             inputName.doAfterTextChanged {
                 args.dateItem.name = it.toString()
@@ -71,7 +71,7 @@ class DateDetailsFragment :
     }
 
     private fun applyNewDate(ts: Long) {
-        val dateItem = args.dateItem
+        val dateItem = parseDateItem(args.dateItem)
         dateItem.date = ts
         dateItem.computeDaysLeftAndAge()
         binding.apply {

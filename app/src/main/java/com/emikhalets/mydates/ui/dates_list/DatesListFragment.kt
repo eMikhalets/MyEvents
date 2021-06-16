@@ -1,11 +1,11 @@
 package com.emikhalets.mydates.ui.dates_list
 
-import android.util.Log
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.data.database.entities.DateItem
+import com.emikhalets.mydates.data.GroupDateItem
 import com.emikhalets.mydates.databinding.FragmentDatesListBinding
 import com.emikhalets.mydates.mvi.MviFragment
 import com.emikhalets.mydates.ui.DatesAdapter
@@ -58,25 +58,19 @@ class DatesListFragment :
     }
 
     override fun render(state: DatesListState) {
+        binding.loader.root.visibility = View.GONE
         when (state) {
+            is DatesListState.Error -> toast(state.message)
+            is DatesListState.ResultDatesList -> datesAdapter.submitList(state.data)
+            is DatesListState.ResultDateUpdated -> datesAdapter.submitList(state.data)
+            DatesListState.ResultDateAdded -> dispatchIntent(DatesListIntent.LoadDatesList)
+            DatesListState.Loading -> binding.loader.root.visibility = View.VISIBLE
             DatesListState.ResultEmptyList -> {
-            }
-            is DatesListState.ResultDatesList -> {
-                datesAdapter.submitList(state.data)
-            }
-            is DatesListState.Error -> {
-                toast(state.message)
-            }
-            DatesListState.ResultDateAdded -> {
-                dispatchIntent(DatesListIntent.LoadDatesList)
-            }
-            is DatesListState.ResultDateUpdated -> {
-                datesAdapter.submitList(state.data)
             }
         }
     }
 
-    private fun onDateClick(item: DateItem) {
+    private fun onDateClick(item: GroupDateItem) {
         val action = DatesListFragmentDirections.actionHomeToDateDetails(item)
         findNavController().navigate(action)
     }
