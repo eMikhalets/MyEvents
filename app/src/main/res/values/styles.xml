@@ -8,7 +8,7 @@
     </style>
 
     <style name="AppAddButton">
-        <item name="android:background">@drawable/back_button</item>
+        <item name="android:background">@drawable/back_button_add</item>
         <item name="android:padding">50dp</item>
     </style>
 </resources>

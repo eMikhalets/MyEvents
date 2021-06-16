@@ -16,22 +16,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/bottom_groups"
-        android:name="com.emikhalets.mydates.ui.GroupsListFragment"
-        android:label="@string/title_groups"
-        tools:layout="@layout/fragment_groups_list" />
-
-    <fragment
-        android:id="@+id/bottom_calendar"
-        android:name="com.emikhalets.mydates.ui.calendar.CalendarFragment"
-        android:label="@string/title_calendar"
-        tools:layout="@layout/fragment_calendar" >
-        <action
-            android:id="@+id/action_calendar_to_dateDetails"
-            app:destination="@id/dateDetailsFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/dateDetailsFragment"
         android:name="com.emikhalets.mydates.ui.date_details.DateDetailsFragment"
         android:label="@string/title_date_details"
