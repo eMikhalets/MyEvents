@@ -1,33 +1,40 @@
-package com.emikhalets.mydates.ui.dates_list
+package com.emikhalets.mydates.ui.events_list
 
+import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.data.GroupDateItem
-import com.emikhalets.mydates.databinding.FragmentDatesListBinding
-import com.emikhalets.mydates.mvi.MviFragment
-import com.emikhalets.mydates.ui.DatesAdapter
+import com.emikhalets.mydates.ShareVM
+import com.emikhalets.mydates.databinding.FragmentEventsListBinding
 import com.emikhalets.mydates.utils.day
 import com.emikhalets.mydates.utils.month
-import com.emikhalets.mydates.utils.startAddDateDialog
+import com.emikhalets.mydates.utils.startAddEventDialog
 import com.emikhalets.mydates.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
-class DatesListFragment :
-    MviFragment<DatesListIntent, DatesListAction, DatesListState, DatesListViewModel>(
-        R.layout.fragment_dates_list
-    ) {
+class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
-    override val binding by viewBinding(FragmentDatesListBinding::bind)
-    override val viewModel: DatesListViewModel by viewModels()
+    private val binding by viewBinding(FragmentEventsListBinding::bind)
+    private val viewModel: EventsListViewModel by viewModels()
+    private val shareVM: ShareVM by activityViewModels()
     private lateinit var datesAdapter: DatesAdapter
 
-    override fun initData() {
-        dispatchIntent(DatesListIntent.LoadDatesList)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.loadAllEvents()
+        observe()
+    }
+
+    private fun observe() {
+        viewModel.events.observe(viewLifecycleOwner) {
+            datesAdapter.submitList(it)
+        }
     }
 
     override fun initView() {
@@ -53,7 +60,7 @@ class DatesListFragment :
         }
 
         binding.btnAddDate.setOnClickListener {
-            startAddDateDialog { dispatchIntent(DatesListIntent.ClickAddDateItem(it)) }
+            startAddEventDialog { dispatchIntent(DatesListIntent.ClickAddDateItem(it)) }
         }
     }
 

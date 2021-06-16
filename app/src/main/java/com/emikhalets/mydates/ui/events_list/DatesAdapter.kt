@@ -1,4 +1,4 @@
-package com.emikhalets.mydates.ui
+package com.emikhalets.mydates.ui.events_list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.data.GroupDateItem
 import com.emikhalets.mydates.databinding.ItemDateBinding
 import com.emikhalets.mydates.databinding.ItemDateDividerBinding
-import com.emikhalets.mydates.utils.dateFormat
 
 class DatesAdapter(private val click: (GroupDateItem) -> Unit) :
     ListAdapter<GroupDateItem, RecyclerView.ViewHolder>(DatesDiffCallback()) {

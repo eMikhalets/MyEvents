@@ -2,7 +2,7 @@ package com.emikhalets.mydates.di
 
 import android.content.Context
 import com.emikhalets.mydates.data.database.AppDatabase
-import com.emikhalets.mydates.data.database.dao.DatesDao
+import com.emikhalets.mydates.data.database.dao.EventDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,5 +21,5 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun providesDatesDao(database: AppDatabase): DatesDao = database.datesDao
+    fun providesDatesDao(database: AppDatabase): EventDao = database.eventDao
 }

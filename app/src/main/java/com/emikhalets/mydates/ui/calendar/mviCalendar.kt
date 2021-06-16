@@ -1,6 +1,6 @@
 package com.emikhalets.mydates.ui.calendar
 
-import com.emikhalets.mydates.data.database.entities.DateItem
+import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.mvi.MviAction
 import com.emikhalets.mydates.mvi.MviIntent
 import com.emikhalets.mydates.mvi.MviState
@@ -17,7 +17,7 @@ sealed class CalendarAction : MviAction() {
 
 sealed class CalendarState : MviState() {
     object ResultEmptyList : CalendarState()
-    data class ResultDatesByDate(val data: List<DateItem>) : CalendarState()
-    data class ResultAllDatesList(val data: List<DateItem>) : CalendarState()
+    data class ResultDatesByDate(val data: List<Event>) : CalendarState()
+    data class ResultAllDatesList(val data: List<Event>) : CalendarState()
     data class Error(val message: String) : CalendarState()
 }

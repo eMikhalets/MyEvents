@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ShareViewModel @Inject constructor() : ViewModel() {
+class ShareVM @Inject constructor() : ViewModel() {
 
     private var bottomBtnClickFlag = false
 

@@ -1,21 +1,20 @@
-package com.emikhalets.mydates.ui.date_details
+package com.emikhalets.mydates.ui.add_event
 
+import androidx.lifecycle.ViewModel
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.repositories.RoomRepository
-import com.emikhalets.mydates.mvi.MviViewModel
-import com.emikhalets.mydates.utils.calculateParameters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DateDetailsViewModel @Inject constructor(
+class AddBirthdayVM @Inject constructor(
     private val repository: RoomRepository
-) : MviViewModel<DateDetailsIntent, DateDetailsAction, DateDetailsState>() {
+) : ViewModel() {
 
     override fun intentToAction(intent: DateDetailsIntent): DateDetailsAction {
         return when (intent) {
-            is DateDetailsIntent.ClickDeleteDateItem -> DateDetailsAction.DeleteDateItem(intent.event)
-            is DateDetailsIntent.ClickSaveDateItem -> DateDetailsAction.UpdateDateItem(intent.event)
+            is DateDetailsIntent.ClickDeleteDateItem -> DateDetailsAction.DeleteDateItem(intent.dateItem)
+            is DateDetailsIntent.ClickSaveDateItem -> DateDetailsAction.UpdateDateItem(intent.dateItem)
         }
     }
 
@@ -23,12 +22,12 @@ class DateDetailsViewModel @Inject constructor(
         launch {
             when (action) {
                 is DateDetailsAction.DeleteDateItem -> {
-                    val result = repository.deleteEvent(action.event)
+                    val result = repository.deleteEvent(action.dateItem)
                     state.postValue(result.reduceDeleting())
                 }
                 is DateDetailsAction.UpdateDateItem -> {
-                    action.event.calculateParameters()
-                    val result = repository.updateEvent(action.event)
+                    action.dateItem.computeDaysLeftAndAge()
+                    val result = repository.updateEvent(action.dateItem)
                     state.postValue(result.reduceUpdating())
                 }
             }

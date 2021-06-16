@@ -73,7 +73,7 @@ class DateDetailsFragment :
     private fun applyNewDate(ts: Long) {
         val dateItem = parseDateItem(args.dateItem)
         dateItem.date = ts
-        dateItem.computeDaysLeftAndAge()
+        dateItem.calculateParameters()
         binding.apply {
             inputDate.setText(ts.dateFormat("d MMMM YYYY"))
             if (dateItem.daysLeft == 0) textDaysLeft.text = getString(

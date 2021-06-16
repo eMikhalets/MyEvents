@@ -3,40 +3,33 @@ package com.emikhalets.mydates.data.repositories
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.SingleResult
-import com.emikhalets.mydates.data.database.dao.DatesDao
-import com.emikhalets.mydates.data.database.entities.DateItem
-import com.emikhalets.mydates.utils.computeDaysLeftAndAgeReturn
+import com.emikhalets.mydates.data.database.dao.EventDao
+import com.emikhalets.mydates.data.database.entities.Event
+import com.emikhalets.mydates.utils.sortWithDividers
 import javax.inject.Inject
 
 class RoomRepository @Inject constructor(
-    private val datesDao: DatesDao
+    private val eventDao: EventDao
 ) : DatabaseRepository {
 
-    override suspend fun getAllDates(): ListResult<List<DateItem>> {
+    override suspend fun getAllEvents(): ListResult<List<Event>> {
         return try {
-            val result = datesDao.getAll()
-            if (result.isEmpty()) ListResult.EmptyList
-            else ListResult.Success(result.sortedBy { it.daysLeft })
+            val result = eventDao.getAll()
+            if (result.isEmpty()) {
+                ListResult.EmptyList
+            } else {
+                val events = sortWithDividers(result)
+                ListResult.Success(events)
+            }
         } catch (ex: Exception) {
             ex.printStackTrace()
             ListResult.Error(ex)
         }
     }
 
-    override suspend fun getItemsByDayMonth(day: Int, month: Int): ListResult<List<DateItem>> {
+    override suspend fun getEventById(id: Long): SingleResult<Event> {
         return try {
-            val result = datesDao.getItemsByDayMonth(day, month)
-            if (result.isEmpty()) ListResult.EmptyList
-            else ListResult.Success(result.sortedBy { it.name })
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            ListResult.Error(ex)
-        }
-    }
-
-    override suspend fun getDateById(id: Long): SingleResult<DateItem> {
-        return try {
-            val result = datesDao.getItem(id)
+            val result = eventDao.getItem(id)
             SingleResult.Success(result)
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -44,9 +37,9 @@ class RoomRepository @Inject constructor(
         }
     }
 
-    override suspend fun insertDate(dateItem: DateItem): CompleteResult<Nothing> {
+    override suspend fun insertEvent(event: Event): CompleteResult<Nothing> {
         return try {
-            datesDao.insert(dateItem)
+            eventDao.insert(event)
             CompleteResult.Complete
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -54,12 +47,13 @@ class RoomRepository @Inject constructor(
         }
     }
 
-    override suspend fun updateAllDates(): ListResult<List<DateItem>> {
+    // TODO: remove?
+    override suspend fun updateEvents(): ListResult<List<Event>> {
         return try {
-            val list = datesDao.getAll()
-            val newList = mutableListOf<DateItem>()
-            list.forEach { newList.add(it.computeDaysLeftAndAgeReturn()) }
-            datesDao.updateAll(newList)
+            val list = eventDao.getAll()
+            val newList = mutableListOf<Event>()
+//            list.forEach { newList.add(it.computeDaysLeftAndAgeReturn()) }
+            eventDao.updateAll(newList)
             ListResult.Success(newList.sortedBy { it.daysLeft })
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -67,9 +61,9 @@ class RoomRepository @Inject constructor(
         }
     }
 
-    override suspend fun updateDate(dateItem: DateItem): CompleteResult<Nothing> {
+    override suspend fun updateEvent(event: Event): CompleteResult<Nothing> {
         return try {
-            datesDao.update(dateItem)
+            eventDao.update(event)
             CompleteResult.Complete
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -77,9 +71,9 @@ class RoomRepository @Inject constructor(
         }
     }
 
-    override suspend fun deleteDate(dateItem: DateItem): CompleteResult<Nothing> {
+    override suspend fun deleteEvent(event: Event): CompleteResult<Nothing> {
         return try {
-            datesDao.delete(dateItem)
+            eventDao.delete(event)
             CompleteResult.Complete
         } catch (ex: Exception) {
             ex.printStackTrace()

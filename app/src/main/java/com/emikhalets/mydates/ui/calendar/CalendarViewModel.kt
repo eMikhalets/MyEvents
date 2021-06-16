@@ -1,7 +1,7 @@
 package com.emikhalets.mydates.ui.calendar
 
 import com.emikhalets.mydates.data.database.ListResult
-import com.emikhalets.mydates.data.database.entities.DateItem
+import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.RoomRepository
 import com.emikhalets.mydates.mvi.MviViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +26,7 @@ class CalendarViewModel @Inject constructor(
         launch {
             when (action) {
                 CalendarAction.GetAllDates -> {
-                    val result = repository.getAllDates()
+                    val result = repository.getAllEvents()
                     state.postValue(result.reduceAllDates())
                 }
                 is CalendarAction.GetDatesByDayMonth -> {
@@ -37,7 +37,7 @@ class CalendarViewModel @Inject constructor(
         }
     }
 
-    private fun ListResult<List<DateItem>>.reduceAllDates(): CalendarState {
+    private fun ListResult<List<Event>>.reduceAllDates(): CalendarState {
         return when (this) {
             ListResult.EmptyList -> CalendarState.ResultEmptyList
             is ListResult.Success -> CalendarState.ResultAllDatesList(data)
@@ -45,7 +45,7 @@ class CalendarViewModel @Inject constructor(
         }
     }
 
-    private fun ListResult<List<DateItem>>.reduceDatesByDate(): CalendarState {
+    private fun ListResult<List<Event>>.reduceDatesByDate(): CalendarState {
         return when (this) {
             ListResult.EmptyList -> CalendarState.ResultEmptyList
             is ListResult.Success -> CalendarState.ResultDatesByDate(data)

@@ -3,15 +3,14 @@ package com.emikhalets.mydates.data.repositories
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.SingleResult
-import com.emikhalets.mydates.data.database.entities.DateItem
+import com.emikhalets.mydates.data.database.entities.Event
 
 interface DatabaseRepository {
 
-    suspend fun getAllDates(): ListResult<List<DateItem>>
-    suspend fun getItemsByDayMonth(day: Int, month: Int): ListResult<List<DateItem>>
-    suspend fun getDateById(id: Long): SingleResult<DateItem>
-    suspend fun insertDate(dateItem: DateItem): CompleteResult<Nothing>
-    suspend fun updateAllDates(): ListResult<List<DateItem>>
-    suspend fun updateDate(dateItem: DateItem): CompleteResult<Nothing>
-    suspend fun deleteDate(dateItem: DateItem): CompleteResult<Nothing>
+    suspend fun getAllEvents(): ListResult<List<Event>>
+    suspend fun getEventById(id: Long): SingleResult<Event>
+    suspend fun insertEvent(event: Event): CompleteResult<Nothing>
+    suspend fun updateEvents(): ListResult<List<Event>>
+    suspend fun updateEvent(event: Event): CompleteResult<Nothing>
+    suspend fun deleteEvent(event: Event): CompleteResult<Nothing>
 }

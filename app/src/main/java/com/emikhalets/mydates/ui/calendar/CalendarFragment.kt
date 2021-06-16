@@ -5,10 +5,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.data.GroupDateItem
 import com.emikhalets.mydates.databinding.FragmentCalendarBinding
 import com.emikhalets.mydates.mvi.MviFragment
-import com.emikhalets.mydates.ui.DatesAdapter
+import com.emikhalets.mydates.ui.events_list.DatesAdapter
 import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DateFormatSymbols

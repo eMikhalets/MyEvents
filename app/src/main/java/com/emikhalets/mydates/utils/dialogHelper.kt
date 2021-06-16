@@ -1,43 +1,21 @@
 package com.emikhalets.mydates.utils
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
-import com.emikhalets.mydates.data.database.entities.DateItem
-import com.emikhalets.mydates.databinding.DialogAddDateBinding
+import com.emikhalets.mydates.databinding.DialogAddEventBinding
 import com.emikhalets.mydates.databinding.DialogDatePickerBinding
 import java.util.*
 
-@SuppressLint("ClickableViewAccessibility")
-inline fun Fragment.startAddDateDialog(crossinline callback: (DateItem) -> Unit) {
+inline fun Fragment.startAddEventDialog(crossinline callback: (EventType) -> Unit) {
     val dialog = Dialog(requireContext())
-    val binding = DialogAddDateBinding.inflate(LayoutInflater.from(context))
+    val binding = DialogAddEventBinding.inflate(LayoutInflater.from(context))
     dialog.setContentView(binding.root)
 
-    var name = ""
-    var date = Calendar.getInstance().timeInMillis
-    val dateItem = DateItem(name)
-
     binding.apply {
-        inputDate.setText(date.dateFormat("d MMMM YYYY"))
-        inputDate.setOnDrawableEndClick {
-            startDatePickerDialog(requireContext(), date) {
-                date = it
-                inputDate.setText(it.dateFormat("d MMMM YYYY"))
-            }
-        }
-
-        btnAdd.setOnClickListener {
-            name = inputName.text.toString()
-            if (name.isNotEmpty()) {
-                dateItem.name = name
-                dateItem.date = date
-                callback.invoke(dateItem)
-                dialog.dismiss()
-            }
-        }
+        cardBirthday.setOnClickListener { callback.invoke(EventType.BIRTHDAY) }
+        cardAnniversary.setOnClickListener { callback.invoke(EventType.ANNIVERSARY) }
     }
 
     dialog.show()

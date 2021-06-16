@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/bottom_home"
-        android:name="com.emikhalets.mydates.ui.dates_list.DatesListFragment"
+        android:name="com.emikhalets.mydates.ui.events_list.EventsListFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_dates_list" >
+        tools:layout="@layout/fragment_events_list" >
         <action
             android:id="@+id/action_home_to_dateDetails"
             app:destination="@id/dateDetailsFragment" />
