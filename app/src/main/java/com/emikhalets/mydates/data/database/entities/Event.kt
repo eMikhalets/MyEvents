@@ -37,10 +37,10 @@ data class Event(
             this(0, "", "", "", 0, 0, month, 0, "", "")
 
     @Ignore
-    constructor(name: String) :
-            this(0, name, "", "", 0, 0, 0, EventType.ANNIVERSARY.value, "", "")
+    constructor(name: String, date: Long) :
+            this(0, name, "", "", date, 0, 0, EventType.ANNIVERSARY.value, "", "")
 
     @Ignore
-    constructor(name: String, lastName: String, middleName: String) :
-            this(0, name, lastName, middleName, 0, 0, 0, EventType.BIRTHDAY.value, "", "")
+    constructor(name: String, lastName: String, middleName: String, date: Long) :
+            this(0, name, lastName, middleName, date, 0, 0, EventType.BIRTHDAY.value, "", "")
 }

@@ -35,9 +35,11 @@ fun Long.dateFormat(pattern: String): String {
     }
 }
 
-fun Fragment.toast(message: String) {
+fun Fragment.toast(resource: Int) =
+    Toast.makeText(requireContext(), resource, Toast.LENGTH_SHORT).show()
+
+fun Fragment.toast(message: String) =
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-}
 
 fun Calendar.day() = this.get(Calendar.DAY_OF_MONTH)
 fun Calendar.dayOfYear() = this.get(Calendar.DAY_OF_YEAR)

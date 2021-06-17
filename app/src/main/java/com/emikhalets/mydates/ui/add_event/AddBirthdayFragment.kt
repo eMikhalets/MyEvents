@@ -1,43 +1,64 @@
 package com.emikhalets.mydates.ui.add_event
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.ShareVM
-import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentAddBirthdayBinding
-import com.emikhalets.mydates.utils.dateFormat
-import com.emikhalets.mydates.utils.startDatePickerDialog
+import com.emikhalets.mydates.utils.*
 import java.util.*
 
 class AddBirthdayFragment : Fragment(R.layout.fragment_add_birthday) {
 
     private val binding by viewBinding(FragmentAddBirthdayBinding::bind)
-    private val viewModel: AddBirthdayVM by viewModels()
+    private val viewModel: AddEventVM by viewModels()
     private val shareVM: ShareVM by activityViewModels()
 
-    var name = ""
-    var date = Calendar.getInstance().timeInMillis
-    val dateItem = Event(name)
+    private var date = 0L
 
-    inputDate.setText(date.dateFormat("d MMMM YYYY"))
-    inputDate.setOnDrawableEndClick
-    {
-        startDatePickerDialog(requireContext(), date) {
-            date = it
-            inputDate.setText(it.dateFormat("d MMMM YYYY"))
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        shareVM.setBottomBtnIcon(BottomBtnIcon.DONE)
+        prepareEventData()
+        clickListeners()
+        observe()
+    }
 
-        btnAdd.setOnClickListener {
-            name = inputName.text.toString()
-            if (name.isNotEmpty()) {
-                dateItem.name = name
-                dateItem.date = date
-                callback.invoke(dateItem)
-                dialog.dismiss()
+    private fun prepareEventData() {
+        date = Calendar.getInstance().timeInMillis
+        binding.inputDate.setText(date.dateFormat("d MMMM YYYY"))
+    }
+
+    private fun clickListeners() {
+        binding.inputDate.setOnDrawableEndClick {
+            startDatePickerDialog(date) { ts ->
+                binding.inputDate.setText(ts.dateFormat("d MMMM YYYY"))
             }
         }
+    }
+
+    private fun observe() {
+        viewModel.eventAdd.observe(viewLifecycleOwner) { navigateBack() }
+        shareVM.bottomBtnClick.observe(viewLifecycleOwner) {
+            if (validateFields()) {
+                viewModel.addNewBirthday(
+                    binding.inputName.text.toString(),
+                    binding.inputLastname.text.toString(),
+                    binding.inputMiddleName.text.toString(),
+                    date
+                )
+            } else {
+                toast(R.string.fields_empty)
+            }
+        }
+    }
+
+    private fun validateFields(): Boolean {
+        return binding.inputName.text.toString().isNotEmpty() &&
+                binding.inputLastname.text.toString().isNotEmpty()
     }
 }

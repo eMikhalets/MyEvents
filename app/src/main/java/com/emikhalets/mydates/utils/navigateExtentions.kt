@@ -4,6 +4,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.emikhalets.mydates.ui.events_list.EventsListFragmentDirections
 
+fun Fragment.navigateBack() {
+    findNavController().popBackStack()
+}
+
 fun Fragment.navigateToAddAnniversary() {
     val action = EventsListFragmentDirections.actionEventsToAddAnniversary()
     findNavController().navigate(action)
