@@ -1,4 +1,4 @@
-package com.emikhalets.mydates.ui.date_details
+package com.emikhalets.mydates.ui.event_details
 
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.mvi.MviAction

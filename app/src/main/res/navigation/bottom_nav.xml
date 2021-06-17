@@ -17,9 +17,9 @@
 
     <fragment
         android:id="@+id/dateDetailsFragment"
-        android:name="com.emikhalets.mydates.ui.date_details.DateDetailsFragment"
+        android:name="com.emikhalets.mydates.ui.event_details.DateDetailsFragment"
         android:label="@string/title_date_details"
-        tools:layout="@layout/fragment_date_details" >
+        tools:layout="@layout/fragment_birthday_details" >
         <argument
             android:name="dateItem"
             app:argType="com.emikhalets.mydates.data.GroupDateItem" />

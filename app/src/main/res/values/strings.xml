@@ -8,12 +8,13 @@
     <string name="title_some">Some</string>
     <string name="title_calendar">Calendar</string>
 
-    <string name="dates_list_today">Today</string>
-    <string name="dates_list_item_info">Birthday %s</string>
-    <plurals name="dates_list_age">
+    <string name="today">Today</string>
+    <string name="birthday_date">Birthday %s</string>
+    <string name="anniversary_date">Anniversary %s</string>
+    <plurals name="age">
         <item quantity="other">(%d years)</item>
     </plurals>
-    <plurals name="dates_list_days_left">
+    <plurals name="days_left">
         <item quantity="one">After %d day</item>
         <item quantity="few">After %d days</item>
         <item quantity="many">After %d days</item>
@@ -42,19 +43,19 @@
     <string name="add_anniversary_hint_date">31 december 1999</string>
     <string name="add_anniversary_text_year">I don\'t remember the year</string>
 
-    <string name="date_details_today">Today</string>
-    <string name="date_details_info">Birthday %s</string>
-    <string name="date_details_text_delete">Delete</string>
-    <string name="date_details_text_save">Save</string>
-    <plurals name="date_details_days_left">
-        <item quantity="one">After %d day</item>
-        <item quantity="few">After %d days</item>
-        <item quantity="many">After %d days</item>
-        <item quantity="other">Error</item>
-    </plurals>
-    <plurals name="date_details_age">
-        <item quantity="other">Will be %d years old</item>
-    </plurals>
+    <string name="event_details_text_edit">Edit data</string>
+    <string name="event_details_text_notes">Notes</string>
+    <string name="event_details_hint_notes">Enter notes</string>
+    <string name="event_details_text_name">Name</string>
+    <string name="event_details_hint_name">Enter name</string>
+    <string name="event_details_text_lastname">Last name</string>
+    <string name="event_details_hint_lastname">Enter last name</string>
+    <string name="event_details_text_middle_name">Middle name</string>
+    <string name="event_details_hint_middle_name">Enter middle name</string>
+    <string name="event_details_text_date">Date</string>
+    <string name="event_details_hint_date">31 december 1999</string>
+    <string name="event_details_text_delete">Delete</string>
+    <string name="event_details_text_save">Save</string>
 
     <string name="calendar_text_no_saved_dates">No saved dates</string>
     <string name="calendar_date" translatable="false">%d %s</string>

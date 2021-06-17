@@ -23,7 +23,7 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
     private val binding by viewBinding(FragmentEventsListBinding::bind)
     private val viewModel: EventsListViewModel by viewModels()
     private val shareVM: ShareVM by activityViewModels()
-    private lateinit var datesAdapter: DatesAdapter
+    private lateinit var eventsAdapter: EventsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,15 +33,15 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     private fun observe() {
         viewModel.events.observe(viewLifecycleOwner) {
-            datesAdapter.submitList(it)
+            eventsAdapter.submitList(it)
         }
     }
 
     override fun initView() {
-        datesAdapter = DatesAdapter { onDateClick(it) }
+        eventsAdapter = EventsAdapter { onDateClick(it) }
         binding.listDates.apply {
             setHasFixedSize(true)
-            adapter = datesAdapter
+            adapter = eventsAdapter
         }
     }
 
@@ -68,8 +68,8 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
         binding.loader.root.visibility = View.GONE
         when (state) {
             is DatesListState.Error -> toast(state.message)
-            is DatesListState.ResultDatesList -> datesAdapter.submitList(state.data)
-            is DatesListState.ResultDateUpdated -> datesAdapter.submitList(state.data)
+            is DatesListState.ResultDatesList -> eventsAdapter.submitList(state.data)
+            is DatesListState.ResultDateUpdated -> eventsAdapter.submitList(state.data)
             DatesListState.ResultDateAdded -> dispatchIntent(DatesListIntent.LoadDatesList)
             DatesListState.Loading -> binding.loader.root.visibility = View.VISIBLE
             DatesListState.ResultEmptyList -> {

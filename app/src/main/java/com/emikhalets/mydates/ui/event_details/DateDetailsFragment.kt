@@ -1,6 +1,5 @@
-package com.emikhalets.mydates.ui.date_details
+package com.emikhalets.mydates.ui.event_details
 
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DateDetailsFragment :
     MviFragment<DateDetailsIntent, DateDetailsAction, DateDetailsState, DateDetailsViewModel>(
-        R.layout.fragment_date_details
+        R.layout.fragment_birthday_details
     ) {
 
     override val binding by viewBinding(FragmentDateDetailsBinding::bind)
@@ -26,17 +25,17 @@ class DateDetailsFragment :
         binding.apply {
             textName.text = dateItem.name
             textInfo.text = getString(
-                R.string.date_details_info,
+                R.string.event_details_info,
                 dateItem.date.dateFormat("d MMMM")
             )
             textAge.text = resources.getQuantityString(
-                R.plurals.date_details_age, dateItem.age, dateItem.age
+                R.plurals.event_details_age, dateItem.age, dateItem.age
             )
             inputName.setText(dateItem.name)
             inputDate.setText(dateItem.date.dateFormat("d MMMM YYYY"))
-            if (dateItem.daysLeft == 0) textDaysLeft.text = getString(R.string.date_details_today)
+            if (dateItem.daysLeft == 0) textDaysLeft.text = getString(R.string.event_details_today)
             else textDaysLeft.text = resources.getQuantityString(
-                R.plurals.date_details_days_left, dateItem.daysLeft, dateItem.daysLeft
+                R.plurals.event_details_days_left, dateItem.daysLeft, dateItem.daysLeft
             )
         }
     }
@@ -77,13 +76,13 @@ class DateDetailsFragment :
         binding.apply {
             inputDate.setText(ts.dateFormat("d MMMM YYYY"))
             if (dateItem.daysLeft == 0) textDaysLeft.text = getString(
-                R.string.date_details_today
+                R.string.event_details_today
             )
             else textDaysLeft.text = resources.getQuantityString(
-                R.plurals.date_details_days_left, dateItem.daysLeft, dateItem.daysLeft
+                R.plurals.event_details_days_left, dateItem.daysLeft, dateItem.daysLeft
             )
             textAge.text = resources.getQuantityString(
-                R.plurals.date_details_age, dateItem.age, dateItem.age
+                R.plurals.event_details_age, dateItem.age, dateItem.age
             )
             btnSave.isEnabled = true
         }

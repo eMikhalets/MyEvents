@@ -7,7 +7,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentCalendarBinding
 import com.emikhalets.mydates.mvi.MviFragment
-import com.emikhalets.mydates.ui.events_list.DatesAdapter
+import com.emikhalets.mydates.ui.events_list.EventsAdapter
 import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DateFormatSymbols
@@ -21,17 +21,17 @@ class CalendarFragment :
 
     override val binding by viewBinding(FragmentCalendarBinding::bind)
     override val viewModel: CalendarViewModel by viewModels()
-    private lateinit var datesAdapter: DatesAdapter
+    private lateinit var eventsAdapter: EventsAdapter
 
     override fun initData() {
         dispatchIntent(CalendarIntent.LoadAllDates)
     }
 
     override fun initView() {
-        datesAdapter = DatesAdapter { onDateClick(it) }
+        eventsAdapter = EventsAdapter { onDateClick(it) }
         binding.listDates.apply {
             setHasFixedSize(true)
-            adapter = datesAdapter
+            adapter = eventsAdapter
         }
     }
 
@@ -59,7 +59,7 @@ class CalendarFragment :
                 // TODO: add dots in calendar, if day has dateItems
             }
             is CalendarState.ResultDatesByDate -> {
-                datesAdapter.submitList(groupDateItemList(state.data))
+                eventsAdapter.submitList(groupDateItemList(state.data))
                 binding.textNoDates.visibility = View.GONE
                 binding.textDate.visibility = View.VISIBLE
                 binding.listDates.visibility = View.VISIBLE

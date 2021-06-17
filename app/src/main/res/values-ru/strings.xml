@@ -8,15 +8,16 @@
     <string name="title_some">Some</string>
     <string name="title_calendar">Календарь</string>
 
-    <string name="dates_list_today">Сегодня</string>
-    <string name="dates_list_item_info">День рождения %s</string>
-    <plurals name="dates_list_age">
+    <string name="today">Сегодня</string>
+    <string name="birthday_date">День рождения %s</string>
+    <string name="anniversary_date">Годовщина %s</string>
+    <plurals name="age">
         <item quantity="one">(%d год)</item>
         <item quantity="few">(%d года)</item>
         <item quantity="many">(%d лет)</item>
         <item quantity="other">Error</item>
     </plurals>
-    <plurals name="dates_list_days_left">
+    <plurals name="days_left">
         <item quantity="one">Через %d день</item>
         <item quantity="few">Через %d дня</item>
         <item quantity="many">Через %d дней</item>
@@ -45,22 +46,19 @@
     <string name="add_anniversary_hint_date">31 декабря 1999</string>
     <string name="add_anniversary_text_year">Я не помню год</string>
 
-    <string name="date_details_today">Сегодня</string>
-    <string name="date_details_text_delete">Удалить</string>
-    <string name="date_details_text_save">Сохранить</string>
-    <string name="date_details_info">День рождения %s</string>
-    <plurals name="date_details_days_left">
-        <item quantity="one">Через %d день</item>
-        <item quantity="few">Через %d дня</item>
-        <item quantity="many">Через %d дней</item>
-        <item quantity="other">Error</item>
-    </plurals>
-    <plurals name="date_details_age">
-        <item quantity="one">Исполнится %d год</item>
-        <item quantity="few">Исполнится %d года</item>
-        <item quantity="many">Исполнится %d лет</item>
-        <item quantity="other">Error</item>
-    </plurals>
+    <string name="event_details_text_edit">Редактирование данных</string>
+    <string name="event_details_text_notes">Заметки</string>
+    <string name="event_details_hint_notes">Введите заметки</string>
+    <string name="event_details_text_name">Имя</string>
+    <string name="event_details_hint_name">Введите имя</string>
+    <string name="event_details_text_lastname">Фамилия</string>
+    <string name="event_details_hint_lastname">Введите фамилию</string>
+    <string name="event_details_text_middle_name">Отчество</string>
+    <string name="event_details_hint_middle_name">Введите отчество</string>
+    <string name="event_details_text_date">Дата</string>
+    <string name="event_details_hint_date">31 декабря 1999</string>
+    <string name="event_details_text_delete">Удалить</string>
+    <string name="event_details_text_save">Сохранить</string>
 
     <string name="calendar_text_no_saved_dates">Нет сохраненных дат</string>
 </resources>
