@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EventsListViewModel @Inject constructor(
+class EventsListVM @Inject constructor(
     private val repository: RoomRepository
 ) : ViewModel() {
 

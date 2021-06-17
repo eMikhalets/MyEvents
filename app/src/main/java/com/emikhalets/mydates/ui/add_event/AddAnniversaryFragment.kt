@@ -50,7 +50,11 @@ class AddAnniversaryFragment : Fragment(R.layout.fragment_add_anniversary) {
         viewModel.eventAdd.observe(viewLifecycleOwner) { navigateBack() }
         shareVM.bottomBtnClick.observe(viewLifecycleOwner) {
             if (validateFields()) {
-                viewModel.addNewAnniversary(binding.inputName.text.toString(), date)
+                viewModel.addNewAnniversary(
+                    binding.inputName.text.toString(),
+                    date,
+                    binding.checkYear.isChecked
+                )
             } else {
                 toast(R.string.fields_empty)
             }

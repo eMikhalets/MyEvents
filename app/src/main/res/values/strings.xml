@@ -12,6 +12,7 @@
     <string name="birthday_date">Birthday %s</string>
     <string name="anniversary_date">Anniversary %s</string>
     <string name="fields_empty">Name and date required</string>
+    <string name="event_saved">Date saved!</string>
     <plurals name="age">
         <item quantity="other">(%d years)</item>
     </plurals>

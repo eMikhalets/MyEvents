@@ -23,12 +23,18 @@ class AddEventVM @Inject constructor(
     private val _error = MutableLiveData<String>()
     val error get(): LiveData<String> = _error
 
-    fun addNewAnniversary(name: String, date: Long) {
-        addNewEvent(Event(name, date))
+    fun addNewAnniversary(name: String, date: Long, withoutYear: Boolean) {
+        addNewEvent(Event(name, date, withoutYear))
     }
 
-    fun addNewBirthday(name: String, lastname: String, middleName: String, date: Long) {
-        addNewEvent(Event(name, lastname, middleName, date))
+    fun addNewBirthday(
+        name: String,
+        lastname: String,
+        middleName: String,
+        date: Long,
+        withoutYear: Boolean
+    ) {
+        addNewEvent(Event(name, lastname, middleName, date, withoutYear))
     }
 
     private fun addNewEvent(event: Event) {

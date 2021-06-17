@@ -161,6 +161,18 @@
             app:layout_constraintTop_toBottomOf="@+id/text_date"
             tools:ignore="Autofill,TextFields" />
 
+        <CheckBox
+            android:id="@+id/check_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/add_anniversary_text_year"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_date" />
+
         <Button
             android:id="@+id/btn_delete"
             style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -174,7 +186,7 @@
             app:iconTint="@color/pink"
             app:layout_constraintEnd_toStartOf="@id/btn_save"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/input_date" />
+            app:layout_constraintTop_toBottomOf="@+id/check_year" />
 
         <Button
             android:id="@+id/btn_save"
@@ -190,7 +202,7 @@
             app:iconTint="@color/orange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_delete"
-            app:layout_constraintTop_toBottomOf="@+id/input_date" />
+            app:layout_constraintTop_toBottomOf="@+id/check_year" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

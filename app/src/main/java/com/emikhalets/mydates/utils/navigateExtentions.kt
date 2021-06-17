@@ -2,6 +2,7 @@ package com.emikhalets.mydates.utils
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.ui.events_list.EventsListFragmentDirections
 
 fun Fragment.navigateBack() {
@@ -18,12 +19,12 @@ fun Fragment.navigateToAddBirthday() {
     findNavController().navigate(action)
 }
 
-fun Fragment.navigateToAnniversaryDetails() {
-    val action = EventsListFragmentDirections.actionEventsToAnniversaryDetails()
+fun Fragment.navigateToAnniversaryDetails(event: Event) {
+    val action = EventsListFragmentDirections.actionEventsToAnniversaryDetails(event)
     findNavController().navigate(action)
 }
 
-fun Fragment.navigateToBirthdayDetails() {
-    val action = EventsListFragmentDirections.actionEventsToBirthdayDetails()
+fun Fragment.navigateToBirthdayDetails(event: Event) {
+    val action = EventsListFragmentDirections.actionEventsToBirthdayDetails(event)
     findNavController().navigate(action)
 }

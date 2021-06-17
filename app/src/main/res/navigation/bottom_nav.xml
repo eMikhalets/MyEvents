@@ -9,7 +9,7 @@
         android:id="@+id/bottom_home"
         android:name="com.emikhalets.mydates.ui.events_list.EventsListFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_events_list" >
+        tools:layout="@layout/fragment_events_list">
         <action
             android:id="@+id/action_events_to_addAnniversary"
             app:destination="@id/addAnniversaryFragment" />
@@ -35,13 +35,25 @@
         android:name="com.emikhalets.mydates.ui.add_event.AddAnniversaryFragment"
         android:label="AddAnniversaryFragment"
         tools:layout="@layout/fragment_add_anniversary" />
+
     <fragment
         android:id="@+id/anniversaryDetailsFragment"
         android:name="com.emikhalets.mydates.ui.event_details.AnniversaryDetailsFragment"
-        android:label="AnniversaryDetailsFragment" />
+        android:label="AnniversaryDetailsFragment"
+        tools:layout="@layout/fragment_anniversary_details">
+        <argument
+            android:name="event"
+            app:argType="com.emikhalets.mydates.data.database.entities.Event" />
+    </fragment>
+
     <fragment
         android:id="@+id/birthdayDetailsFragment"
         android:name="com.emikhalets.mydates.ui.event_details.BirthdayDetailsFragment"
-        android:label="BirthdayDetailsFragment" />
+        android:label="BirthdayDetailsFragment"
+        tools:layout="@layout/fragment_birthday_details">
+        <argument
+            android:name="event"
+            app:argType="com.emikhalets.mydates.data.database.entities.Event" />
+    </fragment>
 
 </navigation>

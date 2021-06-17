@@ -20,7 +20,8 @@ data class Event(
     @ColumnInfo(name = "age") var age: Int,
     @ColumnInfo(name = "event_type") var eventType: Int,
     @ColumnInfo(name = "group") var group: String,
-    @ColumnInfo(name = "notes") var notes: String
+    @ColumnInfo(name = "notes") var notes: String,
+    @ColumnInfo(name = "without_year") var withoutYear: Boolean
 ) : Parcelable {
 
     fun fullName(): String {
@@ -33,14 +34,59 @@ data class Event(
     }
 
     @Ignore
-    constructor(month: Int) :
-            this(0, "", "", "", 0, 0, month, 0, "", "")
+    constructor(
+        month: Int
+    ) : this(
+        0,
+        "",
+        "",
+        "",
+        0,
+        0,
+        month,
+        0,
+        "",
+        "",
+        false
+    )
 
     @Ignore
-    constructor(name: String, date: Long) :
-            this(0, name, "", "", date, 0, 0, EventType.ANNIVERSARY.value, "", "")
+    constructor(
+        name: String,
+        date: Long,
+        withoutYear: Boolean
+    ) : this(
+        0,
+        name,
+        "",
+        "",
+        date,
+        0,
+        0,
+        EventType.ANNIVERSARY.value,
+        "",
+        "",
+        withoutYear
+    )
 
     @Ignore
-    constructor(name: String, lastName: String, middleName: String, date: Long) :
-            this(0, name, lastName, middleName, date, 0, 0, EventType.BIRTHDAY.value, "", "")
+    constructor(
+        name: String,
+        lastName: String,
+        middleName: String,
+        date: Long,
+        withoutYear: Boolean
+    ) : this(
+        0,
+        name,
+        lastName,
+        middleName,
+        date,
+        0,
+        0,
+        EventType.BIRTHDAY.value,
+        "",
+        "",
+        withoutYear
+    )
 }

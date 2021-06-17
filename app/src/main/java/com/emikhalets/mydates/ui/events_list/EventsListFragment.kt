@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     private val binding by viewBinding(FragmentEventsListBinding::bind)
-    private val viewModel: EventsListViewModel by viewModels()
+    private val viewModel: EventsListVM by viewModels()
     private val shareVM: ShareVM by activityViewModels()
     private lateinit var eventsAdapter: EventsAdapter
 
@@ -59,8 +59,8 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     private fun onDateClick(item: Event) {
         when (item.eventType) {
-            EventType.ANNIVERSARY.value -> navigateToAnniversaryDetails()
-            EventType.BIRTHDAY.value -> navigateToBirthdayDetails()
+            EventType.ANNIVERSARY.value -> navigateToAnniversaryDetails(item)
+            EventType.BIRTHDAY.value -> navigateToBirthdayDetails(item)
         }
     }
 }

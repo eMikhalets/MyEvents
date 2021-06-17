@@ -49,7 +49,8 @@ class AddBirthdayFragment : Fragment(R.layout.fragment_add_birthday) {
                     binding.inputName.text.toString(),
                     binding.inputLastname.text.toString(),
                     binding.inputMiddleName.text.toString(),
-                    date
+                    date,
+                    false
                 )
             } else {
                 toast(R.string.fields_empty)
