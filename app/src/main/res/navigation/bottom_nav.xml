@@ -11,17 +11,37 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_events_list" >
         <action
-            android:id="@+id/action_home_to_dateDetails"
-            app:destination="@id/dateDetailsFragment" />
+            android:id="@+id/action_events_to_addAnniversary"
+            app:destination="@id/addAnniversaryFragment" />
+        <action
+            android:id="@+id/action_events_to_addBirthday"
+            app:destination="@id/addBirthdayFragment" />
+        <action
+            android:id="@+id/action_events_to_anniversaryDetails"
+            app:destination="@id/anniversaryDetailsFragment" />
+        <action
+            android:id="@+id/action_events_to_birthdayDetails"
+            app:destination="@id/birthdayDetailsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/dateDetailsFragment"
-        android:name="com.emikhalets.mydates.ui.event_details.DateDetailsFragment"
-        android:label="@string/title_date_details"
-        tools:layout="@layout/fragment_birthday_details" >
-        <argument
-            android:name="dateItem"
-            app:argType="com.emikhalets.mydates.data.GroupDateItem" />
-    </fragment>
+        android:id="@+id/addBirthdayFragment"
+        android:name="com.emikhalets.mydates.ui.add_event.AddBirthdayFragment"
+        android:label="AddBirthdayFragment"
+        tools:layout="@layout/fragment_add_birthday" />
+
+    <fragment
+        android:id="@+id/addAnniversaryFragment"
+        android:name="com.emikhalets.mydates.ui.add_event.AddAnniversaryFragment"
+        android:label="AddAnniversaryFragment"
+        tools:layout="@layout/fragment_add_anniversary" />
+    <fragment
+        android:id="@+id/anniversaryDetailsFragment"
+        android:name="com.emikhalets.mydates.ui.event_details.AnniversaryDetailsFragment"
+        android:label="AnniversaryDetailsFragment" />
+    <fragment
+        android:id="@+id/birthdayDetailsFragment"
+        android:name="com.emikhalets.mydates.ui.event_details.BirthdayDetailsFragment"
+        android:label="BirthdayDetailsFragment" />
+
 </navigation>

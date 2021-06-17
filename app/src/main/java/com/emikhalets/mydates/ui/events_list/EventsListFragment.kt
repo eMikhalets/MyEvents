@@ -5,17 +5,13 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.ShareVM
+import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
-import com.emikhalets.mydates.utils.day
-import com.emikhalets.mydates.utils.month
-import com.emikhalets.mydates.utils.startAddEventDialog
-import com.emikhalets.mydates.utils.toast
+import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class EventsListFragment : Fragment(R.layout.fragment_events_list) {
@@ -27,17 +23,16 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadAllEvents()
+        initEventsAdapter()
         observe()
     }
 
-    private fun observe() {
-        viewModel.events.observe(viewLifecycleOwner) {
-            eventsAdapter.submitList(it)
-        }
+    override fun onStart() {
+        super.onStart()
+        viewModel.loadAllEvents()
     }
 
-    override fun initView() {
+    private fun initEventsAdapter() {
         eventsAdapter = EventsAdapter { onDateClick(it) }
         binding.listDates.apply {
             setHasFixedSize(true)
@@ -45,40 +40,27 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
         }
     }
 
-    override fun initEvent() {
-        val now = Calendar.getInstance()
-        val lastUpdateTime = requireActivity().getSharedPreferences("MyDates", 0)
-            .getLong("last_update", now.timeInMillis)
-        val last = Calendar.getInstance()
-        last.timeInMillis = lastUpdateTime
-        if ((last.month() < now.month()) ||
-            (last.month() == now.month() && last.day() < now.day())
-        ) {
-            requireActivity().getSharedPreferences("MyDates", 0).edit()
-                .putLong("last_update", now.timeInMillis).apply()
-            dispatchIntent(DatesListIntent.UpdateDatesList)
+    private fun observe() {
+        viewModel.events.observe(viewLifecycleOwner) {
+            eventsAdapter.submitList(it)
         }
-
-        binding.btnAddDate.setOnClickListener {
-            startAddEventDialog { dispatchIntent(DatesListIntent.ClickAddDateItem(it)) }
+        viewModel.loading.observe(viewLifecycleOwner) {
+            binding.loader.root.visibility = View.VISIBLE
         }
-    }
-
-    override fun render(state: DatesListState) {
-        binding.loader.root.visibility = View.GONE
-        when (state) {
-            is DatesListState.Error -> toast(state.message)
-            is DatesListState.ResultDatesList -> eventsAdapter.submitList(state.data)
-            is DatesListState.ResultDateUpdated -> eventsAdapter.submitList(state.data)
-            DatesListState.ResultDateAdded -> dispatchIntent(DatesListIntent.LoadDatesList)
-            DatesListState.Loading -> binding.loader.root.visibility = View.VISIBLE
-            DatesListState.ResultEmptyList -> {
+        shareVM.bottomBtnClick.observe(viewLifecycleOwner) {
+            startAddEventDialog { eventType ->
+                when (eventType) {
+                    EventType.ANNIVERSARY -> navigateToAddAnniversary()
+                    EventType.BIRTHDAY -> navigateToAddBirthday()
+                }
             }
         }
     }
 
-    private fun onDateClick(item: GroupDateItem) {
-        val action = DatesListFragmentDirections.actionHomeToDateDetails(item)
-        findNavController().navigate(action)
+    private fun onDateClick(item: Event) {
+        when (item.eventType) {
+            EventType.ANNIVERSARY.value -> navigateToAnniversaryDetails()
+            EventType.BIRTHDAY.value -> navigateToBirthdayDetails()
+        }
     }
 }
