@@ -1,7 +1,6 @@
 package com.emikhalets.mydates
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -15,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: ShareVM by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
 
@@ -25,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         setupBottomBar()
-        observe()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -41,13 +38,5 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNav.setupWithNavController(navController)
-    }
-
-    private fun observe() {
-        viewModel.bottomBtnIcon.observe(this) { icon ->
-            binding.btnBottom.setBackgroundResource(icon.iconRes)
-        }
-
-        binding.btnBottom.setOnClickListener { viewModel.onClickBottomBtn() }
     }
 }

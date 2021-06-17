@@ -1,7 +1,9 @@
 package com.emikhalets.mydates.utils
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -10,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 @SuppressLint("ClickableViewAccessibility")
 inline fun EditText.setOnDrawableEndClick(crossinline callback: () -> Unit) {
@@ -91,4 +94,11 @@ fun Event.monthNumber(): Int {
     val calendar = Calendar.getInstance()
     calendar.timeInMillis = this.date
     return calendar.month()
+}
+
+fun Fragment.hideSoftKeyboard() {
+    val inputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    if (inputMethodManager.isAcceptingText) {
+        inputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken,0)
+    }
 }

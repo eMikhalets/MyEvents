@@ -50,6 +50,7 @@
         android:background="@drawable/back_edit_text"
         android:ems="20"
         android:hint="@string/add_birthday_hint_name"
+        android:inputType="textPersonName"
         android:lines="1"
         android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_name"
@@ -77,6 +78,7 @@
         android:background="@drawable/back_edit_text"
         android:ems="20"
         android:hint="@string/add_birthday_hint_lastname"
+        android:inputType="textPersonName"
         android:lines="1"
         android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_lastname"
@@ -104,6 +106,7 @@
         android:background="@drawable/back_edit_text"
         android:ems="20"
         android:hint="@string/add_birthday_hint_middle_name"
+        android:inputType="textPersonName"
         android:lines="1"
         android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_middle_name"
@@ -135,5 +138,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_date"
         tools:ignore="Autofill,TextFields" />
+
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/event_details_text_save"
+        android:textAllCaps="false"
+        android:textColor="@color/orange"
+        app:icon="@drawable/ic_save"
+        app:iconTint="@color/orange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_date" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

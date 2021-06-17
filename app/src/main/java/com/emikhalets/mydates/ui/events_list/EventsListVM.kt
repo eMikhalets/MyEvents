@@ -16,8 +16,6 @@ class EventsListVM @Inject constructor(
     private val repository: RoomRepository
 ) : ViewModel() {
 
-    private var loadingFlag = false
-
     private val _events = MutableLiveData<List<Event>>()
     val events get(): LiveData<List<Event>> = _events
 
@@ -32,13 +30,13 @@ class EventsListVM @Inject constructor(
 
     fun loadAllEvents() {
         viewModelScope.launch {
-            loadingFlag = !loadingFlag
-            _loading.postValue(loadingFlag)
+            _loading.postValue(true)
             when (val result = repository.getAllEvents()) {
                 ListResult.EmptyList -> _error.postValue("Empty events list")
                 is ListResult.Error -> _error.postValue(result.message)
                 is ListResult.Success -> _events.postValue(result.data)
             }
+            _loading.postValue(false)
         }
     }
 }

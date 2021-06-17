@@ -1,25 +1,25 @@
 package com.emikhalets.mydates.ui.event_details
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.ShareVM
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentBirthdayDetailsBinding
 import com.emikhalets.mydates.utils.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
 
     private val binding by viewBinding(FragmentBirthdayDetailsBinding::bind)
     private val viewModel: EventDetailsVM by viewModels()
-    private val shareVM: ShareVM by activityViewModels()
     private val args: BirthdayDetailsFragmentArgs by navArgs()
 
     private lateinit var event: Event
@@ -51,9 +51,12 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
             inputLastname.setText(event.lastName)
             inputMiddleName.setText(event.middleName)
             inputDate.setDate(event.withoutYear)
+            if (event.withoutYear) textAge.visibility = View.GONE
+            else textAge.visibility = View.VISIBLE
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun clickListeners() {
         binding.apply {
             inputDate.setOnDrawableEndClick {
@@ -66,6 +69,11 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
             btnDelete.setOnClickListener { viewModel.deleteEvent(event) }
             btnSave.setOnClickListener {
                 if (validateFields()) viewModel.updateEvent(event)
+            }
+            root.setOnTouchListener { _, _ ->
+                hideSoftKeyboard()
+                clearFocus()
+                false
             }
         }
     }
@@ -119,6 +127,15 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
                 R.plurals.age, event.age, event.age
             )
             btnSave.isEnabled = true
+        }
+    }
+
+    private fun clearFocus() {
+        binding.apply {
+            inputName.clearFocus()
+            inputLastname.clearFocus()
+            inputMiddleName.clearFocus()
+            inputNotes.clearFocus()
         }
     }
 }

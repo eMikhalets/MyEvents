@@ -1,6 +1,7 @@
 package com.emikhalets.mydates.ui.events_list
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -45,11 +46,20 @@ class EventsAdapter(private val click: (Event) -> Unit) :
 
         fun bind(item: Event) {
             with(binding) {
-                val info = when (item.eventType) {
-                    EventType.ANNIVERSARY.value -> R.string.anniversary_date
-                    EventType.BIRTHDAY.value -> R.string.birthday_date
-                    else -> 0
+                var info = 0
+                when (item.eventType) {
+                    EventType.ANNIVERSARY.value -> {
+                        info = R.string.anniversary_date
+                        imagePhoto.setImageResource(R.drawable.ic_anniversary)
+                    }
+                    EventType.BIRTHDAY.value -> {
+                        info = R.string.birthday_date
+                        imagePhoto.setImageResource(R.drawable.ic_birthday)
+                    }
                 }
+
+                if (item.withoutYear) textAge.visibility = View.GONE
+                else textAge.visibility = View.VISIBLE
 
                 textName.text = item.name
                 textInfo.text = root.context.getString(

@@ -3,11 +3,9 @@ package com.emikhalets.mydates.ui.events_list
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.ShareVM
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
 import com.emikhalets.mydates.utils.*
@@ -18,12 +16,12 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     private val binding by viewBinding(FragmentEventsListBinding::bind)
     private val viewModel: EventsListVM by viewModels()
-    private val shareVM: ShareVM by activityViewModels()
     private lateinit var eventsAdapter: EventsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initEventsAdapter()
+        clickListeners()
         observe()
     }
 
@@ -40,20 +38,24 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
         }
     }
 
-    private fun observe() {
-        viewModel.events.observe(viewLifecycleOwner) {
-            eventsAdapter.submitList(it)
-        }
-        viewModel.loading.observe(viewLifecycleOwner) {
-            binding.loader.root.visibility = View.VISIBLE
-        }
-        shareVM.bottomBtnClick.observe(viewLifecycleOwner) {
+    private fun clickListeners() {
+        binding.btnAddEvent.setOnClickListener {
             startAddEventDialog { eventType ->
                 when (eventType) {
                     EventType.ANNIVERSARY -> navigateToAddAnniversary()
                     EventType.BIRTHDAY -> navigateToAddBirthday()
                 }
             }
+        }
+    }
+
+    private fun observe() {
+        viewModel.events.observe(viewLifecycleOwner) {
+            eventsAdapter.submitList(it)
+        }
+        viewModel.loading.observe(viewLifecycleOwner) {
+            if (it) binding.loader.root.visibility = View.VISIBLE
+            else binding.loader.root.visibility = View.GONE
         }
     }
 

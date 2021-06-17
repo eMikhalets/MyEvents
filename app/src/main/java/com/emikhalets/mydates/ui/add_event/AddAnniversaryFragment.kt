@@ -1,5 +1,6 @@
 package com.emikhalets.mydates.ui.add_event
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -8,22 +9,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
-import com.emikhalets.mydates.ShareVM
 import com.emikhalets.mydates.databinding.FragmentAddAnniversaryBinding
 import com.emikhalets.mydates.utils.*
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class AddAnniversaryFragment : Fragment(R.layout.fragment_add_anniversary) {
 
     private val binding by viewBinding(FragmentAddAnniversaryBinding::bind)
     private val viewModel: AddEventVM by viewModels()
-    private val shareVM: ShareVM by activityViewModels()
 
     private var date = 0L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        shareVM.setBottomBtnIcon(BottomBtnIcon.DONE)
         prepareEventData()
         clickListeners()
         observe()
@@ -34,6 +34,7 @@ class AddAnniversaryFragment : Fragment(R.layout.fragment_add_anniversary) {
         binding.inputDate.setText(date.dateFormat("d MMMM YYYY"))
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun clickListeners() {
         binding.inputDate.setOnDrawableEndClick {
             startDatePickerDialog(date) { timestamp ->
@@ -44,11 +45,7 @@ class AddAnniversaryFragment : Fragment(R.layout.fragment_add_anniversary) {
         binding.checkYear.setOnCheckedChangeListener { _, isChecked ->
             binding.inputDate.setDate(isChecked)
         }
-    }
-
-    private fun observe() {
-        viewModel.eventAdd.observe(viewLifecycleOwner) { navigateBack() }
-        shareVM.bottomBtnClick.observe(viewLifecycleOwner) {
+        binding.btnSave.setOnClickListener {
             if (validateFields()) {
                 viewModel.addNewAnniversary(
                     binding.inputName.text.toString(),
@@ -59,6 +56,15 @@ class AddAnniversaryFragment : Fragment(R.layout.fragment_add_anniversary) {
                 toast(R.string.fields_empty)
             }
         }
+        binding.root.setOnTouchListener { _, _ ->
+            hideSoftKeyboard()
+            clearFocus()
+            false
+        }
+    }
+
+    private fun observe() {
+        viewModel.eventAdd.observe(viewLifecycleOwner) { navigateBack() }
     }
 
     private fun validateFields(): Boolean {
@@ -68,5 +74,11 @@ class AddAnniversaryFragment : Fragment(R.layout.fragment_add_anniversary) {
     private fun EditText.setDate(withoutYear: Boolean) {
         if (withoutYear) this.setText(date.dateFormat("d MMMM"))
         else this.setText(date.dateFormat("d MMMM YYYY"))
+    }
+
+    private fun clearFocus() {
+        binding.apply {
+            inputName.clearFocus()
+        }
     }
 }
