@@ -1,10 +1,12 @@
 package com.emikhalets.mydates.data.repositories
 
+import android.util.Log
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.SingleResult
 import com.emikhalets.mydates.data.database.dao.EventDao
 import com.emikhalets.mydates.data.database.entities.Event
+import com.emikhalets.mydates.utils.calculateParameters
 import com.emikhalets.mydates.utils.sortWithDividers
 import javax.inject.Inject
 
@@ -15,6 +17,22 @@ class RoomRepository @Inject constructor(
     override suspend fun getAllEvents(): ListResult<List<Event>> {
         return try {
             val result = eventDao.getAll()
+            if (result.isEmpty()) {
+                ListResult.EmptyList
+            } else {
+                val events = sortWithDividers(result)
+                ListResult.Success(events)
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            ListResult.Error(ex)
+        }
+    }
+
+    override suspend fun getAllThisMonth(): ListResult<List<Event>> {
+        return try {
+            val result = eventDao.getAllLessDays(30)
+            Log.d("TAG", "getAllThisMonth: ${result.size} items")
             if (result.isEmpty()) {
                 ListResult.EmptyList
             } else {
@@ -47,17 +65,16 @@ class RoomRepository @Inject constructor(
         }
     }
 
-    // TODO: remove?
-    override suspend fun updateEvents(): ListResult<List<Event>> {
+    override suspend fun updateEvents(): CompleteResult<Nothing> {
         return try {
-            val list = eventDao.getAll()
-            val newList = mutableListOf<Event>()
-//            list.forEach { newList.add(it.computeDaysLeftAndAgeReturn()) }
-            eventDao.updateAll(newList)
-            ListResult.Success(newList.sortedBy { it.daysLeft })
+            val events = eventDao.getAll()
+            val newEvents = mutableListOf<Event>()
+            events.forEach { newEvents.add(it.calculateParameters()) }
+            eventDao.updateAll(newEvents)
+            CompleteResult.Complete
         } catch (ex: Exception) {
             ex.printStackTrace()
-            ListResult.Error(ex)
+            CompleteResult.Error(ex)
         }
     }
 

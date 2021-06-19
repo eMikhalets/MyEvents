@@ -6,6 +6,9 @@
     <string name="title_groups">Все Группы</string>
     <string name="title_calendar">Календарь</string>
 
+    <string name="notification_title_month">События в этом месяце</string>
+    <string name="notification_text_month">Посмотреть события</string>
+
     <string name="today">Сегодня</string>
     <string name="birthday_date">День рождения %s</string>
     <string name="anniversary_date">Годовщина %s</string>

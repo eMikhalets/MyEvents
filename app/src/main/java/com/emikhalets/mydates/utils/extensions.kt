@@ -49,7 +49,7 @@ fun Calendar.dayOfYear() = this.get(Calendar.DAY_OF_YEAR)
 fun Calendar.month() = this.get(Calendar.MONTH)
 fun Calendar.year() = this.get(Calendar.YEAR)
 
-fun Event.calculateParameters() {
+fun Event.calculateParameters(): Event {
     val now = Calendar.getInstance()
     val date = Calendar.getInstance()
     date.timeInMillis = this.date
@@ -70,6 +70,8 @@ fun Event.calculateParameters() {
             }
         }
     }
+
+    return this
 }
 
 suspend fun sortWithDividers(events: List<Event>): List<Event> = withContext(Dispatchers.IO) {
@@ -97,8 +99,9 @@ fun Event.monthNumber(): Int {
 }
 
 fun Fragment.hideSoftKeyboard() {
-    val inputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    val inputMethodManager =
+        activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     if (inputMethodManager.isAcceptingText) {
-        inputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken,0)
+        inputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
 }
