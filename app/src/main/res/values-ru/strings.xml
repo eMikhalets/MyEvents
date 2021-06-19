@@ -61,4 +61,11 @@
     <string name="event_details_text_save">Сохранить</string>
 
     <string name="calendar_text_no_saved_dates">Нет сохраненных дат</string>
+
+    <string name="settings_all_notif">Присылать уведомления</string>
+    <string name="settings_month_notif">Уведомлять о событиях месяца в первый день месяца</string>
+    <string name="settings_week_notif">Уведомлять о событиях за неделю</string>
+    <string name="settings_two_day_notif">Уведомлять о событиях за 2 дня</string>
+    <string name="settings_day_notif">Уведомлять о событиях за день</string>
+    <string name="settings_today_notif">Уведомлять о событиях утром</string>
 </resources>

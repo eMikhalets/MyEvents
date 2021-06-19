@@ -21,6 +21,9 @@
         <item quantity="other">Error</item>
     </plurals>
 
+    <string name="menu_title_search" translatable="false">Search</string>
+    <string name="menu_title_settings" translatable="false">Settings</string>
+
     <string name="add_event_text_new_event">New event</string>
     <string name="add_event_text_choose">Select the type of event</string>
     <string name="add_event_text_birthday">Birthday</string>
@@ -59,4 +62,11 @@
 
     <string name="calendar_text_no_saved_dates">No saved dates</string>
     <string name="calendar_date" translatable="false">%d %s</string>
+
+    <string name="settings_all_notif">Присылать уведомления</string>
+    <string name="settings_month_notif">Уведомлять о событиях месяца в первый день месяца</string>
+    <string name="settings_week_notif">Уведомлять о событиях за неделю</string>
+    <string name="settings_two_day_notif">Уведомлять о событиях за 2 дня</string>
+    <string name="settings_day_notif">Уведомлять о событиях за день</string>
+    <string name="settings_today_notif">Уведомлять о событиях утром</string>
 </resources>

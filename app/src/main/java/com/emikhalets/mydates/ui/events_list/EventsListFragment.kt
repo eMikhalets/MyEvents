@@ -1,6 +1,9 @@
 package com.emikhalets.mydates.ui.events_list
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,6 +23,7 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         initEventsAdapter()
         clickListeners()
         observe()
@@ -28,6 +32,18 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
     override fun onStart() {
         super.onStart()
         viewModel.loadAllEvents()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_settings -> navigateEventsToSettings()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initEventsAdapter() {
@@ -42,8 +58,8 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
         binding.btnAddEvent.setOnClickListener {
             startAddEventDialog { eventType ->
                 when (eventType) {
-                    EventType.ANNIVERSARY -> navigateToAddAnniversary()
-                    EventType.BIRTHDAY -> navigateToAddBirthday()
+                    EventType.ANNIVERSARY -> navigateEventsToAddAnniversary()
+                    EventType.BIRTHDAY -> navigateEventsToAddBirthday()
                 }
             }
         }
@@ -61,8 +77,8 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     private fun onDateClick(item: Event) {
         when (item.eventType) {
-            EventType.ANNIVERSARY.value -> navigateToAnniversaryDetails(item)
-            EventType.BIRTHDAY.value -> navigateToBirthdayDetails(item)
+            EventType.ANNIVERSARY.value -> navigateEventsToAnniversaryDetails(item)
+            EventType.BIRTHDAY.value -> navigateEventsToBirthdayDetails(item)
         }
     }
 }
