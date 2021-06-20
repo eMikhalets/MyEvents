@@ -1,9 +1,5 @@
 package com.emikhalets.mydates.ui.settings
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -13,11 +9,9 @@ import androidx.work.WorkManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentSettingsBinding
-import com.emikhalets.mydates.foreground.EventsReceiver
-import com.emikhalets.mydates.foreground.NotifMonthWorker
+import com.emikhalets.mydates.foreground.EventWorker
 import com.emikhalets.mydates.utils.navigateBack
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -107,7 +101,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private fun applyMonthNotifications(isChecked: Boolean) {
         if (isChecked) {
             val work =
-                PeriodicWorkRequest.Builder(NotifMonthWorker::class.java, 15, TimeUnit.MINUTES)
+                PeriodicWorkRequest.Builder(EventWorker::class.java, 15, TimeUnit.MINUTES)
                     .build()
             val workManager = WorkManager.getInstance(requireContext())
             workManager.enqueue(work)

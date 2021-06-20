@@ -15,6 +15,12 @@ import com.emikhalets.mydates.MainActivity
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 
+const val DATA_NOTIF_MONTH = "worker_notif_month"
+const val DATA_NOTIF_WEEK = "worker_notif_week"
+const val DATA_NOTIF_TWO_DAY = "worker_notif_two_day"
+const val DATA_NOTIF_DAY = "worker_notif_day"
+const val DATA_NOTIF_TODAY = "worker_notif_today"
+
 private const val PENDING_ID = "my_dates_pending_id"
 
 private const val ID_EVENTS = "my_dates_channel_id_events"
@@ -23,26 +29,52 @@ private const val ID_UPDATE = "my_dates_channel_id_update"
 private const val NAME_EVENTS = "my_dates_channel_name_events"
 private const val NAME_UPDATE = "my_dates_channel_name_update"
 
-fun sendMonthNotification(context: Context, id: Int, events: List<Event>) {
+fun sendEventsNotification(context: Context, id: Int, events: HashMap<String, List<Event>>) {
     val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-    val style = NotificationCompat.InboxStyle()
-    events.forEach {
-        if (it.eventType != 0) style.addLine("${it.fullName()} ${it.age}")
-    }
 
     val notification = NotificationCompat.Builder(context, ID_EVENTS)
         .setSmallIcon(R.drawable.ic_calendar)
-        .setContentTitle(context.getString(R.string.notification_title_month))
-        .setContentText(context.getString(R.string.notification_text_month))
+        .setContentTitle(context.getString(R.string.notification_title))
+        .setContentText(context.getString(R.string.notification_text))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        .setStyle(style)
         .setAutoCancel(true)
 
     notification.setPendingIntent(context, id)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         notificationManager.setNotificationChannel(notification, ID_EVENTS, NAME_EVENTS)
+
+    val style = NotificationCompat.InboxStyle()
+    events[DATA_NOTIF_TODAY]?.let { list ->
+        if (list.isNotEmpty()) {
+            style.addLine(context.getString(R.string.notification_text_today))
+            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+        }
+    }
+    events[DATA_NOTIF_DAY]?.let { list ->
+        if (list.isNotEmpty()) {
+            style.addLine(context.getString(R.string.notification_text_day))
+            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+        }
+    }
+    events[DATA_NOTIF_TWO_DAY]?.let { list ->
+        if (list.isNotEmpty()) {
+            style.addLine(context.getString(R.string.notification_text_two_day))
+            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+        }
+    }
+    events[DATA_NOTIF_WEEK]?.let { list ->
+        if (list.isNotEmpty()) {
+            style.addLine(context.getString(R.string.notification_text_week))
+            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+        }
+    }
+    events[DATA_NOTIF_MONTH]?.let { list ->
+        if (list.isNotEmpty()) {
+            style.addLine(context.getString(R.string.notification_text_month))
+            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+        }
+    }
 
     notificationManager.notify(id, notification.build())
 }
@@ -52,8 +84,7 @@ fun sendErrorUpdateNotification(context: Context) {
 
     val notification = NotificationCompat.Builder(context, ID_UPDATE)
         .setSmallIcon(R.drawable.ic_calendar)
-        .setContentTitle(context.getString(R.string.notification_title_month))
-        .setContentText(context.getString(R.string.notification_text_month))
+        .setContentTitle(context.getString(R.string.notification_title))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .setAutoCancel(true)
 

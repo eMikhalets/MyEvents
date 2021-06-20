@@ -20,6 +20,7 @@ class UpdateEventsWorker(context: Context, parameters: WorkerParameters) :
             CompleteResult.Complete -> {
             }
         }
+
         return Result.success()
     }
 }

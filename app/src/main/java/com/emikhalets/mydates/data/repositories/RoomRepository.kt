@@ -1,6 +1,5 @@
 package com.emikhalets.mydates.data.repositories
 
-import android.util.Log
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.SingleResult
@@ -29,16 +28,11 @@ class RoomRepository @Inject constructor(
         }
     }
 
-    override suspend fun getAllThisMonth(): ListResult<List<Event>> {
+    override suspend fun getAllAfterDays(days: Int): ListResult<List<Event>> {
         return try {
-            val result = eventDao.getAllLessDays(30)
-            Log.d("TAG", "getAllThisMonth: ${result.size} items")
-            if (result.isEmpty()) {
-                ListResult.EmptyList
-            } else {
-                val events = sortWithDividers(result)
-                ListResult.Success(events)
-            }
+            val result = eventDao.getAllAfterDays(days)
+            if (result.isEmpty()) ListResult.EmptyList
+            else ListResult.Success(result)
         } catch (ex: Exception) {
             ex.printStackTrace()
             ListResult.Error(ex)

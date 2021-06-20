@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyDates">
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -23,6 +24,9 @@
         </activity>
 
         <receiver android:name=".foreground.EventsReceiver" />
+
+        <receiver android:name=".foreground.UpdateEventsReceiver" />
+
     </application>
 
 </manifest>

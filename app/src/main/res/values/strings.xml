@@ -6,13 +6,12 @@
     <string name="title_groups">All Groups</string>
     <string name="title_calendar">Calendar</string>
 
-    <string name="notification_title_month">События в этом месяце</string>
-    <string name="notification_text_month">Посмотреть события</string>
-    <string name="channel_id_month" translatable="false">channel_id_month</string>
-    <string name="channel_id_week" translatable="false">channel_id_week</string>
-    <string name="channel_id_two_day" translatable="false">channel_id_two_day</string>
-    <string name="channel_id_day" translatable="false">channel_id_day</string>
-    <string name="channel_id_today" translatable="false">channel_id_today</string>
+    <string name="notification_title">Events this month</string>
+    <string name="notification_text_month">After month:</string>
+    <string name="notification_text_week">After week:</string>
+    <string name="notification_text_two_day">After 2 days:</string>
+    <string name="notification_text_day">Tomorrow:</string>
+    <string name="notification_text_today">Today:</string>
 
     <string name="today">Today</string>
     <string name="birthday_date">Birthday %s</string>
