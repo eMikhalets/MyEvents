@@ -68,7 +68,6 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
     private fun observe() {
         viewModel.events.observe(viewLifecycleOwner) {
             eventsAdapter.submitList(it)
-            viewModel.updateAllEvents()
         }
         viewModel.loading.observe(viewLifecycleOwner) {
             if (it) binding.loader.root.visibility = View.VISIBLE

@@ -39,10 +39,4 @@ class EventsListVM @Inject constructor(
             _loading.postValue(false)
         }
     }
-
-    fun updateAllEvents() {
-        viewModelScope.launch {
-            repository.updateEvents()
-        }
-    }
 }

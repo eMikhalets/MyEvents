@@ -71,10 +71,12 @@
     <string name="calendar_text_no_saved_dates">No saved dates</string>
     <string name="calendar_date" translatable="false">%d %s</string>
 
-    <string name="settings_all_notif">Присылать уведомления</string>
-    <string name="settings_month_notif">Уведомлять о событиях месяца в первый день месяца</string>
-    <string name="settings_week_notif">Уведомлять о событиях за неделю</string>
-    <string name="settings_two_day_notif">Уведомлять о событиях за 2 дня</string>
-    <string name="settings_day_notif">Уведомлять о событиях за день</string>
-    <string name="settings_today_notif">Уведомлять о событиях утром</string>
+    <string name="settings_all_notif">Send notifications</string>
+    <string name="settings_time_label">Time of notifications</string>
+    <string name="settings_time" translatable="false">11:00</string>
+    <string name="settings_month_notif">Notify about events for a month</string>
+    <string name="settings_week_notif">Notify about events for a week</string>
+    <string name="settings_two_day_notif">Notify about events for 2 days</string>
+    <string name="settings_day_notif">Notify about events for 1 day</string>
+    <string name="settings_today_notif">Notify about events per day</string>
 </resources>
