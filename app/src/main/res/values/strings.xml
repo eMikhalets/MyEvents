@@ -18,6 +18,8 @@
     <string name="anniversary_date">Anniversary %s</string>
     <string name="fields_empty">Name and date required</string>
     <string name="event_saved">Date saved!</string>
+    <string name="time_hour_minute" translatable="false">%d:%d</string>
+    <string name="time_hour_minute_sub" translatable="false">%d:%0d</string>
     <plurals name="age">
         <item quantity="other">(%d years)</item>
     </plurals>

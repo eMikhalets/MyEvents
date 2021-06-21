@@ -35,7 +35,6 @@ fun sendEventsNotification(context: Context, id: Int, events: HashMap<String, Li
     val notification = NotificationCompat.Builder(context, ID_EVENTS)
         .setSmallIcon(R.drawable.ic_calendar)
         .setContentTitle(context.getString(R.string.notification_title))
-        .setContentText(context.getString(R.string.notification_text))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         .setAutoCancel(true)
 

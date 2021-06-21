@@ -13,6 +13,19 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
+const val APP_EVENTS_ALARM_REQUEST_CODE = 7
+const val APP_UPDATE_ALARM_REQUEST_CODE = 8
+
+const val APP_SHARED_PREFERENCES = "my_dates_shared_preferences"
+const val APP_SP_FIRST_LAUNCH = "my_dates_sp_first_launch"
+const val APP_SP_ALARM_EVENT_FLAG = "my_dates_sp_alarm_event_flag"
+const val APP_SP_ALARM_UPDATE_FLAG = "my_dates_sp_alarm_update_flag"
+const val APP_SP_NOTIF_ALL_FLAG = "my_dates_sp_notif_all_flag"
+const val APP_SP_NOTIF_MONTH_FLAG = "my_dates_sp_notif_month_flag"
+const val APP_SP_NOTIF_WEEK_FLAG = "my_dates_sp_notif_week_flag"
+const val APP_SP_NOTIF_TWO_DAY_FLAG = "my_dates_sp_two_day_month_flag"
+const val APP_SP_NOTIF_DAY_FLAG = "my_dates_sp_notif_day_flag"
+const val APP_SP_NOTIF_TODAY_FLAG = "my_dates_sp_notif_today_flag"
 
 @SuppressLint("ClickableViewAccessibility")
 inline fun EditText.setOnDrawableEndClick(crossinline callback: () -> Unit) {

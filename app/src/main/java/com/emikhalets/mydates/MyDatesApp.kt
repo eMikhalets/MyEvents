@@ -1,13 +1,10 @@
 package com.emikhalets.mydates
 
-import android.app.AlarmManager
 import android.app.Application
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
+import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.foreground.UpdateEventsReceiver
+import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.HiltAndroidApp
-import java.util.*
 
 @HiltAndroidApp
 class MyDatesApp : Application() {
@@ -15,29 +12,42 @@ class MyDatesApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        val initUpdating = getSharedPreferences("my_dates_sp", MODE_PRIVATE)
-            .getBoolean("is_init_updating", false)
-        if (!initUpdating) {
-            val calendar = Calendar.getInstance()
-            calendar.set(Calendar.HOUR_OF_DAY, 1)
-            if (calendar.time < Date()) calendar.add(Calendar.DAY_OF_MONTH, 1)
-
-            val intent = Intent(applicationContext, UpdateEventsReceiver::class.java)
-            val pendingIntent = PendingIntent.getBroadcast(
-                applicationContext,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                AlarmManager.INTERVAL_DAY,
-                pendingIntent
-            )
-            getSharedPreferences("my_dates_sp", MODE_PRIVATE).edit()
-                .putBoolean("is_init_updating", true).apply()
+        if (!isAlarmLaunched(APP_SP_ALARM_UPDATE_FLAG)) {
+            resetEventAlarm(1, 0, UpdateEventsReceiver::class.java, APP_UPDATE_ALARM_REQUEST_CODE)
+            saveAlarmLaunchState(APP_SP_ALARM_UPDATE_FLAG)
         }
+
+        if (!isAlarmLaunched(APP_SP_ALARM_EVENT_FLAG)) {
+            resetEventAlarm(1, 0, EventsReceiver::class.java, APP_EVENTS_ALARM_REQUEST_CODE)
+            saveAlarmLaunchState(APP_SP_ALARM_EVENT_FLAG)
+        }
+
+        if (!isAlarmLaunched(APP_SP_FIRST_LAUNCH)) {
+            initSharedPreferencesNotification()
+        }
+
+    }
+
+    private fun initSharedPreferencesNotification() {
+        val sp = getSharedPreferences(APP_SHARED_PREFERENCES, MODE_PRIVATE).edit()
+
+        sp.putBoolean(APP_SP_NOTIF_ALL_FLAG, true)
+        sp.putBoolean(APP_SP_NOTIF_MONTH_FLAG, true)
+        sp.putBoolean(APP_SP_NOTIF_WEEK_FLAG, true)
+        sp.putBoolean(APP_SP_NOTIF_TWO_DAY_FLAG, false)
+        sp.putBoolean(APP_SP_NOTIF_DAY_FLAG, true)
+        sp.putBoolean(APP_SP_NOTIF_TODAY_FLAG, true)
+
+        sp.apply()
+    }
+
+    private fun isAlarmLaunched(key: String): Boolean {
+        return getSharedPreferences(APP_SHARED_PREFERENCES, MODE_PRIVATE)
+            .getBoolean(key, false)
+    }
+
+    private fun saveAlarmLaunchState(key: String) {
+        getSharedPreferences(APP_SHARED_PREFERENCES, MODE_PRIVATE).edit()
+            .putBoolean(key, true).apply()
     }
 }

@@ -1,11 +1,13 @@
 package com.emikhalets.mydates.utils
 
 import android.app.Dialog
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.databinding.DialogAddEventBinding
 import com.emikhalets.mydates.databinding.DialogDatePickerBinding
+import com.emikhalets.mydates.databinding.DialogTimePickerBinding
 import java.util.*
 
 inline fun Fragment.startAddEventDialog(crossinline callback: (EventType) -> Unit) {
@@ -50,6 +52,37 @@ inline fun Fragment.startDatePickerDialog(init: Long, crossinline callback: (Lon
 
     binding.btnApply.setOnClickListener {
         callback.invoke(calendar.timeInMillis)
+        dialog.dismiss()
+    }
+
+    dialog.show()
+}
+
+inline fun Fragment.startTimePickerDialog(crossinline callback: (hour: Int, minute: Int) -> Unit) {
+    val dialog = Dialog(requireContext())
+    val binding = DialogTimePickerBinding.inflate(LayoutInflater.from(requireContext()))
+    dialog.setContentView(binding.root)
+    binding.timePicker.setIs24HourView(true)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        binding.timePicker.hour = 11
+        binding.timePicker.minute = 11
+    } else {
+        @Suppress("DEPRECATION")
+        binding.timePicker.currentHour = 11
+        @Suppress("DEPRECATION")
+        binding.timePicker.currentMinute = 11
+    }
+
+    var hour = 11
+    var minute = 0
+    binding.timePicker.setOnTimeChangedListener { _, h, m ->
+        hour = h
+        minute = m
+    }
+
+    binding.btnApply.setOnClickListener {
+        callback.invoke(hour, minute)
         dialog.dismiss()
     }
 

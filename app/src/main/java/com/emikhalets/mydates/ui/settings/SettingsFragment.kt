@@ -1,19 +1,15 @@
 package com.emikhalets.mydates.ui.settings
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentSettingsBinding
-import com.emikhalets.mydates.foreground.EventWorker
-import com.emikhalets.mydates.utils.navigateBack
+import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.TimeUnit
-
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
@@ -21,13 +17,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private val binding by viewBinding(FragmentSettingsBinding::bind)
     private val viewModel: SettingsVM by viewModels()
 
-    private var date = 0L
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prepareSettings()
         clickListeners()
-        observe()
     }
 
     private fun prepareSettings() {
@@ -43,79 +36,55 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun clickListeners() {
         binding.apply {
+            layoutTime.setOnClickListener {
+                if (switchAllNotif.isChecked) {
+                    startTimePickerDialog { hour, minute ->
+                        binding.textTime.text = formatTime(hour, minute)
+                        resetEventAlarm(hour, minute)
+                    }
+                }
+            }
+
             switchAllNotif.setOnCheckedChangeListener { _, isChecked ->
-                applyAllNotifications(isChecked)
+                saveSharedPrefNotif(APP_SP_NOTIF_ALL_FLAG, isChecked)
+                switchMonthNotif.isEnabled = isChecked
+                switchWeekNotif.isEnabled = isChecked
+                switchTwoDayNotif.isEnabled = isChecked
+                switchDayNotif.isEnabled = isChecked
+                switchTodayNotif.isEnabled = isChecked
+                if (isChecked) layoutTime.visibility = View.VISIBLE
+                else layoutTime.visibility = View.GONE
             }
-            switchMonthNotif.setOnCheckedChangeListener { view, isChecked ->
-                applyMonthNotifications(isChecked)
+
+            switchMonthNotif.setOnCheckedChangeListener { _, isChecked ->
+                saveSharedPrefNotif(APP_SP_NOTIF_MONTH_FLAG, isChecked)
             }
-            switchWeekNotif.setOnCheckedChangeListener { view, isChecked -> }
-            switchTwoDayNotif.setOnCheckedChangeListener { view, isChecked -> }
-            switchDayNotif.setOnCheckedChangeListener { view, isChecked -> }
-            switchTodayNotif.setOnCheckedChangeListener { view, isChecked -> }
+
+            switchWeekNotif.setOnCheckedChangeListener { _, isChecked ->
+                saveSharedPrefNotif(APP_SP_NOTIF_WEEK_FLAG, isChecked)
+            }
+
+            switchTwoDayNotif.setOnCheckedChangeListener { _, isChecked ->
+                saveSharedPrefNotif(APP_SP_NOTIF_TWO_DAY_FLAG, isChecked)
+            }
+
+            switchDayNotif.setOnCheckedChangeListener { _, isChecked ->
+                saveSharedPrefNotif(APP_SP_NOTIF_DAY_FLAG, isChecked)
+            }
+
+            switchTodayNotif.setOnCheckedChangeListener { _, isChecked ->
+                saveSharedPrefNotif(APP_SP_NOTIF_TODAY_FLAG, isChecked)
+            }
         }
     }
 
-    private fun applyAllNotifications(isChecked: Boolean) {
-        binding.apply {
-            switchMonthNotif.isEnabled = isChecked
-            switchWeekNotif.isEnabled = isChecked
-            switchTwoDayNotif.isEnabled = isChecked
-            switchDayNotif.isEnabled = isChecked
-            switchTodayNotif.isEnabled = isChecked
-        }
-        if (!isChecked) {
-            binding.apply {
-                switchMonthNotif.isChecked = false
-                switchWeekNotif.isChecked = false
-                switchTwoDayNotif.isChecked = false
-                switchDayNotif.isChecked = false
-                switchTodayNotif.isChecked = false
-            }
-            applyMonthNotifications(isChecked)
-        }
-
-//        val calendar = Calendar.getInstance()
-//        calendar.set(Calendar.HOUR_OF_DAY, 11)
-//        calendar.set(Calendar.MINUTE, 0)
-//        calendar.set(Calendar.SECOND, 0)
-//
-//        if (calendar.time < Date()) calendar.add(Calendar.DAY_OF_MONTH, 1)
-//
-//        val intent = Intent(requireContext(), EventsReceiver::class.java)
-//        val pendingIntent = PendingIntent.getBroadcast(
-//            requireContext(),
-//            0,
-//            intent,
-//            PendingIntent.FLAG_UPDATE_CURRENT
-//        )
-//        val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-//        alarmManager.setRepeating(
-//            AlarmManager.RTC_WAKEUP,
-//            calendar.timeInMillis,
-//            AlarmManager.INTERVAL_DAY,
-//            pendingIntent
-//        )
+    private fun saveSharedPrefNotif(key: String, value: Boolean) {
+        requireContext().getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE).edit()
+            .putBoolean(key, value).apply()
     }
 
-    private fun applyMonthNotifications(isChecked: Boolean) {
-        if (isChecked) {
-            val work =
-                PeriodicWorkRequest.Builder(EventWorker::class.java, 15, TimeUnit.MINUTES)
-                    .build()
-            val workManager = WorkManager.getInstance(requireContext())
-            workManager.enqueue(work)
-//            workManager.enqueueUniquePeriodicWork(
-//                "notif_month",
-//                ExistingPeriodicWorkPolicy.REPLACE,
-//                work
-//            )
-        } else {
-            WorkManager.getInstance(requireContext()).cancelUniqueWork("notif_month")
-        }
-    }
-
-    private fun observe() {
-        viewModel.eventAdd.observe(viewLifecycleOwner) { navigateBack() }
+    private fun formatTime(hour: Int, minute: Int): String {
+        return if (minute > 9) requireContext().getString(R.string.time_hour_minute, hour, minute)
+        else requireContext().getString(R.string.time_hour_minute_sub, hour, minute)
     }
 }
