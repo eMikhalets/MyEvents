@@ -63,7 +63,7 @@ class EventWorker(context: Context, parameters: WorkerParameters) :
             }
         }
 
-        if (events.isNotEmpty()) sendEventsNotification(applicationContext, 1, events)
+        if (events.isNotEmpty()) sendEventsNotification(applicationContext, events)
 
         return Result.success()
     }

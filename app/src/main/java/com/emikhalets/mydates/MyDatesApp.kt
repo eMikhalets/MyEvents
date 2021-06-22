@@ -12,18 +12,18 @@ class MyDatesApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        if (!isAlarmLaunched(APP_SP_FIRST_LAUNCH)) {
+            initSharedPreferencesNotification()
+        }
+
         if (!isAlarmLaunched(APP_SP_ALARM_UPDATE_FLAG)) {
-            resetEventAlarm(1, 0, UpdateEventsReceiver::class.java, APP_UPDATE_ALARM_REQUEST_CODE)
+            setAlarm(1, 0, UpdateEventsReceiver::class.java, APP_UPDATE_ALARM_REQUEST_CODE)
             saveAlarmLaunchState(APP_SP_ALARM_UPDATE_FLAG)
         }
 
         if (!isAlarmLaunched(APP_SP_ALARM_EVENT_FLAG)) {
-            resetEventAlarm(1, 0, EventsReceiver::class.java, APP_EVENTS_ALARM_REQUEST_CODE)
+            setAlarm(11, 0, EventsReceiver::class.java, APP_EVENTS_ALARM_REQUEST_CODE)
             saveAlarmLaunchState(APP_SP_ALARM_EVENT_FLAG)
-        }
-
-        if (!isAlarmLaunched(APP_SP_FIRST_LAUNCH)) {
-            initSharedPreferencesNotification()
         }
 
     }
@@ -31,10 +31,12 @@ class MyDatesApp : Application() {
     private fun initSharedPreferencesNotification() {
         val sp = getSharedPreferences(APP_SHARED_PREFERENCES, MODE_PRIVATE).edit()
 
+        sp.putInt(APP_SP_EVENT_HOUR, 11)
+        sp.putInt(APP_SP_EVENT_MINUTE, 0)
         sp.putBoolean(APP_SP_NOTIF_ALL_FLAG, true)
         sp.putBoolean(APP_SP_NOTIF_MONTH_FLAG, true)
         sp.putBoolean(APP_SP_NOTIF_WEEK_FLAG, true)
-        sp.putBoolean(APP_SP_NOTIF_TWO_DAY_FLAG, false)
+        sp.putBoolean(APP_SP_NOTIF_TWO_DAY_FLAG, true)
         sp.putBoolean(APP_SP_NOTIF_DAY_FLAG, true)
         sp.putBoolean(APP_SP_NOTIF_TODAY_FLAG, true)
 

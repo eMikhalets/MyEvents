@@ -17,6 +17,8 @@ const val APP_EVENTS_ALARM_REQUEST_CODE = 7
 const val APP_UPDATE_ALARM_REQUEST_CODE = 8
 
 const val APP_SHARED_PREFERENCES = "my_dates_shared_preferences"
+const val APP_SP_EVENT_HOUR = "my_dates_sp_event_hour"
+const val APP_SP_EVENT_MINUTE = "my_dates_sp_event_minute"
 const val APP_SP_FIRST_LAUNCH = "my_dates_sp_first_launch"
 const val APP_SP_ALARM_EVENT_FLAG = "my_dates_sp_alarm_event_flag"
 const val APP_SP_ALARM_UPDATE_FLAG = "my_dates_sp_alarm_update_flag"
@@ -74,11 +76,13 @@ fun Event.calculateParameters(): Event {
     when {
         date.month() < now.month() -> {
             this.age++
+            date.set(Calendar.YEAR, now.year() + 1)
             this.daysLeft += now.getActualMaximum(Calendar.DAY_OF_YEAR)
         }
         date.month() == now.month() -> {
             if (date.day() < now.day()) {
                 this.age++
+                date.set(Calendar.YEAR, now.year() + 1)
                 this.daysLeft += now.getActualMaximum(Calendar.DAY_OF_YEAR)
             }
         }
@@ -88,7 +92,6 @@ fun Event.calculateParameters(): Event {
 }
 
 suspend fun sortWithDividers(events: List<Event>): List<Event> = withContext(Dispatchers.IO) {
-    events.forEach { it.calculateParameters() }
     val sorted = events.sortedBy { it.daysLeft }
     val result = mutableListOf<Event>()
 

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.foreground.EventsReceiver
 import java.util.*
 
-fun Application.resetEventAlarm(hour: Int, minute: Int, receiver: Class<*>, requestCode: Int) {
+fun Application.setAlarm(hour: Int, minute: Int, receiver: Class<*>, requestCode: Int) {
     val calendar = Calendar.getInstance()
     calendar.set(Calendar.HOUR_OF_DAY, hour)
     calendar.set(Calendar.MINUTE, minute)

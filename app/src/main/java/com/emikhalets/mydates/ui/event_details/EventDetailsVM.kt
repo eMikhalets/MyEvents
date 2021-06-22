@@ -38,7 +38,7 @@ class EventDetailsVM @Inject constructor(
 
     fun updateEvent(event: Event) {
         viewModelScope.launch {
-            when (val result = repository.insertEvent(event)) {
+            when (val result = repository.updateEvent(event)) {
                 CompleteResult.Complete -> {
                     updateFlag = !updateFlag
                     _eventUpdate.postValue(updateFlag)

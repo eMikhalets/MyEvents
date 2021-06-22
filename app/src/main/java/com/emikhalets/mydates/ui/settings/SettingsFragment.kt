@@ -25,12 +25,19 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun prepareSettings() {
         binding.apply {
-            val isAllNotifChecked = binding.switchAllNotif.isChecked
-            switchMonthNotif.isEnabled = isAllNotifChecked
-            switchWeekNotif.isEnabled = isAllNotifChecked
-            switchTwoDayNotif.isEnabled = isAllNotifChecked
-            switchDayNotif.isEnabled = isAllNotifChecked
-            switchTodayNotif.isEnabled = isAllNotifChecked
+            binding.textTime.text = formatTime(getNotifHour(), getNotifMinute())
+            switchAllNotif.isChecked = getNotifPref(APP_SP_NOTIF_ALL_FLAG)
+            switchMonthNotif.isChecked = getNotifPref(APP_SP_NOTIF_MONTH_FLAG)
+            switchWeekNotif.isChecked = getNotifPref(APP_SP_NOTIF_WEEK_FLAG)
+            switchTwoDayNotif.isChecked = getNotifPref(APP_SP_NOTIF_TWO_DAY_FLAG)
+            switchDayNotif.isChecked = getNotifPref(APP_SP_NOTIF_DAY_FLAG)
+            switchTodayNotif.isChecked = getNotifPref(APP_SP_NOTIF_TODAY_FLAG)
+
+            switchMonthNotif.isEnabled = switchAllNotif.isChecked
+            switchWeekNotif.isEnabled = switchAllNotif.isChecked
+            switchTwoDayNotif.isEnabled = switchAllNotif.isChecked
+            switchDayNotif.isEnabled = switchAllNotif.isChecked
+            switchTodayNotif.isEnabled = switchAllNotif.isChecked
         }
     }
 
@@ -40,6 +47,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 if (switchAllNotif.isChecked) {
                     startTimePickerDialog { hour, minute ->
                         binding.textTime.text = formatTime(hour, minute)
+                        saveNotifTime(hour, minute)
                         resetEventAlarm(hour, minute)
                     }
                 }
@@ -76,6 +84,29 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 saveSharedPrefNotif(APP_SP_NOTIF_TODAY_FLAG, isChecked)
             }
         }
+    }
+
+    private fun getNotifHour(): Int {
+        return requireContext().getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+            .getInt(APP_SP_EVENT_HOUR, 11)
+    }
+
+    private fun saveNotifTime(hour: Int, minute: Int) {
+        val sp = requireContext()
+            .getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE).edit()
+        sp.putInt(APP_SP_EVENT_HOUR, hour)
+        sp.putInt(APP_SP_EVENT_MINUTE, minute)
+        sp.apply()
+    }
+
+    private fun getNotifMinute(): Int {
+        return requireContext().getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+            .getInt(APP_SP_EVENT_MINUTE, 0)
+    }
+
+    private fun getNotifPref(key: String): Boolean {
+        return requireContext().getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+            .getBoolean(key, false)
     }
 
     private fun saveSharedPrefNotif(key: String, value: Boolean) {
