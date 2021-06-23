@@ -6,7 +6,7 @@
     <string name="title_groups">All Groups</string>
     <string name="title_calendar">Calendar</string>
 
-    <string name="notification_title">Events this month</string>
+    <string name="notification_title">Upcoming events</string>
     <string name="notification_text_month">After month:</string>
     <string name="notification_text_week">After week:</string>
     <string name="notification_text_two_day">After 2 days:</string>

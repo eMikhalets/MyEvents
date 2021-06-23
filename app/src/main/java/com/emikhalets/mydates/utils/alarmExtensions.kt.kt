@@ -15,15 +15,15 @@ fun Application.setAlarm(hour: Int, minute: Int, receiver: Class<*>, requestCode
     calendar.set(Calendar.SECOND, 0)
     if (calendar.time < Date()) calendar.add(Calendar.DAY_OF_MONTH, 1)
 
-    val intent = Intent(applicationContext, receiver)
+    val alarmManager = getSystemService(Application.ALARM_SERVICE) as AlarmManager
+    val intent = Intent(this, receiver)
     val pendingIntent = PendingIntent.getBroadcast(
-        applicationContext,
-        requestCode,
+        this,
+        APP_EVENTS_ALARM_REQUEST_CODE,
         intent,
         PendingIntent.FLAG_UPDATE_CURRENT
     )
 
-    val alarmManager = getSystemService(Application.ALARM_SERVICE) as AlarmManager
     alarmManager.setRepeating(
         AlarmManager.RTC_WAKEUP,
         calendar.timeInMillis,

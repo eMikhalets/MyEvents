@@ -6,7 +6,7 @@
     <string name="title_groups">Все Группы</string>
     <string name="title_calendar">Календарь</string>
 
-    <string name="notification_title">События в этом месяце</string>
+    <string name="notification_title">Предстоящие события</string>
     <string name="notification_text_month">Через месяц:</string>
     <string name="notification_text_week">Через неделю:</string>
     <string name="notification_text_two_day">Через 2 дня:</string>

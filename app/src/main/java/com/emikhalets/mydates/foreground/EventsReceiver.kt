@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.emikhalets.mydates.utils.*
 
@@ -27,7 +28,8 @@ class EventsReceiver : BroadcastReceiver() {
                 DATA_NOTIF_DAY to isDays,
                 DATA_NOTIF_TODAY to isToday
             )
-            OneTimeWorkRequestBuilder<EventWorker>().setInputData(data).build()
+            val work = OneTimeWorkRequestBuilder<EventWorker>().setInputData(data).build()
+            WorkManager.getInstance(context).enqueue(work)
         }
     }
 }

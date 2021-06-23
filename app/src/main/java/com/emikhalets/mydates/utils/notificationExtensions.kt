@@ -11,6 +11,7 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.emikhalets.mydates.MainActivity
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
@@ -35,7 +36,7 @@ fun sendErrorUpdateNotification(context: Context) {
     val notification = NotificationCompat.Builder(context, ID_UPDATE)
         .setSmallIcon(R.drawable.ic_calendar)
         .setContentTitle("Error updating events")
-        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setAutoCancel(true)
 
     notification.setPendingIntent(context, 0)
@@ -43,7 +44,7 @@ fun sendErrorUpdateNotification(context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
         notificationManager.setNotificationChannel(notification, ID_UPDATE, NAME_UPDATE)
 
-    notificationManager.notify(0, notification.build())
+    NotificationManagerCompat.from(context).notify(0, notification.build())
 }
 
 fun sendEventsNotification(context: Context, events: HashMap<String, List<Event>>) {
@@ -52,7 +53,7 @@ fun sendEventsNotification(context: Context, events: HashMap<String, List<Event>
     val notification = NotificationCompat.Builder(context, ID_EVENTS)
         .setSmallIcon(R.drawable.ic_calendar)
         .setContentTitle(context.getString(R.string.notification_title))
-        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
         .setAutoCancel(true)
 
     notification.setPendingIntent(context, 1)
@@ -91,25 +92,9 @@ fun sendEventsNotification(context: Context, events: HashMap<String, List<Event>
             list.forEach { style.addLine("${it.fullName()} ${it.age}") }
         }
     }
+    notification.setStyle(style)
 
-    notificationManager.notify(1, notification.build())
-}
-
-fun sendNotification(context: Context) {
-    val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-    val notification = NotificationCompat.Builder(context, ID_UPDATE)
-        .setSmallIcon(R.drawable.ic_calendar)
-        .setContentTitle("Уведомление Обновление")
-        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        .setAutoCancel(true)
-
-    notification.setPendingIntent(context, 3)
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        notificationManager.setNotificationChannel(notification, ID_UPDATE, NAME_UPDATE)
-
-    notificationManager.notify(3, notification.build())
+    NotificationManagerCompat.from(context).notify(1, notification.build())
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
