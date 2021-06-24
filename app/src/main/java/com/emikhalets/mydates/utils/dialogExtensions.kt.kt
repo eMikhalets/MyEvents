@@ -14,6 +14,7 @@ inline fun Fragment.startAddEventDialog(crossinline callback: (EventType) -> Uni
     val dialog = Dialog(requireContext())
     val binding = DialogAddEventBinding.inflate(LayoutInflater.from(context))
     dialog.setContentView(binding.root)
+    dialog.setCanceledOnTouchOutside(false)
 
     binding.apply {
         cardBirthday.setOnClickListener {
@@ -39,6 +40,7 @@ inline fun Fragment.startDatePickerDialog(init: Long, crossinline callback: (Lon
     val binding = DialogDatePickerBinding.inflate(LayoutInflater.from(requireContext()))
     val calendar = Calendar.getInstance()
     dialog.setContentView(binding.root)
+    dialog.setCanceledOnTouchOutside(false)
 
     calendar.timeInMillis = init
     val year: Int = calendar.get(Calendar.YEAR)
@@ -63,6 +65,7 @@ inline fun Fragment.startTimePickerDialog(crossinline callback: (hour: Int, minu
     val binding = DialogTimePickerBinding.inflate(LayoutInflater.from(requireContext()))
     dialog.setContentView(binding.root)
     binding.timePicker.setIs24HourView(true)
+    dialog.setCanceledOnTouchOutside(false)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         binding.timePicker.hour = 11
