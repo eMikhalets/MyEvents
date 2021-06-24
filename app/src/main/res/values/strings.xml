@@ -14,6 +14,7 @@
     <string name="notification_text_today">Today:</string>
 
     <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
     <string name="birthday_date">Birthday %s</string>
     <string name="anniversary_date">Anniversary %s</string>
     <string name="fields_empty">Name and date required</string>

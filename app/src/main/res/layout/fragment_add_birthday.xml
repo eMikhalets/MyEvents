@@ -50,7 +50,7 @@
         android:background="@drawable/back_edit_text"
         android:ems="20"
         android:hint="@string/add_birthday_hint_name"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:lines="1"
         android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_name"
@@ -78,7 +78,7 @@
         android:background="@drawable/back_edit_text"
         android:ems="20"
         android:hint="@string/add_birthday_hint_lastname"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:lines="1"
         android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_lastname"
@@ -106,7 +106,7 @@
         android:background="@drawable/back_edit_text"
         android:ems="20"
         android:hint="@string/add_birthday_hint_middle_name"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:lines="1"
         android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_middle_name"
@@ -139,6 +139,18 @@
         app:layout_constraintTop_toBottomOf="@+id/text_date"
         tools:ignore="Autofill,TextFields" />
 
+    <CheckBox
+        android:id="@+id/check_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_anniversary_text_year"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_date" />
+
     <Button
         android:id="@+id/btn_save"
         style="@style/Widget.MaterialComponents.Button.TextButton"
@@ -152,6 +164,6 @@
         app:iconTint="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_date" />
+        app:layout_constraintTop_toBottomOf="@+id/check_year" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

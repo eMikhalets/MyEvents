@@ -50,7 +50,7 @@
         android:background="@drawable/back_edit_text"
         android:ems="20"
         android:hint="@string/add_anniversary_hint_name"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:lines="1"
         android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_name"

@@ -14,6 +14,7 @@
     <string name="notification_text_today">Сегодня:</string>
 
     <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
     <string name="birthday_date">День рождения %s</string>
     <string name="anniversary_date">Годовщина %s</string>
     <string name="fields_empty">Необходимо заполнить имя и дату</string>

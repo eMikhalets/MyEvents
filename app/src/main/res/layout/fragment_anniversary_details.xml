@@ -91,7 +91,7 @@
             android:background="@drawable/back_edit_text"
             android:gravity="start"
             android:hint="@string/event_details_hint_notes"
-            android:lines="4"
+            android:inputType="textCapWords|textMultiLine"
             app:layout_constraintTop_toBottomOf="@+id/text_notes_label"
             tools:ignore="Autofill,TextFields" />
 
@@ -129,6 +129,7 @@
             android:background="@drawable/back_edit_text"
             android:ems="20"
             android:hint="@string/add_birthday_hint_name"
+            android:inputType="textCapWords"
             android:lines="1"
             android:maxLength="20"
             app:layout_constraintTop_toBottomOf="@+id/text_name"

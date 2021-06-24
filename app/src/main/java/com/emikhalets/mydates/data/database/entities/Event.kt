@@ -28,7 +28,15 @@ data class Event(
         return when (eventType) {
             0 -> "Divider"
             EventType.ANNIVERSARY.value -> name
-            EventType.BIRTHDAY.value -> "$lastName $name $middleName"
+            EventType.BIRTHDAY.value -> {
+                if (middleName.isEmpty()) {
+                    if (lastName.isEmpty()) name
+                    else "$lastName $name"
+                } else {
+                    if (lastName.isEmpty()) "$name $middleName"
+                    else "$lastName $name $middleName"
+                }
+            }
             else -> "Error"
         }
     }

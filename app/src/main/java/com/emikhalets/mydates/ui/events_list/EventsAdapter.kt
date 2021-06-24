@@ -61,7 +61,7 @@ class EventsAdapter(private val click: (Event) -> Unit) :
                 if (item.withoutYear) textAge.visibility = View.GONE
                 else textAge.visibility = View.VISIBLE
 
-                textName.text = item.name
+                textName.text = item.fullName()
                 textInfo.text = root.context.getString(
                     info, item.date.dateFormat("d MMMM")
                 )
@@ -70,11 +70,14 @@ class EventsAdapter(private val click: (Event) -> Unit) :
                     item.age, item.age
                 )
 
-                if (item.daysLeft == 0) textDaysLeft.text = root.context.getString(R.string.today)
-                else textDaysLeft.text = root.context.resources.getQuantityString(
-                    R.plurals.days_left,
-                    item.daysLeft, item.daysLeft
-                )
+                when (item.daysLeft) {
+                    0 -> textDaysLeft.text = root.context.getString(R.string.today)
+                    1 -> textDaysLeft.text = root.context.getString(R.string.tomorrow)
+                    else -> textDaysLeft.text = root.context.resources.getQuantityString(
+                        R.plurals.days_left,
+                        item.daysLeft, item.daysLeft
+                    )
+                }
 
                 imageForward.setOnClickListener { click.invoke(item) }
             }

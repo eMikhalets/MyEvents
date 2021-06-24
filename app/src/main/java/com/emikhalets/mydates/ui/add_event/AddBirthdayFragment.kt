@@ -3,6 +3,7 @@ package com.emikhalets.mydates.ui.add_event
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -37,8 +38,11 @@ class AddBirthdayFragment : Fragment(R.layout.fragment_add_birthday) {
         binding.inputDate.setOnDrawableEndClick {
             startDatePickerDialog(date) { timestamp ->
                 date = timestamp
-                binding.inputDate.setText(timestamp.dateFormat("d MMMM YYYY"))
+                binding.inputDate.setDate(binding.checkYear.isChecked)
             }
+        }
+        binding.checkYear.setOnCheckedChangeListener { _, isChecked ->
+            binding.inputDate.setDate(isChecked)
         }
         binding.btnSave.setOnClickListener {
             if (validateFields()) {
@@ -47,7 +51,7 @@ class AddBirthdayFragment : Fragment(R.layout.fragment_add_birthday) {
                     binding.inputLastname.text.toString(),
                     binding.inputMiddleName.text.toString(),
                     date,
-                    false
+                    binding.checkYear.isChecked
                 )
             } else {
                 toast(R.string.fields_empty)
@@ -74,5 +78,10 @@ class AddBirthdayFragment : Fragment(R.layout.fragment_add_birthday) {
             inputLastname.clearFocus()
             inputMiddleName.clearFocus()
         }
+    }
+
+    private fun EditText.setDate(withoutYear: Boolean) {
+        if (withoutYear) this.setText(date.dateFormat("d MMMM"))
+        else this.setText(date.dateFormat("d MMMM YYYY"))
     }
 }

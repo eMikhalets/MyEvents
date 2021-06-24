@@ -51,6 +51,7 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
             inputLastname.setText(event.lastName)
             inputMiddleName.setText(event.middleName)
             inputDate.setDate(event.withoutYear)
+            checkYear.isChecked = event.withoutYear
             if (event.withoutYear) textAge.visibility = View.GONE
             else textAge.visibility = View.VISIBLE
         }
@@ -62,9 +63,14 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
             inputDate.setOnDrawableEndClick {
                 startDatePickerDialog(event.date) { timestamp ->
                     applyNewDate(timestamp)
-                    binding.inputDate.setDate(false)
+                    binding.inputDate.setDate(binding.checkYear.isChecked)
                     btnSave.isEnabled = true
                 }
+            }
+            checkYear.setOnCheckedChangeListener { _, isChecked ->
+                event.withoutYear = isChecked
+                binding.inputDate.setDate(isChecked)
+                btnSave.isEnabled = true
             }
             btnDelete.setOnClickListener { viewModel.deleteEvent(event) }
             btnSave.setOnClickListener {
@@ -105,8 +111,7 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
     }
 
     private fun validateFields(): Boolean {
-        return binding.inputName.text.toString().isNotEmpty() &&
-                binding.inputLastname.text.toString().isNotEmpty()
+        return binding.inputName.text.toString().isNotEmpty()
     }
 
     private fun EditText.setDate(withoutYear: Boolean) {

@@ -17,6 +17,7 @@ const val APP_EVENTS_ALARM_REQUEST_CODE = 7
 const val APP_UPDATE_ALARM_REQUEST_CODE = 8
 
 const val APP_SHARED_PREFERENCES = "my_dates_shared_preferences"
+const val APP_SP_UPDATE_EVENTS_TIME = "my_dates_sp_update_event_time"
 const val APP_SP_EVENT_HOUR = "my_dates_sp_event_hour"
 const val APP_SP_EVENT_MINUTE = "my_dates_sp_event_minute"
 const val APP_SP_FIRST_LAUNCH = "my_dates_sp_first_launch"

@@ -65,36 +65,48 @@ fun sendEventsNotification(context: Context, events: HashMap<String, List<Event>
     events[DATA_NOTIF_TODAY]?.let { list ->
         if (list.isNotEmpty()) {
             style.addLine(context.getString(R.string.notification_text_today))
-            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+            list.forEach { style.addLine(setEvent(context, it)) }
         }
     }
     events[DATA_NOTIF_DAY]?.let { list ->
         if (list.isNotEmpty()) {
             style.addLine(context.getString(R.string.notification_text_day))
-            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+            list.forEach { style.addLine(setEvent(context, it)) }
         }
     }
     events[DATA_NOTIF_TWO_DAY]?.let { list ->
         if (list.isNotEmpty()) {
             style.addLine(context.getString(R.string.notification_text_two_day))
-            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+            list.forEach { style.addLine(setEvent(context, it)) }
         }
     }
     events[DATA_NOTIF_WEEK]?.let { list ->
         if (list.isNotEmpty()) {
             style.addLine(context.getString(R.string.notification_text_week))
-            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+            list.forEach { style.addLine(setEvent(context, it)) }
         }
     }
     events[DATA_NOTIF_MONTH]?.let { list ->
         if (list.isNotEmpty()) {
             style.addLine(context.getString(R.string.notification_text_month))
-            list.forEach { style.addLine("${it.fullName()} ${it.age}") }
+            list.forEach { style.addLine(setEvent(context, it)) }
         }
     }
     notification.setStyle(style)
 
     NotificationManagerCompat.from(context).notify(1, notification.build())
+}
+
+private fun setEvent(context: Context, event: Event): String {
+    var string = ""
+    when (event.eventType) {
+        EventType.ANNIVERSARY.value -> string += event.fullName()
+        EventType.BIRTHDAY.value -> string += event.fullName()
+    }
+    string += event.fullName()
+    if (!event.withoutYear) string += context.resources
+        .getQuantityString(R.plurals.age, event.age, event.age)
+    return string
 }
 
 @RequiresApi(Build.VERSION_CODES.O)

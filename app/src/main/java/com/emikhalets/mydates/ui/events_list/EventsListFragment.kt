@@ -1,5 +1,6 @@
 package com.emikhalets.mydates.ui.events_list
 
+import android.app.Application
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,6 +14,7 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
 import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class EventsListFragment : Fragment(R.layout.fragment_events_list) {
@@ -24,14 +26,23 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        checkUpdateEvents()
         initEventsAdapter()
         clickListeners()
         observe()
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         viewModel.loadAllEvents()
+    }
+
+    private fun checkUpdateEvents() {
+        val now = Date().time
+        val sp = requireActivity()
+            .getSharedPreferences(APP_SHARED_PREFERENCES, Application.MODE_PRIVATE)
+        val lastUpdate = sp.getLong(APP_SP_UPDATE_EVENTS_TIME, 0)
+        if (now - lastUpdate > 86400000) viewModel.updateEvents(sp)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
