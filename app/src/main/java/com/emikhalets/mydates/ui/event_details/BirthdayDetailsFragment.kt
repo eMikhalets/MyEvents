@@ -72,7 +72,11 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
                 binding.inputDate.setDate(isChecked)
                 btnSave.isEnabled = true
             }
-            btnDelete.setOnClickListener { viewModel.deleteEvent(event) }
+            btnDelete.setOnClickListener {
+                startDeleteDialog(getString(R.string.dialog_delete_event)) {
+                    viewModel.deleteEvent(event)
+                }
+            }
             btnSave.setOnClickListener {
                 if (validateFields()) viewModel.updateEvent(event)
             }

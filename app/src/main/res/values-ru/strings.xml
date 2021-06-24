@@ -15,10 +15,13 @@
 
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
     <string name="birthday_date">День рождения %s</string>
     <string name="anniversary_date">Годовщина %s</string>
     <string name="fields_empty">Необходимо заполнить имя и дату</string>
     <string name="event_saved">Дата сохранена!</string>
+    <string name="dialog_delete_event">Удалить это событие?</string>
     <plurals name="age">
         <item quantity="one">(%d год)</item>
         <item quantity="few">(%d года)</item>

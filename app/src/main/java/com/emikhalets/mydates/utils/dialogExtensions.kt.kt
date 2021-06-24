@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.databinding.DialogAddEventBinding
+import com.emikhalets.mydates.databinding.DialogConfirmBinding
 import com.emikhalets.mydates.databinding.DialogDatePickerBinding
 import com.emikhalets.mydates.databinding.DialogTimePickerBinding
 import java.util.*
@@ -90,4 +91,22 @@ inline fun Fragment.startTimePickerDialog(crossinline callback: (hour: Int, minu
     }
 
     dialog.show()
+}
+
+inline fun Fragment.startDeleteDialog(content: String, crossinline callback: () -> Unit) {
+    val dialog = Dialog(requireContext())
+    val binding = DialogConfirmBinding.inflate(LayoutInflater.from(requireContext()))
+    dialog.setContentView(binding.root)
+    dialog.setCanceledOnTouchOutside(false)
+
+    binding.textContent.text = content
+    binding.btnNo.setOnClickListener { dialog.dismiss() }
+    binding.btnYes.setOnClickListener {
+        callback.invoke()
+        dialog.dismiss()
+    }
+
+    dialog.show()
+    val window = dialog.window
+    window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 }

@@ -79,7 +79,7 @@ class EventsAdapter(private val click: (Event) -> Unit) :
                     )
                 }
 
-                imageForward.setOnClickListener { click.invoke(item) }
+                if (item.eventType != 0) root.setOnClickListener { click.invoke(item) }
             }
         }
     }

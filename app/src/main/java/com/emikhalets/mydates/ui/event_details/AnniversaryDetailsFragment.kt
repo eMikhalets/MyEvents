@@ -70,7 +70,11 @@ class AnniversaryDetailsFragment : Fragment(R.layout.fragment_anniversary_detail
                 binding.inputDate.setDate(isChecked)
                 btnSave.isEnabled = true
             }
-            btnDelete.setOnClickListener { viewModel.deleteEvent(event) }
+            btnDelete.setOnClickListener {
+                startDeleteDialog(getString(R.string.dialog_delete_event)) {
+                    viewModel.deleteEvent(event)
+                }
+            }
             btnSave.setOnClickListener {
                 if (validateFields()) viewModel.updateEvent(event)
             }
