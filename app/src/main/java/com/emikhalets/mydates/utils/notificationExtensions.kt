@@ -98,14 +98,19 @@ fun sendEventsNotification(context: Context, events: HashMap<String, List<Event>
 }
 
 private fun setEvent(context: Context, event: Event): String {
-    var string = ""
-    when (event.eventType) {
-        EventType.ANNIVERSARY.value -> string += event.fullName()
-        EventType.BIRTHDAY.value -> string += event.fullName()
-    }
+    var string = context.getString(
+        when (event.eventType) {
+            EventType.ANNIVERSARY.value -> R.string.anniversary
+            EventType.BIRTHDAY.value -> R.string.birthday
+            else -> 0
+        }
+    )
+    string += "  "
     string += event.fullName()
-    if (!event.withoutYear) string += context.resources
-        .getQuantityString(R.plurals.age, event.age, event.age)
+    if (!event.withoutYear) {
+        string += "  "
+        string += context.resources.getQuantityString(R.plurals.age, event.age, event.age)
+    }
     return string
 }
 

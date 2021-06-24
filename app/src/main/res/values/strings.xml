@@ -18,7 +18,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="birthday_date">Birthday %s</string>
+    <string name="birthday">Birthday</string>
     <string name="anniversary_date">Anniversary %s</string>
+    <string name="anniversary">Anniversary</string>
     <string name="fields_empty">Name and date required</string>
     <string name="event_saved">Date saved!</string>
     <string name="dialog_delete_event">Delete this event?</string>
