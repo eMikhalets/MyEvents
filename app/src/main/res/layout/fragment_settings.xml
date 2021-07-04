@@ -7,9 +7,10 @@
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_all_notif"
+        style="@style/Text.Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space_small"
         android:text="@string/settings_all_notif"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,68 +29,73 @@
 
         <TextView
             android:id="@+id/text_time_label"
+            style="@style/Text.Settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/settings_time_label"
-            android:textColor="@color/dark_grey" />
+            android:layout_margin="@dimen/space_small"
+            android:text="@string/settings_time_label" />
 
         <TextView
             android:id="@+id/text_time"
+            style="@style/Text.Settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:paddingStart="16dp"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginEnd="@dimen/space_small"
+            android:paddingStart="@dimen/space_normal"
             android:text="@string/settings_time"
-            android:textColor="@color/dark_grey"
             tools:ignore="RtlSymmetry" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/space_small"
             android:background="@color/pink" />
 
     </LinearLayout>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_month_notif"
+        style="@style/Text.Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space_small"
         android:text="@string/settings_month_notif"
         app:layout_constraintTop_toBottomOf="@id/layout_time" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_week_notif"
+        style="@style/Text.Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space_small"
         android:text="@string/settings_week_notif"
         app:layout_constraintTop_toBottomOf="@id/switch_month_notif" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_two_day_notif"
+        style="@style/Text.Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space_small"
         android:text="@string/settings_two_day_notif"
         app:layout_constraintTop_toBottomOf="@id/switch_week_notif" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_day_notif"
+        style="@style/Text.Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space_small"
         android:text="@string/settings_day_notif"
         app:layout_constraintTop_toBottomOf="@id/switch_two_day_notif" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_today_notif"
+        style="@style/Text.Settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space_small"
         android:text="@string/settings_today_notif"
         app:layout_constraintTop_toBottomOf="@id/switch_day_notif" />
 

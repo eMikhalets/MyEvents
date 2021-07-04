@@ -4,165 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="@dimen/space_small">
 
     <ImageView
         android:id="@+id/image_label"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/icon_size_small"
+        android:layout_height="@dimen/icon_size_small"
+        android:src="@drawable/placeholder_image"
         app:layout_constraintBottom_toBottomOf="@+id/text_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_label"
-        tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_birthday" />
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/text_label"
+        style="@style/Text.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textColor="@color/dark_grey"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:layout_marginStart="@dimen/space_normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_label"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/add_event_text_birthday" />
+        tools:text="День рождения" />
 
     <TextView
         android:id="@+id/text_name"
+        style="@style/Text.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_normal"
         android:text="@string/add_event_text_name"
-        android:textColor="@color/grey"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_label" />
 
     <EditText
         android:id="@+id/input_name"
+        style="@style/Input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/back_edit_text"
-        android:ems="20"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_very_small"
+        android:layout_marginEnd="@dimen/space_normal"
         android:hint="@string/add_event_hint_name"
-        android:inputType="textCapWords"
-        android:lines="1"
-        android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_name"
-        tools:ignore="Autofill,TextFields" />
+        tools:ignore="Autofill" />
 
     <TextView
         android:id="@+id/text_lastname"
+        style="@style/Text.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_normal"
         android:text="@string/add_event_text_lastname"
-        android:textColor="@color/grey"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_name" />
 
     <EditText
         android:id="@+id/input_lastname"
+        style="@style/Input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/back_edit_text"
-        android:ems="20"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_very_small"
+        android:layout_marginEnd="@dimen/space_normal"
         android:hint="@string/add_event_hint_lastname"
-        android:inputType="textCapWords"
-        android:lines="1"
-        android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_lastname"
-        tools:ignore="Autofill,TextFields" />
+        tools:ignore="Autofill" />
 
     <TextView
         android:id="@+id/text_middle_name"
+        style="@style/Text.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_normal"
         android:text="@string/add_event_text_middle_name"
-        android:textColor="@color/grey"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_lastname" />
 
     <EditText
         android:id="@+id/input_middle_name"
+        style="@style/Input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/back_edit_text"
-        android:ems="20"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_very_small"
+        android:layout_marginEnd="@dimen/space_normal"
         android:hint="@string/add_event_hint_middle_name"
-        android:inputType="textCapWords"
-        android:lines="1"
-        android:maxLength="20"
         app:layout_constraintTop_toBottomOf="@+id/text_middle_name"
-        tools:ignore="Autofill,TextFields" />
+        tools:ignore="Autofill" />
 
     <TextView
         android:id="@+id/text_date"
+        style="@style/Text.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_normal"
         android:text="@string/add_event_text_date"
-        android:textColor="@color/grey"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_middle_name" />
 
     <EditText
         android:id="@+id/input_date"
+        style="@style/Input.Date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/back_edit_text"
-        android:drawableEnd="@drawable/ic_calendar"
-        android:ems="11"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_very_small"
         android:hint="@string/add_event_hint_date"
-        app:drawableTint="@color/pink"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_date"
         tools:ignore="Autofill,TextFields" />
 
     <CheckBox
         android:id="@+id/check_year"
+        style="@style/Text.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_small"
         android:text="@string/add_event_text_year"
-        android:textColor="@color/grey"
-        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_date" />
 
     <Button
         android:id="@+id/btn_save"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/Button.Positive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/space_normal"
         android:text="@string/event_details_text_save"
-        android:textAllCaps="false"
-        android:textColor="@color/orange"
         app:icon="@drawable/ic_save"
-        app:iconTint="@color/orange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/check_year" />

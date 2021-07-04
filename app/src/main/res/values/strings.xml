@@ -17,6 +17,7 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="apply">Apply</string>
     <string name="birthday_date">Birthday %s</string>
     <string name="birthday">Birthday</string>
     <string name="anniversary_date">Anniversary %s</string>

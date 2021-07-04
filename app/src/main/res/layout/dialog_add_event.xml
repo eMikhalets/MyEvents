@@ -4,40 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="@dimen/space_small">
 
     <ImageView
         android:id="@+id/image_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_close"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/text_label"
+        style="@style/Text.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_event_text_new_event"
         android:textAlignment="center"
-        android:textColor="@color/dark_grey"
-        android:textSize="24sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_close" />
 
     <TextView
         android:id="@+id/text_choose"
+        style="@style/Text.Secondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16sp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="@dimen/space_normal"
+        android:layout_marginTop="@dimen/space_normal"
+        android:layout_marginEnd="@dimen/space_normal"
         android:text="@string/add_event_text_choose"
-        android:textColor="@color/grey"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_label" />
@@ -46,40 +45,27 @@
         android:id="@+id/card_birthday"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space_small"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="6dp"
+        app:cardCornerRadius="@dimen/corner_radius_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/card_anniversary"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_choose">
 
-        <LinearLayout
+        <TextView
+            style="@style/Text.Secondary"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_birthday"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/add_event_text_birthday"
-                android:textAlignment="center"
-                android:textColor="@color/grey"
-                android:textSize="16sp" />
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_normal"
+            android:drawablePadding="@dimen/space_normal"
+            android:padding="@dimen/space_normal"
+            android:text="@string/add_event_text_birthday"
+            android:textAlignment="center"
+            app:drawableTopCompat="@drawable/ic_birthday" />
 
     </androidx.cardview.widget.CardView>
 
@@ -87,39 +73,26 @@
         android:id="@+id/card_anniversary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/space_small"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="6dp"
+        app:cardCornerRadius="@dimen/corner_radius_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card_birthday"
         app:layout_constraintTop_toBottomOf="@id/text_choose">
 
-        <LinearLayout
+        <TextView
+            style="@style/Text.Secondary"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_anniversary"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/add_event_text_anniversary"
-                android:textAlignment="center"
-                android:textColor="@color/grey"
-                android:textSize="16sp" />
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_normal"
+            android:drawablePadding="@dimen/space_normal"
+            android:padding="@dimen/space_normal"
+            android:text="@string/add_event_text_anniversary"
+            android:textAlignment="center"
+            app:drawableTopCompat="@drawable/ic_anniversary" />
 
     </androidx.cardview.widget.CardView>
 
