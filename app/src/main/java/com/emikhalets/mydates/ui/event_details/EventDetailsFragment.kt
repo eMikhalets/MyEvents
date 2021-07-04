@@ -11,16 +11,16 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
-import com.emikhalets.mydates.databinding.FragmentBirthdayDetailsBinding
+import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
+class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
 
-    private val binding by viewBinding(FragmentBirthdayDetailsBinding::bind)
+    private val binding by viewBinding(FragmentEventDetailsBinding::bind)
     private val viewModel: EventDetailsVM by viewModels()
-    private val args: BirthdayDetailsFragmentArgs by navArgs()
+    private val args: EventDetailsFragmentArgs by navArgs()
 
     private lateinit var event: Event
 
@@ -35,10 +35,8 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
     private fun insertEventData() {
         event = args.event
         binding.apply {
+            setViewsForEventType(EventType.get(event.eventType))
             textFullName.text = event.fullName()
-            textInfo.text = getString(
-                R.string.birthday_date, event.date.dateFormat("d MMMM")
-            )
             if (event.daysLeft == 0) textDaysLeft.text = getString(R.string.today)
             else textDaysLeft.text = resources.getQuantityString(
                 R.plurals.days_left, event.daysLeft, event.daysLeft
@@ -145,6 +143,31 @@ class BirthdayDetailsFragment : Fragment(R.layout.fragment_birthday_details) {
             inputLastname.clearFocus()
             inputMiddleName.clearFocus()
             inputNotes.clearFocus()
+        }
+    }
+
+    private fun setViewsForEventType(eventType: EventType) {
+        when (eventType) {
+            EventType.ANNIVERSARY -> {
+                binding.apply {
+                    imagePhoto.setImageResource(R.drawable.ic_anniversary)
+                    textInfo.text = getString(
+                        R.string.anniversary_date, event.date.dateFormat("d MMMM")
+                    )
+                    textLastname.visibility = View.GONE
+                    textMiddleName.visibility = View.GONE
+                    inputLastname.visibility = View.GONE
+                    inputMiddleName.visibility = View.GONE
+                }
+            }
+            EventType.BIRTHDAY -> {
+                binding.apply {
+                    imagePhoto.setImageResource(R.drawable.ic_birthday)
+                    textInfo.text = getString(
+                        R.string.birthday_date, event.date.dateFormat("d MMMM")
+                    )
+                }
+            }
         }
     }
 }

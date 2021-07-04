@@ -11,49 +11,31 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_events_list">
         <action
-            android:id="@+id/action_events_to_addAnniversary"
-            app:destination="@id/addAnniversaryFragment" />
-        <action
             android:id="@+id/action_events_to_addBirthday"
-            app:destination="@id/addBirthdayFragment" />
+            app:destination="@id/addEventFragment" />
         <action
-            android:id="@+id/action_events_to_anniversaryDetails"
-            app:destination="@id/anniversaryDetailsFragment" />
-        <action
-            android:id="@+id/action_events_to_birthdayDetails"
-            app:destination="@id/birthdayDetailsFragment" />
+            android:id="@+id/action_events_to_eventDetails"
+            app:destination="@id/eventDetailsFragment" />
         <action
             android:id="@+id/action_events_to_settings"
             app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/addBirthdayFragment"
-        android:name="com.emikhalets.mydates.ui.add_event.AddBirthdayFragment"
+        android:id="@+id/addEventFragment"
+        android:name="com.emikhalets.mydates.ui.add_event.AddEventFragment"
         android:label="AddBirthdayFragment"
-        tools:layout="@layout/fragment_add_birthday" />
-
-    <fragment
-        android:id="@+id/addAnniversaryFragment"
-        android:name="com.emikhalets.mydates.ui.add_event.AddAnniversaryFragment"
-        android:label="AddAnniversaryFragment"
-        tools:layout="@layout/fragment_add_anniversary" />
-
-    <fragment
-        android:id="@+id/anniversaryDetailsFragment"
-        android:name="com.emikhalets.mydates.ui.event_details.AnniversaryDetailsFragment"
-        android:label="AnniversaryDetailsFragment"
-        tools:layout="@layout/fragment_anniversary_details">
+        tools:layout="@layout/fragment_add_event">
         <argument
-            android:name="event"
-            app:argType="com.emikhalets.mydates.data.database.entities.Event" />
+            android:name="event_type"
+            app:argType="com.emikhalets.mydates.utils.EventType" />
     </fragment>
 
     <fragment
-        android:id="@+id/birthdayDetailsFragment"
-        android:name="com.emikhalets.mydates.ui.event_details.BirthdayDetailsFragment"
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.emikhalets.mydates.ui.event_details.EventDetailsFragment"
         android:label="BirthdayDetailsFragment"
-        tools:layout="@layout/fragment_birthday_details">
+        tools:layout="@layout/fragment_event_details">
         <argument
             android:name="event"
             app:argType="com.emikhalets.mydates.data.database.entities.Event" />

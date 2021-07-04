@@ -69,8 +69,8 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
         binding.btnAddEvent.setOnClickListener {
             startAddEventDialog { eventType ->
                 when (eventType) {
-                    EventType.ANNIVERSARY -> navigateEventsToAddAnniversary()
-                    EventType.BIRTHDAY -> navigateEventsToAddBirthday()
+                    EventType.ANNIVERSARY -> navigateEventsToAddEvent(EventType.ANNIVERSARY)
+                    EventType.BIRTHDAY -> navigateEventsToAddEvent(EventType.BIRTHDAY)
                 }
             }
         }
@@ -87,9 +87,6 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
     }
 
     private fun onDateClick(item: Event) {
-        when (item.eventType) {
-            EventType.ANNIVERSARY.value -> navigateEventsToAnniversaryDetails(item)
-            EventType.BIRTHDAY.value -> navigateEventsToBirthdayDetails(item)
-        }
+        navigateEventsToEventDetails(item)
     }
 }

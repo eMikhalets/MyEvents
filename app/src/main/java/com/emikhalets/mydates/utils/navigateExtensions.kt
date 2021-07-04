@@ -9,23 +9,13 @@ fun Fragment.navigateBack() {
     findNavController().popBackStack()
 }
 
-fun Fragment.navigateEventsToAddAnniversary() {
-    val action = EventsListFragmentDirections.actionEventsToAddAnniversary()
+fun Fragment.navigateEventsToAddEvent(eventType: EventType) {
+    val action = EventsListFragmentDirections.actionEventsToAddBirthday(eventType)
     findNavController().navigate(action)
 }
 
-fun Fragment.navigateEventsToAddBirthday() {
-    val action = EventsListFragmentDirections.actionEventsToAddBirthday()
-    findNavController().navigate(action)
-}
-
-fun Fragment.navigateEventsToAnniversaryDetails(event: Event) {
-    val action = EventsListFragmentDirections.actionEventsToAnniversaryDetails(event)
-    findNavController().navigate(action)
-}
-
-fun Fragment.navigateEventsToBirthdayDetails(event: Event) {
-    val action = EventsListFragmentDirections.actionEventsToBirthdayDetails(event)
+fun Fragment.navigateEventsToEventDetails(event: Event) {
+    val action = EventsListFragmentDirections.actionEventsToEventDetails(event)
     findNavController().navigate(action)
 }
 

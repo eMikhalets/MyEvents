@@ -14,7 +14,7 @@
             android:id="@+id/image_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_anniversary"
+            android:src="@drawable/ic_birthday"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +30,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/image_photo"
-            tools:text="Какая-нибудь свадьба" />
+            tools:text="Михалец Евгений" />
 
         <TextView
             android:id="@+id/text_info"
@@ -41,7 +41,7 @@
             android:textColor="@color/grey"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/text_full_name"
-            tools:text="Годовщина 21 августа" />
+            tools:text="День рождения 21 августа" />
 
         <TextView
             android:id="@+id/text_days_left"
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
-            android:text="@string/add_birthday_text_name"
+            android:text="@string/event_details_text_name"
             android:textColor="@color/grey"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -128,11 +128,67 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/back_edit_text"
             android:ems="20"
-            android:hint="@string/add_birthday_hint_name"
+            android:hint="@string/event_details_hint_name"
             android:inputType="textCapWords"
             android:lines="1"
             android:maxLength="20"
             app:layout_constraintTop_toBottomOf="@+id/text_name"
+            tools:ignore="Autofill,TextFields" />
+
+        <TextView
+            android:id="@+id/text_lastname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/event_details_text_lastname"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_name" />
+
+        <EditText
+            android:id="@+id/input_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/back_edit_text"
+            android:ems="20"
+            android:hint="@string/event_details_hint_lastname"
+            android:inputType="textCapWords"
+            android:lines="1"
+            android:maxLength="20"
+            app:layout_constraintTop_toBottomOf="@+id/text_lastname"
+            tools:ignore="Autofill,TextFields" />
+
+        <TextView
+            android:id="@+id/text_middle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/event_details_text_middle_name"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_lastname" />
+
+        <EditText
+            android:id="@+id/input_middle_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/back_edit_text"
+            android:ems="20"
+            android:hint="@string/event_details_hint_middle_name"
+            android:inputType="textCapWords"
+            android:lines="1"
+            android:maxLength="20"
+            app:layout_constraintTop_toBottomOf="@+id/text_middle_name"
             tools:ignore="Autofill,TextFields" />
 
         <TextView
@@ -141,11 +197,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="16dp"
-            android:text="@string/add_birthday_text_date"
+            android:text="@string/event_details_text_date"
             android:textColor="@color/grey"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/input_name" />
+            app:layout_constraintTop_toBottomOf="@id/input_middle_name" />
 
         <EditText
             android:id="@+id/input_date"
@@ -156,7 +212,7 @@
             android:background="@drawable/back_edit_text"
             android:drawableEnd="@drawable/ic_calendar"
             android:ems="11"
-            android:hint="@string/add_birthday_hint_date"
+            android:hint="@string/event_details_hint_date"
             app:drawableTint="@color/pink"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_date"
@@ -168,7 +224,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="@string/add_anniversary_text_year"
+            android:text="@string/add_event_text_year"
             android:textColor="@color/grey"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"

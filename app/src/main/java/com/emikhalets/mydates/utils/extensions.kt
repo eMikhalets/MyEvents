@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.data.database.entities.Event
 import kotlinx.coroutines.Dispatchers
@@ -54,7 +55,7 @@ fun Long.dateFormat(pattern: String): String {
     }
 }
 
-fun Fragment.toast(resource: Int) =
+fun Fragment.toast(@StringRes resource: Int) =
     Toast.makeText(requireContext(), resource, Toast.LENGTH_SHORT).show()
 
 fun Fragment.toast(message: String) =

@@ -43,23 +43,15 @@
     <string name="add_event_text_choose">Select the type of event</string>
     <string name="add_event_text_birthday">Birthday</string>
     <string name="add_event_text_anniversary">Anniversary</string>
-
-    <string name="add_birthday_text_label">Birthday</string>
-    <string name="add_birthday_text_name">Name</string>
-    <string name="add_birthday_hint_name">Enter name</string>
-    <string name="add_birthday_text_lastname">Last name</string>
-    <string name="add_birthday_hint_lastname">Enter last name</string>
-    <string name="add_birthday_text_middle_name">Middle name</string>
-    <string name="add_birthday_hint_middle_name">Enter middle name</string>
-    <string name="add_birthday_text_date">Date</string>
-    <string name="add_birthday_hint_date">31 december 1999</string>
-
-    <string name="add_anniversary_text_label">Anniversary</string>
-    <string name="add_anniversary_text_name">Name</string>
-    <string name="add_anniversary_hint_name">Enter name</string>
-    <string name="add_anniversary_text_date">Date</string>
-    <string name="add_anniversary_hint_date">31 december 1999</string>
-    <string name="add_anniversary_text_year">I don\'t remember the year</string>
+    <string name="add_event_text_name">Name</string>
+    <string name="add_event_hint_name">Enter name</string>
+    <string name="add_event_text_lastname">Last name</string>
+    <string name="add_event_hint_lastname">Enter last name</string>
+    <string name="add_event_text_middle_name">Middle name</string>
+    <string name="add_event_hint_middle_name">Enter middle name</string>
+    <string name="add_event_text_date">Date</string>
+    <string name="add_event_hint_date">31 december 1999</string>
+    <string name="add_event_text_year">I don\'t remember the year</string>
 
     <string name="event_details_text_edit">Edit data</string>
     <string name="event_details_text_notes">Notes</string>
@@ -72,6 +64,7 @@
     <string name="event_details_hint_middle_name">Enter middle name</string>
     <string name="event_details_text_date">Date</string>
     <string name="event_details_hint_date">31 december 1999</string>
+    <string name="event_details_text_year">I don\'t remember the year</string>
     <string name="event_details_text_delete">Delete</string>
     <string name="event_details_text_save">Save</string>
 

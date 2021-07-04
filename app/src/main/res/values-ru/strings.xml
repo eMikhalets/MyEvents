@@ -41,25 +41,17 @@
     <string name="add_event_text_choose">Выберите тип события</string>
     <string name="add_event_text_birthday">День рождения</string>
     <string name="add_event_text_anniversary">Годовщина</string>
+    <string name="add_event_text_name">Имя</string>
+    <string name="add_event_hint_name">Введите имя</string>
+    <string name="add_event_text_lastname">Фамилия</string>
+    <string name="add_event_hint_lastname">Введите фамилию</string>
+    <string name="add_event_text_middle_name">Отчество</string>
+    <string name="add_event_hint_middle_name">Введите отчество</string>
+    <string name="add_event_text_date">Дата</string>
+    <string name="add_event_hint_date">31 декабря 1999</string>
+    <string name="add_event_text_year">Я не помню год</string>
 
-    <string name="add_birthday_text_label">День рождения</string>
-    <string name="add_birthday_text_name">Имя</string>
-    <string name="add_birthday_hint_name">Введите имя</string>
-    <string name="add_birthday_text_lastname">Фамилия</string>
-    <string name="add_birthday_hint_lastname">Введите фамилию</string>
-    <string name="add_birthday_text_middle_name">Отчество</string>
-    <string name="add_birthday_hint_middle_name">Введите отчество</string>
-    <string name="add_birthday_text_date">Дата</string>
-    <string name="add_birthday_hint_date">31 декабря 1999</string>
-
-    <string name="add_anniversary_text_label">Годовщина</string>
-    <string name="add_anniversary_text_name">Название</string>
-    <string name="add_anniversary_hint_name">Введите название</string>
-    <string name="add_anniversary_text_date">Дата</string>
-    <string name="add_anniversary_hint_date">31 декабря 1999</string>
-    <string name="add_anniversary_text_year">Я не помню год</string>
-
-    <string name="event_details_text_edit">Редактирование данных</string>
+    <string name="event_details_text_edit">Редактирование</string>
     <string name="event_details_text_notes">Заметки</string>
     <string name="event_details_hint_notes">Введите заметки</string>
     <string name="event_details_text_name">Имя</string>
@@ -70,6 +62,7 @@
     <string name="event_details_hint_middle_name">Введите отчество</string>
     <string name="event_details_text_date">Дата</string>
     <string name="event_details_hint_date">31 декабря 1999</string>
+    <string name="event_details_text_year">Я не помню год</string>
     <string name="event_details_text_delete">Удалить</string>
     <string name="event_details_text_save">Сохранить</string>
 
