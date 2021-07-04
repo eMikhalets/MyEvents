@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentSettingsBinding
+import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,8 +48,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 if (switchAllNotif.isChecked) {
                     startTimePickerDialog { hour, minute ->
                         binding.textTime.text = formatTime(hour, minute)
-                        saveNotifTime(hour, minute)
-                        resetEventAlarm(hour, minute)
+                        saveNotificationsTime(hour, minute)
                     }
                 }
             }
@@ -91,12 +91,20 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .getInt(APP_SP_EVENT_HOUR, 11)
     }
 
-    private fun saveNotifTime(hour: Int, minute: Int) {
+    private fun saveNotificationsTime(hour: Int, minute: Int) {
         val sp = requireContext()
             .getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE).edit()
         sp.putInt(APP_SP_EVENT_HOUR, hour)
         sp.putInt(APP_SP_EVENT_MINUTE, minute)
         sp.apply()
+
+        setRepeatingAlarm(
+            requireContext(),
+            11,
+            0,
+            EventsReceiver::class.java,
+            APP_EVENTS_ALARM_REQUEST_CODE
+        )
     }
 
     private fun getNotifMinute(): Int {

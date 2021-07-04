@@ -7,7 +7,7 @@ import com.emikhalets.mydates.data.database.entities.Event
 
 interface DatabaseRepository {
 
-    suspend fun getAllEvents(): ListResult<List<Event>>
+    suspend fun getAllEvents(lastUpdate: Long): ListResult<List<Event>>
     suspend fun getAllAfterDays(days: Int): ListResult<List<Event>>
     suspend fun getEventById(id: Long): SingleResult<Event>
     suspend fun insertEvent(event: Event): CompleteResult<Nothing>

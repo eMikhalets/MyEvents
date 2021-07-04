@@ -17,12 +17,24 @@ class MyDatesApp : Application() {
         }
 
         if (!isAlarmLaunched(APP_SP_ALARM_UPDATE_FLAG)) {
-            setAlarm(1, 0, UpdateEventsReceiver::class.java, APP_UPDATE_ALARM_REQUEST_CODE)
+            setRepeatingAlarm(
+                this,
+                0,
+                10,
+                UpdateEventsReceiver::class.java,
+                APP_UPDATE_ALARM_REQUEST_CODE
+            )
             saveAlarmLaunchState(APP_SP_ALARM_UPDATE_FLAG)
         }
 
         if (!isAlarmLaunched(APP_SP_ALARM_EVENT_FLAG)) {
-            setAlarm(11, 0, EventsReceiver::class.java, APP_EVENTS_ALARM_REQUEST_CODE)
+            setRepeatingAlarm(
+                this,
+                11,
+                0,
+                EventsReceiver::class.java,
+                APP_EVENTS_ALARM_REQUEST_CODE
+            )
             saveAlarmLaunchState(APP_SP_ALARM_EVENT_FLAG)
         }
 

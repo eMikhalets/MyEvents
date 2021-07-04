@@ -7,14 +7,23 @@ import com.emikhalets.mydates.data.database.dao.EventDao
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.utils.calculateParameters
 import com.emikhalets.mydates.utils.sortWithDividers
+import java.util.*
 import javax.inject.Inject
 
 class RoomRepository @Inject constructor(
     private val eventDao: EventDao
 ) : DatabaseRepository {
 
-    override suspend fun getAllEvents(): ListResult<List<Event>> {
+    override suspend fun getAllEvents(lastUpdate: Long): ListResult<List<Event>> {
         return try {
+            val now = Date().time
+            if (now - lastUpdate > 86400000) {
+                val events = eventDao.getAll()
+                val newEvents = mutableListOf<Event>()
+                events.forEach { newEvents.add(it.calculateParameters()) }
+                eventDao.updateAll(newEvents)
+            }
+
             val result = eventDao.getAll()
             if (result.isEmpty()) {
                 ListResult.EmptyList
