@@ -25,6 +25,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setTitle(R.string.title_add_event)
         prepareEventData()
         clickListeners()
         observe()

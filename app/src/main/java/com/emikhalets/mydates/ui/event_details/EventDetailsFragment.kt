@@ -26,6 +26,7 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setTitle(R.string.title_event_details)
         insertEventData()
         clickListeners()
         textWatchers()

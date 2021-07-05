@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.emikhalets.mydates.MainActivity
 import com.emikhalets.mydates.data.database.entities.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -122,4 +123,8 @@ fun Fragment.hideSoftKeyboard() {
     if (inputMethodManager.isAcceptingText) {
         inputMethodManager.hideSoftInputFromWindow(activity?.currentFocus?.windowToken, 0)
     }
+}
+
+fun Fragment.setTitle(@StringRes stringRes: Int) {
+    (activity as MainActivity).supportActionBar?.title = getString(stringRes)
 }

@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name" translatable="false">MyDates</string>
 
-    <string name="title_home">All Dates</string>
-    <string name="title_date_details">Date Details</string>
+    <string name="title_home">All Events</string>
+    <string name="title_event_details">Event Details</string>
+    <string name="title_add_event">New Event</string>
     <string name="title_groups">All Groups</string>
     <string name="title_calendar">Calendar</string>
+    <string name="title_settings">Settings</string>
 
     <string name="notification_title">Upcoming events</string>
     <string name="notification_text_month">After month:</string>
@@ -26,7 +28,7 @@
     <string name="event_saved">Date saved!</string>
     <string name="dialog_delete_event">Delete this event?</string>
     <string name="time_hour_minute" translatable="false">%d:%d</string>
-    <string name="time_hour_minute_sub" translatable="false">%d:%0d</string>
+    <string name="time_hour_minute_sub" translatable="false">%d:0%d</string>
     <plurals name="age">
         <item quantity="other">(%d years)</item>
     </plurals>

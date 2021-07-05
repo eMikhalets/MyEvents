@@ -11,14 +11,26 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_events_list">
         <action
-            android:id="@+id/action_events_to_addBirthday"
-            app:destination="@id/addEventFragment" />
+            android:id="@+id/action_events_to_addEvent"
+            app:destination="@id/addEventFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_pop_in"
+            app:popExitAnim="@anim/slide_pop_out" />
         <action
             android:id="@+id/action_events_to_eventDetails"
-            app:destination="@id/eventDetailsFragment" />
+            app:destination="@id/eventDetailsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_pop_in"
+            app:popExitAnim="@anim/slide_pop_out" />
         <action
             android:id="@+id/action_events_to_settings"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_pop_in"
+            app:popExitAnim="@anim/slide_pop_out" />
     </fragment>
 
     <fragment

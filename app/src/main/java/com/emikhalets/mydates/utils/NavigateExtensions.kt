@@ -10,7 +10,7 @@ fun Fragment.navigateBack() {
 }
 
 fun Fragment.navigateEventsToAddEvent(eventType: EventType) {
-    val action = EventsListFragmentDirections.actionEventsToAddBirthday(eventType)
+    val action = EventsListFragmentDirections.actionEventsToAddEvent(eventType)
     findNavController().navigate(action)
 }
 

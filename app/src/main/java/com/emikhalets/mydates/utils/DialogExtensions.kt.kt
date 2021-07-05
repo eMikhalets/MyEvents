@@ -14,8 +14,10 @@ import java.util.*
 inline fun Fragment.startAddEventDialog(crossinline callback: (EventType) -> Unit) {
     val dialog = Dialog(requireContext())
     val binding = DialogAddEventBinding.inflate(LayoutInflater.from(context))
+    binding.root.alpha = 0f
     dialog.setContentView(binding.root)
     dialog.setCanceledOnTouchOutside(false)
+    binding.root.animate().alpha(1f).setDuration(300).start()
 
     binding.apply {
         cardBirthday.setOnClickListener {
@@ -39,9 +41,11 @@ inline fun Fragment.startAddEventDialog(crossinline callback: (EventType) -> Uni
 inline fun Fragment.startDatePickerDialog(init: Long, crossinline callback: (Long) -> Unit) {
     val dialog = Dialog(requireContext())
     val binding = DialogDatePickerBinding.inflate(LayoutInflater.from(requireContext()))
+    binding.root.alpha = 0f
     val calendar = Calendar.getInstance()
     dialog.setContentView(binding.root)
     dialog.setCanceledOnTouchOutside(false)
+    binding.root.animate().alpha(1f).setDuration(300).start()
 
     calendar.timeInMillis = init
     val year: Int = calendar.get(Calendar.YEAR)
@@ -57,6 +61,9 @@ inline fun Fragment.startDatePickerDialog(init: Long, crossinline callback: (Lon
         callback.invoke(calendar.timeInMillis)
         dialog.dismiss()
     }
+    binding.imageClose.setOnClickListener {
+        dialog.dismiss()
+    }
 
     dialog.show()
 }
@@ -64,9 +71,11 @@ inline fun Fragment.startDatePickerDialog(init: Long, crossinline callback: (Lon
 inline fun Fragment.startTimePickerDialog(crossinline callback: (hour: Int, minute: Int) -> Unit) {
     val dialog = Dialog(requireContext())
     val binding = DialogTimePickerBinding.inflate(LayoutInflater.from(requireContext()))
+    binding.root.alpha = 0f
     dialog.setContentView(binding.root)
     binding.timePicker.setIs24HourView(true)
     dialog.setCanceledOnTouchOutside(false)
+    binding.root.animate().alpha(1f).setDuration(300).start()
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         binding.timePicker.hour = 11
@@ -89,6 +98,9 @@ inline fun Fragment.startTimePickerDialog(crossinline callback: (hour: Int, minu
         callback.invoke(hour, minute)
         dialog.dismiss()
     }
+    binding.imageClose.setOnClickListener {
+        dialog.dismiss()
+    }
 
     dialog.show()
 }
@@ -96,8 +108,10 @@ inline fun Fragment.startTimePickerDialog(crossinline callback: (hour: Int, minu
 inline fun Fragment.startDeleteDialog(content: String, crossinline callback: () -> Unit) {
     val dialog = Dialog(requireContext())
     val binding = DialogConfirmBinding.inflate(LayoutInflater.from(requireContext()))
+    binding.root.alpha = 0f
     dialog.setContentView(binding.root)
     dialog.setCanceledOnTouchOutside(false)
+    binding.root.animate().alpha(1f).setDuration(300).start()
 
     binding.textContent.text = content
     binding.btnNo.setOnClickListener { dialog.dismiss() }
