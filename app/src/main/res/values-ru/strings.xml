@@ -25,6 +25,7 @@
     <string name="anniversary_date">Годовщина %s</string>
     <string name="anniversary">Годовщина</string>
     <string name="fields_empty">Необходимо заполнить имя и дату</string>
+    <string name="alarm_managers_restarted">Ежедневные уведомления и обновления событий перезапущены!</string>
     <string name="event_saved">Дата сохранена!</string>
     <string name="dialog_delete_event">Удалить это событие?</string>
     <plurals name="age">
@@ -78,4 +79,5 @@
     <string name="settings_two_day_notif">Уведомлять о событиях за 2 дня</string>
     <string name="settings_day_notif">Уведомлять о событиях за день</string>
     <string name="settings_today_notif">Уведомлять о событиях утром</string>
+    <string name="settings_restart_alarm_manager">Перезапустить ежедневные уведомления и обновления событий</string>
 </resources>

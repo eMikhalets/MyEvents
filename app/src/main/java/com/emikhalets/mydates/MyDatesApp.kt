@@ -19,8 +19,8 @@ class MyDatesApp : Application() {
         if (!isAlarmLaunched(APP_SP_ALARM_UPDATE_FLAG)) {
             setRepeatingAlarm(
                 this,
-                0,
-                10,
+                EVENTS_UPDATE_HOUR,
+                EVENTS_UPDATE_MINUTE,
                 UpdateEventsReceiver::class.java,
                 APP_UPDATE_ALARM_REQUEST_CODE
             )

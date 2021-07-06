@@ -8,7 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.emikhalets.mydates.MainActivity
+import com.emikhalets.mydates.ui.MainActivity
 import com.emikhalets.mydates.data.database.entities.Event
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,6 +17,8 @@ import java.util.*
 
 const val APP_EVENTS_ALARM_REQUEST_CODE = 7
 const val APP_UPDATE_ALARM_REQUEST_CODE = 8
+const val EVENTS_UPDATE_HOUR = 0
+const val EVENTS_UPDATE_MINUTE = 10
 
 const val APP_SHARED_PREFERENCES = "my_dates_shared_preferences"
 const val APP_SP_UPDATE_EVENTS_TIME = "my_dates_sp_update_event_time"

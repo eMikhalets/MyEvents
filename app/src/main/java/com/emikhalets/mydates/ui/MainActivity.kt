@@ -1,4 +1,4 @@
-package com.emikhalets.mydates
+package com.emikhalets.mydates.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

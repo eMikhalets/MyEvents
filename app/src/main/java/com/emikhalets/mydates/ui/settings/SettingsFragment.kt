@@ -84,7 +84,32 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             switchTodayNotif.setOnCheckedChangeListener { _, isChecked ->
                 saveSharedPrefNotif(APP_SP_NOTIF_TODAY_FLAG, isChecked)
             }
+            textRestartAlarmManager.setOnClickListener {
+                restartAlarmManagers()
+            }
         }
+    }
+
+    private fun restartAlarmManagers() {
+        val sp = requireContext().getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+        val notifHour = sp.getInt(APP_SP_EVENT_HOUR, 11)
+        val notifMinute = sp.getInt(APP_SP_EVENT_MINUTE, 0)
+
+        setRepeatingAlarm(
+            requireContext(),
+            EVENTS_UPDATE_HOUR,
+            EVENTS_UPDATE_MINUTE,
+            EventsReceiver::class.java,
+            APP_UPDATE_ALARM_REQUEST_CODE
+        )
+
+        setRepeatingAlarm(
+            requireContext(),
+            notifHour,
+            notifMinute,
+            EventsReceiver::class.java,
+            APP_EVENTS_ALARM_REQUEST_CODE
+        )
     }
 
     private fun getNotifHour(): Int {

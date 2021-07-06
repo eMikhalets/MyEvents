@@ -12,7 +12,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.emikhalets.mydates.MainActivity
+import com.emikhalets.mydates.ui.MainActivity
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 
