@@ -80,4 +80,6 @@
     <string name="settings_day_notif">Уведомлять о событиях за день</string>
     <string name="settings_today_notif">Уведомлять о событиях утром</string>
     <string name="settings_restart_alarm_manager">Перезапустить ежедневные уведомления и обновления событий</string>
+    <string name="settings_import_events">Импорт событий</string>
+    <string name="settings_export_events">Экспорт событий</string>
 </resources>

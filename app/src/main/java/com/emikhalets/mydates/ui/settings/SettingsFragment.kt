@@ -1,6 +1,8 @@
 package com.emikhalets.mydates.ui.settings
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -23,6 +25,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         setTitle(R.string.title_settings)
         prepareSettings()
         clickListeners()
+        viewModel.importEvents.observe(viewLifecycleOwner) { path ->
+        }
     }
 
     private fun prepareSettings() {
@@ -87,7 +91,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             textRestartAlarmManager.setOnClickListener {
                 restartAlarmManagers()
             }
+            textImportEvents.setOnClickListener { importEvents() }
+            textExportEvents.setOnClickListener { exportEvents() }
         }
+    }
+
+    private fun importEvents() {
+    }
+
+    private fun exportEvents() {
+        val path = requireContext().getExternalFilesDir(null)
+        viewModel.createEventsJson(path)
     }
 
     private fun restartAlarmManagers() {

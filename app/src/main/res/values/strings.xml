@@ -84,4 +84,6 @@
     <string name="settings_day_notif">Notify about events for 1 day</string>
     <string name="settings_today_notif">Notify about events per day</string>
     <string name="settings_restart_alarm_manager">Restart daily notifications and event updates</string>
+    <string name="settings_import_events">Import events</string>
+    <string name="settings_export_events">Export events</string>
 </resources>

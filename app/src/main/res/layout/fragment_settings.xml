@@ -1,117 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_all_notif"
-        style="@style/Text.Settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_small"
-        android:text="@string/settings_all_notif"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/layout_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/switch_all_notif">
+        android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/pink" />
-
-        <TextView
-            android:id="@+id/text_time_label"
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_all_notif"
             style="@style/Text.Settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_small"
-            android:text="@string/settings_time_label" />
+            android:text="@string/settings_all_notif"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/text_time"
+        <LinearLayout
+            android:id="@+id/layout_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/switch_all_notif">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/pink" />
+
+            <TextView
+                android:id="@+id/text_time_label"
+                style="@style/Text.Settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_small"
+                android:text="@string/settings_time_label" />
+
+            <TextView
+                android:id="@+id/text_time"
+                style="@style/Text.Settings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_small"
+                android:layout_marginEnd="@dimen/space_small"
+                android:paddingStart="@dimen/space_normal"
+                android:text="@string/settings_time"
+                tools:ignore="RtlSymmetry" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/space_small"
+                android:background="@color/pink" />
+
+        </LinearLayout>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_month_notif"
             style="@style/Text.Settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/space_small"
-            android:layout_marginEnd="@dimen/space_small"
-            android:paddingStart="@dimen/space_normal"
-            android:text="@string/settings_time"
-            tools:ignore="RtlSymmetry" />
+            android:layout_margin="@dimen/space_small"
+            android:text="@string/settings_month_notif"
+            app:layout_constraintTop_toBottomOf="@id/layout_time" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_week_notif"
+            style="@style/Text.Settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:text="@string/settings_week_notif"
+            app:layout_constraintTop_toBottomOf="@id/switch_month_notif" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_two_day_notif"
+            style="@style/Text.Settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:text="@string/settings_two_day_notif"
+            app:layout_constraintTop_toBottomOf="@id/switch_week_notif" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_day_notif"
+            style="@style/Text.Settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:text="@string/settings_day_notif"
+            app:layout_constraintTop_toBottomOf="@id/switch_two_day_notif" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_today_notif"
+            style="@style/Text.Settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:text="@string/settings_today_notif"
+            app:layout_constraintTop_toBottomOf="@id/switch_day_notif" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="@dimen/space_small"
             android:background="@color/pink" />
+
+        <TextView
+            android:id="@+id/text_restart_alarm_manager"
+            style="@style/Text.Settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:paddingTop="@dimen/space_normal"
+            android:paddingBottom="@dimen/space_normal"
+            android:text="@string/settings_restart_alarm_manager" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/pink" />
+
+        <TextView
+            android:id="@+id/text_import_events"
+            style="@style/Text.Settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:paddingTop="@dimen/space_normal"
+            android:paddingBottom="@dimen/space_normal"
+            android:text="@string/settings_import_events" />
+
+        <TextView
+            android:id="@+id/text_export_events"
+            style="@style/Text.Settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_small"
+            android:paddingTop="@dimen/space_normal"
+            android:paddingBottom="@dimen/space_normal"
+            android:text="@string/settings_export_events" />
 
     </LinearLayout>
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_month_notif"
-        style="@style/Text.Settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_small"
-        android:text="@string/settings_month_notif"
-        app:layout_constraintTop_toBottomOf="@id/layout_time" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_week_notif"
-        style="@style/Text.Settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_small"
-        android:text="@string/settings_week_notif"
-        app:layout_constraintTop_toBottomOf="@id/switch_month_notif" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_two_day_notif"
-        style="@style/Text.Settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_small"
-        android:text="@string/settings_two_day_notif"
-        app:layout_constraintTop_toBottomOf="@id/switch_week_notif" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_day_notif"
-        style="@style/Text.Settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_small"
-        android:text="@string/settings_day_notif"
-        app:layout_constraintTop_toBottomOf="@id/switch_two_day_notif" />
-
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch_today_notif"
-        style="@style/Text.Settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_small"
-        android:text="@string/settings_today_notif"
-        app:layout_constraintTop_toBottomOf="@id/switch_day_notif" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/pink" />
-
-    <TextView
-        android:id="@+id/text_restart_alarm_manager"
-        style="@style/Text.Settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_small"
-        android:padding="@dimen/space_normal"
-        android:text="@string/settings_restart_alarm_manager" />
-
-</LinearLayout>
+</ScrollView>

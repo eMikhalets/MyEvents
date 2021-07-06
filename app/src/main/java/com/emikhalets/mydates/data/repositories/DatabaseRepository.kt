@@ -4,10 +4,11 @@ import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.SingleResult
 import com.emikhalets.mydates.data.database.entities.Event
+import java.util.*
 
 interface DatabaseRepository {
 
-    suspend fun getAllEvents(lastUpdate: Long): ListResult<List<Event>>
+    suspend fun getAllEvents(lastUpdate: Long = Date().time): ListResult<List<Event>>
     suspend fun getAllAfterDays(days: Int): ListResult<List<Event>>
     suspend fun getEventById(id: Long): SingleResult<Event>
     suspend fun insertEvent(event: Event): CompleteResult<Nothing>

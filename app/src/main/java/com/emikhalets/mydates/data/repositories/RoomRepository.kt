@@ -6,7 +6,6 @@ import com.emikhalets.mydates.data.database.SingleResult
 import com.emikhalets.mydates.data.database.dao.EventDao
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.utils.calculateParameters
-import com.emikhalets.mydates.utils.sortWithDividers
 import java.util.*
 import javax.inject.Inject
 
@@ -25,12 +24,8 @@ class RoomRepository @Inject constructor(
             }
 
             val result = eventDao.getAll()
-            if (result.isEmpty()) {
-                ListResult.EmptyList
-            } else {
-                val events = sortWithDividers(result)
-                ListResult.Success(events)
-            }
+            if (result.isEmpty()) ListResult.EmptyList
+            else ListResult.Success(result)
         } catch (ex: Exception) {
             ex.printStackTrace()
             ListResult.Error(ex)
