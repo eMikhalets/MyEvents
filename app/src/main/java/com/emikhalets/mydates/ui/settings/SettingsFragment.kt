@@ -124,6 +124,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             EventsReceiver::class.java,
             APP_EVENTS_ALARM_REQUEST_CODE
         )
+
+        toast(R.string.alarm_managers_restarted)
     }
 
     private fun getNotifHour(): Int {
