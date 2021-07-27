@@ -1,8 +1,6 @@
 package com.emikhalets.mydates.ui.settings
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -20,13 +18,28 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private val binding by viewBinding(FragmentSettingsBinding::bind)
     private val viewModel: SettingsVM by viewModels()
 
+    private lateinit var documentCreator: DocumentCreator
+    private lateinit var documentPicker: DocumentPicker
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setTitle(R.string.title_settings)
+        initActivityResult()
         prepareSettings()
         clickListeners()
-        viewModel.importEvents.observe(viewLifecycleOwner) { path ->
-        }
+    }
+
+    private fun initActivityResult() {
+        documentCreator = DocumentCreator(
+            registry = requireActivity().activityResultRegistry,
+            lifecycleOwner = viewLifecycleOwner,
+            onResult = { viewModel.getAllEventsAndFillFile(requireContext(), it) }
+        )
+        documentPicker = DocumentPicker(
+            registry = requireActivity().activityResultRegistry,
+            lifecycleOwner = viewLifecycleOwner,
+            onResult = { viewModel.readFileAndRecreateEventsTable(requireContext(), it) }
+        )
     }
 
     private fun prepareSettings() {
@@ -97,11 +110,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun importEvents() {
+        startDeleteDialog(getString(R.string.import_alert)) {
+            documentPicker.openFile()
+        }
+        viewModel.importEvents.observe(viewLifecycleOwner) {
+            if (it) toast(R.string.import_success)
+            else toast(R.string.import_failure)
+        }
     }
 
     private fun exportEvents() {
-        val path = requireContext().getExternalFilesDir(null)
-        viewModel.createEventsJson(path)
+        documentCreator.createFile()
+        viewModel.exportEvents.observe(viewLifecycleOwner) {
+            if (it) toast(R.string.export_success)
+            else toast(R.string.export_failure)
+        }
     }
 
     private fun restartAlarmManagers() {

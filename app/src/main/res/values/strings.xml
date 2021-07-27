@@ -28,6 +28,11 @@
     <string name="alarm_managers_restarted">Daily notifications and event updates have been relaunched!</string>
     <string name="event_saved">Date saved!</string>
     <string name="dialog_delete_event">Delete this event?</string>
+    <string name="export_success">События экспортированы успешно!</string>
+    <string name="export_failure">Ошибка во время экспорта</string>
+    <string name="import_success">События импортированы успешно!</string>
+    <string name="import_failure">Ошибка во время импорта</string>
+    <string name="import_alert">Импорт дат удалит все существующие записи и создаст новые из выбранного файла. Продолжить?</string>
     <string name="time_hour_minute" translatable="false">%d:%d</string>
     <string name="time_hour_minute_sub" translatable="false">%d:0%d</string>
     <plurals name="age">

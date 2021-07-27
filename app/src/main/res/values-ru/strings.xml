@@ -28,6 +28,11 @@
     <string name="alarm_managers_restarted">Ежедневные уведомления и обновления событий перезапущены!</string>
     <string name="event_saved">Дата сохранена!</string>
     <string name="dialog_delete_event">Удалить это событие?</string>
+    <string name="export_success">События экспортированы успешно!</string>
+    <string name="export_failure">Ошибка во время экспорта</string>
+    <string name="import_success">События импортированы успешно!</string>
+    <string name="import_failure">Ошибка во время импорта</string>
+    <string name="import_alert">Импорт дат удалит все существующие записи и создаст новые из выбранного файла. Продолжить?</string>
     <plurals name="age">
         <item quantity="one">(%d год)</item>
         <item quantity="few">(%d года)</item>

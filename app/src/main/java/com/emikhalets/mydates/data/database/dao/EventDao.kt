@@ -6,6 +6,9 @@ import com.emikhalets.mydates.data.database.entities.Event
 @Dao
 interface EventDao {
 
+    @Query("DELETE FROM events_table")
+    suspend fun drop()
+
     @Query("SELECT * FROM events_table ORDER BY daysLeft ASC")
     suspend fun getAll(): List<Event>
 
@@ -17,6 +20,9 @@ interface EventDao {
 
     @Insert
     suspend fun insert(event: Event)
+
+    @Insert
+    suspend fun insertAll(events: List<Event>)
 
     @Update
     suspend fun update(event: Event)

@@ -13,6 +13,10 @@ class RoomRepository @Inject constructor(
     private val eventDao: EventDao
 ) : DatabaseRepository {
 
+    override suspend fun dropEvents() {
+        eventDao.drop()
+    }
+
     override suspend fun getAllEvents(lastUpdate: Long): ListResult<List<Event>> {
         return try {
             val now = Date().time
@@ -50,6 +54,17 @@ class RoomRepository @Inject constructor(
         } catch (ex: Exception) {
             ex.printStackTrace()
             SingleResult.Error(ex)
+        }
+    }
+
+    override suspend fun insertAllEvents(events: List<Event>): CompleteResult<Nothing> {
+        return try {
+            val list = events.map { it.calculateParameters() }
+            eventDao.insertAll(list)
+            CompleteResult.Complete
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            CompleteResult.Error(ex)
         }
     }
 
