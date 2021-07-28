@@ -11,7 +11,7 @@ interface DatabaseRepository {
     suspend fun dropEvents()
 
     suspend fun getAllEvents(lastUpdate: Long = Date().time): ListResult<List<Event>>
-    suspend fun getAllAfterDays(days: Int): ListResult<List<Event>>
+    suspend fun getAllByDaysLeft(daysLeft: Int): ListResult<List<Event>>
     suspend fun getEventById(id: Long): SingleResult<Event>
 
     suspend fun insertAllEvents(events: List<Event>): CompleteResult<Nothing>

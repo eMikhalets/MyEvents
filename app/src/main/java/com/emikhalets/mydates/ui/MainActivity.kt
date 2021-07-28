@@ -34,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host)
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.bottom_home
+                R.id.bottom_home,
+                R.id.bottom_calendar
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

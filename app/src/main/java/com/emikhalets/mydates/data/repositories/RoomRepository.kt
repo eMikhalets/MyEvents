@@ -36,9 +36,9 @@ class RoomRepository @Inject constructor(
         }
     }
 
-    override suspend fun getAllAfterDays(days: Int): ListResult<List<Event>> {
+    override suspend fun getAllByDaysLeft(daysLeft: Int): ListResult<List<Event>> {
         return try {
-            val result = eventDao.getAllAfterDays(days)
+            val result = eventDao.getAllByDaysLeft(daysLeft)
             if (result.isEmpty()) ListResult.EmptyList
             else ListResult.Success(result)
         } catch (ex: Exception) {

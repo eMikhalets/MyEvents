@@ -12,8 +12,8 @@ interface EventDao {
     @Query("SELECT * FROM events_table ORDER BY daysLeft ASC")
     suspend fun getAll(): List<Event>
 
-    @Query("SELECT * FROM events_table WHERE daysLeft = :days ORDER BY daysLeft ASC")
-    suspend fun getAllAfterDays(days: Int): List<Event>
+    @Query("SELECT * FROM events_table WHERE daysLeft = :daysLeft")
+    suspend fun getAllByDaysLeft(daysLeft: Int): List<Event>
 
     @Query("SELECT * FROM events_table WHERE id = :id")
     suspend fun getItem(id: Long): Event

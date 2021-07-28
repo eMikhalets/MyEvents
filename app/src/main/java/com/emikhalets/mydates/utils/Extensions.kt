@@ -8,8 +8,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import com.emikhalets.mydates.ui.MainActivity
 import com.emikhalets.mydates.data.database.entities.Event
+import com.emikhalets.mydates.ui.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -63,6 +63,13 @@ fun Fragment.toast(@StringRes resource: Int) =
 
 fun Fragment.toast(message: String) =
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+
+fun Long.toCalendar(year: Int = Calendar.getInstance().year()): Calendar {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = this
+    calendar.set(Calendar.YEAR, year)
+    return calendar
+}
 
 fun Calendar.day() = this.get(Calendar.DAY_OF_MONTH)
 fun Calendar.dayOfYear() = this.get(Calendar.DAY_OF_YEAR)

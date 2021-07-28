@@ -19,7 +19,7 @@ class EventWorker(context: Context, parameters: WorkerParameters) :
         val events = HashMap<String, List<Event>>()
 
         if (inputData.getBoolean(DATA_NOTIF_MONTH, false)) {
-            when (val result = repo.getAllAfterDays(30)) {
+            when (val result = repo.getAllByDaysLeft(30)) {
                 is ListResult.Success -> events[DATA_NOTIF_MONTH] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
@@ -28,7 +28,7 @@ class EventWorker(context: Context, parameters: WorkerParameters) :
         }
 
         if (inputData.getBoolean(DATA_NOTIF_WEEK, false)) {
-            when (val result = repo.getAllAfterDays(7)) {
+            when (val result = repo.getAllByDaysLeft(7)) {
                 is ListResult.Success -> events[DATA_NOTIF_WEEK] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
@@ -37,7 +37,7 @@ class EventWorker(context: Context, parameters: WorkerParameters) :
         }
 
         if (inputData.getBoolean(DATA_NOTIF_TWO_DAY, false)) {
-            when (val result = repo.getAllAfterDays(2)) {
+            when (val result = repo.getAllByDaysLeft(2)) {
                 is ListResult.Success -> events[DATA_NOTIF_TWO_DAY] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
@@ -46,7 +46,7 @@ class EventWorker(context: Context, parameters: WorkerParameters) :
         }
 
         if (inputData.getBoolean(DATA_NOTIF_DAY, false)) {
-            when (val result = repo.getAllAfterDays(1)) {
+            when (val result = repo.getAllByDaysLeft(1)) {
                 is ListResult.Success -> events[DATA_NOTIF_DAY] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
@@ -55,7 +55,7 @@ class EventWorker(context: Context, parameters: WorkerParameters) :
         }
 
         if (inputData.getBoolean(DATA_NOTIF_TODAY, false)) {
-            when (val result = repo.getAllAfterDays(0)) {
+            when (val result = repo.getAllByDaysLeft(0)) {
                 is ListResult.Success -> events[DATA_NOTIF_TODAY] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {

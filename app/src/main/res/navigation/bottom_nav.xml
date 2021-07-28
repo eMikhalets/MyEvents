@@ -34,6 +34,20 @@
     </fragment>
 
     <fragment
+        android:id="@+id/bottom_calendar"
+        android:name="com.emikhalets.mydates.ui.calendar.CalendarFragment"
+        android:label="@string/title_calendar"
+        tools:layout="@layout/fragment_calendar">
+        <action
+            android:id="@+id/action_calendar_to_eventDetails"
+            app:destination="@id/eventDetailsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_pop_in"
+            app:popExitAnim="@anim/slide_pop_out" />
+    </fragment>
+
+    <fragment
         android:id="@+id/addEventFragment"
         android:name="com.emikhalets.mydates.ui.add_event.AddEventFragment"
         android:label="AddBirthdayFragment"
