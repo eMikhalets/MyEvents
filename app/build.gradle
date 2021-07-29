@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.emikhalets.mydates"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.02"
@@ -32,6 +32,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -40,14 +41,10 @@ android {
     }
     buildFeatures {
         viewBinding true
+        compose true
     }
-    kapt {
-        javacOptions {
-            // These options are normally set automatically via the Hilt Gradle plugin, but we
-            // set them manually to workaround a bug in the Kotlin 1.5.20
-            option("-Adagger.fastInit=ENABLED")
-            option("-Adagger.hilt.android.internal.disableAndroidSuperclassValidation=true")
-        }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.0.0"
     }
 }
 
@@ -56,38 +53,59 @@ dependencies {
     // General
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.activity:activity-ktx:1.2.3'
-    implementation 'androidx.fragment:fragment-ktx:1.3.5'
-    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "com.google.accompanist:accompanist-pager:0.14.0"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-    // Architecture
-    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.4.7'
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    // Compose
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation "androidx.compose.foundation:foundation:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.material:material-icons-core:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation "androidx.compose.runtime:runtime:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+    implementation "androidx.activity:activity-compose:$compose_activity_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$compose_lifecycle_version"
 
     // Database
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-
     // DI
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-    // OTHER
-    implementation 'io.coil-kt:coil:1.3.0'
-    implementation 'com.applandeo:material-calendar-view:1.7.0'
-    implementation 'com.applandeo:material-calendar-view:1.9.0-rc03'
+    // Foreground
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    // Third-Party
+    implementation "io.coil-kt:coil:$coil_version"
+    implementation "cafe.adriel.voyager:voyager-navigator:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-tab-navigator:$voyager_version"
 
     // Test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     androidTestImplementation "androidx.work:work-testing:$work_version"
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.activity:activity-ktx:1.2.3'
+    implementation 'androidx.fragment:fragment-ktx:1.3.5'
+
+    // Architecture
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.4.7'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // OTHER
+    implementation 'com.applandeo:material-calendar-view:1.7.0'
+    implementation 'com.applandeo:material-calendar-view:1.9.0-rc03'
 }
