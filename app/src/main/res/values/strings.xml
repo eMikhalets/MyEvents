@@ -84,15 +84,25 @@
     <string name="calendar_text_no_saved_dates">Нет сохраненных дат</string>
     <string name="calendar_date">%d %s</string>
 
-    <string name="settings_all_notif">Присылать уведомления</string>
-    <string name="settings_time_label">Время уведомлений</string>
-    <string name="settings_time">11:00</string>
-    <string name="settings_month_notif">Уведомлять о событиях месяца в первый день месяца</string>
-    <string name="settings_week_notif">Уведомлять о событиях за неделю</string>
-    <string name="settings_two_day_notif">Уведомлять о событиях за 2 дня</string>
-    <string name="settings_day_notif">Уведомлять о событиях за день</string>
-    <string name="settings_today_notif">Уведомлять о событиях утром</string>
-    <string name="settings_restart_alarm_manager">Перезапустить ежедневные уведомления и обновления событий</string>
-    <string name="settings_import_events">Импорт событий</string>
-    <string name="settings_export_events">Экспорт событий</string>
+    <string name="settings_general">Основные</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_language_ru">Русский</string>
+    <string name="settings_language_en">Английский</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_light">Светлая тема</string>
+    <string name="settings_theme_dark">Темная тема</string>
+    <string name="settings_notifications">Уведомления</string>
+    <string name="settings_notifications_all">Присылать уведомления</string>
+    <string name="settings_notifications_time">Время уведомлений</string>
+    <string name="settings_notifications_time_value">11:00</string>
+    <string name="settings_notifications_month">Уведомлять о событиях месяца в первый день месяца</string>
+    <string name="settings_notifications_week">Уведомлять о событиях за неделю</string>
+    <string name="settings_notifications_three_day">Уведомлять о событиях за 3 дня</string>
+    <string name="settings_notifications_two_day">Уведомлять о событиях за 2 дня</string>
+    <string name="settings_notifications_day">Уведомлять о событиях за день</string>
+    <string name="settings_notifications_today">Уведомлять о событиях утром</string>
+    <string name="settings_restart_notifications">Перезапустить ежедневные уведомления и обновления событий</string>
+    <string name="settings_backup">Резервные копии</string>
+    <string name="settings_backup_import">Импорт событий</string>
+    <string name="settings_backup_export">Экспорт событий</string>
 </resources>

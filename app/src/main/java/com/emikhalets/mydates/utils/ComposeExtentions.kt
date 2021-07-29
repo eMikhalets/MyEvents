@@ -21,3 +21,19 @@ fun EventType.getEventTypeImage(): Painter {
         EventType.BIRTHDAY -> painterResource(R.drawable.ic_birthday)
     }
 }
+
+@Composable
+fun SettingLanguage.getName(): String {
+    return when (this) {
+        SettingLanguage.RUSSIAN -> stringResource(R.string.settings_language_ru)
+        SettingLanguage.ENGLISH -> stringResource(R.string.settings_language_en)
+    }
+}
+
+@Composable
+fun SettingTheme.getName(): String {
+    return when (this) {
+        SettingTheme.LIGHT -> stringResource(R.string.settings_theme_light)
+        SettingTheme.DARK -> stringResource(R.string.settings_theme_dark)
+    }
+}

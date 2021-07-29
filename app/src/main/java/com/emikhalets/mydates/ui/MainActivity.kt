@@ -7,21 +7,22 @@ import androidx.navigation.NavController
 import androidx.navigation.ui.AppBarConfiguration
 import com.emikhalets.mydates.databinding.ActivityMainBinding
 import com.emikhalets.mydates.ui.add_event.AddEventScreen
+import com.emikhalets.mydates.ui.settings.SettingsScreen
 import com.emikhalets.mydates.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var navController: NavController
+//    private lateinit var binding: ActivityMainBinding
+//    private lateinit var appBarConfiguration: AppBarConfiguration
+//    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                AddEventScreen()
+                SettingsScreen()
             }
         }
 //        binding = ActivityMainBinding.inflate(layoutInflater)
