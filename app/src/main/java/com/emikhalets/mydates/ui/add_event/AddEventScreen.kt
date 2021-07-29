@@ -69,9 +69,7 @@ private fun AddEventScreen(
         Column(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
         ) {
-            AddEventTitle(
-                title = stringResource(R.string.add_event_text_birthday)
-            )
+            AddEventTitle(title = stringResource(R.string.add_event_text_birthday))
             Spacer(modifier = Modifier.size(16.dp))
             AppTextField(
                 label = stringResource(R.string.add_event_text_name),
@@ -121,7 +119,7 @@ private fun AddEventScreen(
 }
 
 @Composable
-fun AddEventTitle(
+private fun AddEventTitle(
     title: String
 ) {
     Row(
@@ -145,7 +143,7 @@ fun AddEventTitle(
 
 @Preview(showBackground = true)
 @Composable
-fun AddEventScreenPreview() {
+private fun AddEventScreenPreview() {
     AppTheme {
         AddEventScreen(
             name = "Иван",
@@ -166,7 +164,7 @@ fun AddEventScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun AddEventScreenDarkPreview() {
+private fun AddEventScreenDarkPreview() {
     AppTheme(darkTheme = true) {
         AddEventScreen(
             name = "Иван",

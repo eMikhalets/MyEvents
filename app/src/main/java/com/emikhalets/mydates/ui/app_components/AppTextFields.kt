@@ -146,7 +146,7 @@ fun AppDateField(
 
 @Preview(showBackground = true)
 @Composable
-fun AppTextFieldPreview() {
+private fun AppTextFieldPreview() {
     AppTheme {
         AppTextField("Preview", "Preview text field", {})
     }
@@ -154,7 +154,7 @@ fun AppTextFieldPreview() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun AppTextFieldDarkPreview() {
+private fun AppTextFieldDarkPreview() {
     AppTheme {
         AppTextField("Preview", "Preview text field", {})
     }
@@ -162,7 +162,7 @@ fun AppTextFieldDarkPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun AppTextFieldMultilinePreview() {
+private fun AppTextFieldMultilinePreview() {
     AppTheme {
         AppTextFieldMultiline("Preview", "Preview text field Preview text fieldPreview text field Preview text field Preview text field Preview text field Preview text field ", {})
     }
@@ -170,7 +170,7 @@ fun AppTextFieldMultilinePreview() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun AppTextFieldMultilineDarkPreview() {
+private fun AppTextFieldMultilineDarkPreview() {
     AppTheme {
         AppTextFieldMultiline("Preview", "Preview text field Preview text fieldPreview text field Preview text field Preview text field Preview text field Preview text field ", {})
     }
@@ -178,7 +178,7 @@ fun AppTextFieldMultilineDarkPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun AppDateFieldPreview() {
+private fun AppDateFieldPreview() {
     AppTheme {
         AppDateField("Дата", "12 мая 2016", {}, {})
     }
@@ -186,7 +186,7 @@ fun AppDateFieldPreview() {
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-fun AppDateFieldDarkPreview() {
+private fun AppDateFieldDarkPreview() {
     AppTheme {
         AppDateField("Дата", "12 мая 2016", {}, {})
     }

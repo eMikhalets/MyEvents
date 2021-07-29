@@ -21,6 +21,7 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.ui.app_components.*
 import com.emikhalets.mydates.ui.theme.AppTheme
+import com.emikhalets.mydates.utils.buildEvent
 import com.emikhalets.mydates.utils.pluralsResource
 import com.emikhalets.mydates.utils.toDateString
 
@@ -95,15 +96,13 @@ private fun EventDetailsScreen(
 }
 
 @Composable
-fun EventDetailsHeader(
+private fun EventDetailsHeader(
     fullName: String,
     dateString: String,
     daysLeft: Int,
     age: Int
 ) {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         Image(
             painter = painterResource(R.drawable.ic_birthday),
             contentDescription = "Event type icon",
@@ -123,9 +122,7 @@ fun EventDetailsHeader(
             style = MaterialTheme.typography.body1,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
-        Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
+        Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text(
                 text = pluralsResource(R.plurals.days_left, daysLeft),
                 style = MaterialTheme.typography.body1
@@ -140,7 +137,7 @@ fun EventDetailsHeader(
 }
 
 @Composable
-fun EventDetailsEdit(
+private fun EventDetailsEdit(
     event: Event,
     date: Long,
     onDateChange: (Long) -> Unit
@@ -187,22 +184,10 @@ fun EventDetailsEdit(
 
 @Preview(showBackground = true)
 @Composable
-fun EventDetailsScreenPreview() {
+private fun EventDetailsScreenPreview() {
     AppTheme {
         EventDetailsScreen(
-            event = Event(
-                id = 0,
-                name = "Иван",
-                lastName = "Иванов",
-                middleName = "Иванович",
-                date = 1627551042000,
-                daysLeft = 36,
-                age = 60,
-                eventType = 2,
-                group = "",
-                notes = "text text text text text text text text text text text text text",
-                withoutYear = false
-            ),
+            event = buildEvent(),
             onSaveEvent = {},
             onDeleteEvent = {}
         )
@@ -211,22 +196,10 @@ fun EventDetailsScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun EventDetailsScreenDarkPreview() {
+private fun EventDetailsScreenDarkPreview() {
     AppTheme(darkTheme = true) {
         EventDetailsScreen(
-            event = Event(
-                id = 0,
-                name = "Иван",
-                lastName = "Иванов",
-                middleName = "Иванович",
-                date = 1627551042000,
-                daysLeft = 36,
-                age = 60,
-                eventType = 2,
-                group = "",
-                notes = "text text text text text text text text text text text text text",
-                withoutYear = false
-            ),
+            event = buildEvent(),
             onSaveEvent = {},
             onDeleteEvent = {}
         )
