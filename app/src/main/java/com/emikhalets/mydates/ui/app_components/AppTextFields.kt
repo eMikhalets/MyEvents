@@ -58,6 +58,46 @@ fun AppTextField(
 }
 
 @Composable
+fun AppTextFieldMultiline(
+    label: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        elevation = 4.dp,
+        modifier = modifier
+    ) {
+        TextField(
+            value = value,
+            onValueChange = onValueChange,
+            enabled = enabled,
+            textStyle = MaterialTheme.typography.body1,
+            label = {
+                Text(
+                    text = label,
+                    color = MaterialTheme.colors.onBackground
+                )
+            },
+            shape = RoundedCornerShape(16.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = MaterialTheme.colors.onBackground,
+                backgroundColor = MaterialTheme.colors.background,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent
+            ),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences
+            ),
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
 fun AppDateField(
     label: String,
     value: String,
@@ -117,6 +157,22 @@ fun AppTextFieldPreview() {
 fun AppTextFieldDarkPreview() {
     AppTheme {
         AppTextField("Preview", "Preview text field", {})
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppTextFieldMultilinePreview() {
+    AppTheme {
+        AppTextFieldMultiline("Preview", "Preview text field Preview text fieldPreview text field Preview text field Preview text field Preview text field Preview text field ", {})
+    }
+}
+
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun AppTextFieldMultilineDarkPreview() {
+    AppTheme {
+        AppTextFieldMultiline("Preview", "Preview text field Preview text fieldPreview text field Preview text field Preview text field Preview text field Preview text field ", {})
     }
 }
 

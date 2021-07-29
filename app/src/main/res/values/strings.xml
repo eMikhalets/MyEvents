@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">MyDates</string>
 
-    <string name="title_home">Все События</string>
+    <string name="title_home">События</string>
     <string name="title_event_details">Детали События</string>
     <string name="title_add_event">Новое Событие</string>
     <string name="title_groups">Все Группы</string>

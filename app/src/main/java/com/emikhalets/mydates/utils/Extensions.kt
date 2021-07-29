@@ -6,7 +6,11 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.ui.platform.LocalContext
 import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.ui.MainActivity
@@ -47,7 +51,7 @@ inline fun EditText.setOnDrawableEndClick(crossinline callback: () -> Unit) {
     }
 }
 
-fun Long.dateFormat(pattern: String): String {
+fun Long.toDateString(pattern: String = "d MMMM y"): String {
     return try {
         val date = Date(this)
         val formatter = SimpleDateFormat(pattern, Locale.getDefault())
@@ -136,4 +140,10 @@ fun Fragment.hideSoftKeyboard() {
 
 fun Fragment.setTitle(@StringRes stringRes: Int) {
     (activity as MainActivity).supportActionBar?.title = getString(stringRes)
+}
+
+@Composable
+@ReadOnlyComposable
+fun pluralsResource(@PluralsRes id: Int, value: Int): String {
+    return LocalContext.current.resources.getQuantityString(id, value, value)
 }

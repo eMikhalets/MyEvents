@@ -33,7 +33,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
 
     private fun prepareEventData() {
         date = Calendar.getInstance().timeInMillis
-        binding.inputDate.setText(date.dateFormat("d MMMM YYYY"))
+        binding.inputDate.setText(date.toDateString("d MMMM YYYY"))
         setViewsForEventType(args.eventType)
     }
 
@@ -75,8 +75,8 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
     }
 
     private fun EditText.setDate(withoutYear: Boolean) {
-        if (withoutYear) this.setText(date.dateFormat("d MMMM"))
-        else this.setText(date.dateFormat("d MMMM YYYY"))
+        if (withoutYear) this.setText(date.toDateString("d MMMM"))
+        else this.setText(date.toDateString("d MMMM YYYY"))
     }
 
     private fun onSaveClick() {

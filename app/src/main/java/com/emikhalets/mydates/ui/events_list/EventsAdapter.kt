@@ -11,7 +11,7 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.ItemEventBinding
 import com.emikhalets.mydates.databinding.ItemEventDividerBinding
 import com.emikhalets.mydates.utils.EventType
-import com.emikhalets.mydates.utils.dateFormat
+import com.emikhalets.mydates.utils.toDateString
 
 class EventsAdapter(private val click: (Event) -> Unit) :
     ListAdapter<Event, RecyclerView.ViewHolder>(DatesDiffCallback()) {
@@ -63,7 +63,7 @@ class EventsAdapter(private val click: (Event) -> Unit) :
 
                 textName.text = item.fullName()
                 textInfo.text = root.context.getString(
-                    info, item.date.dateFormat("d MMMM")
+                    info, item.date.toDateString("d MMMM")
                 )
                 textAge.text = root.context.resources.getQuantityString(
                     R.plurals.age,

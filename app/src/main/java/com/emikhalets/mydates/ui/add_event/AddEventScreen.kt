@@ -166,7 +166,7 @@ fun AddEventScreenPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun AddEventScreenPreviewDark() {
+fun AddEventScreenDarkPreview() {
     AppTheme(darkTheme = true) {
         AddEventScreen(
             name = "Иван",

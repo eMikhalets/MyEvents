@@ -118,15 +118,15 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
     }
 
     private fun EditText.setDate(withoutYear: Boolean) {
-        if (withoutYear) this.setText(event.date.dateFormat("d MMMM"))
-        else this.setText(event.date.dateFormat("d MMMM YYYY"))
+        if (withoutYear) this.setText(event.date.toDateString("d MMMM"))
+        else this.setText(event.date.toDateString("d MMMM YYYY"))
     }
 
     private fun applyNewDate(ts: Long) {
         event.date = ts
         event.calculateParameters()
         binding.apply {
-            inputDate.setText(ts.dateFormat("d MMMM YYYY"))
+            inputDate.setText(ts.toDateString("d MMMM YYYY"))
             if (event.daysLeft == 0) textDaysLeft.text = getString(R.string.today)
             else textDaysLeft.text = resources.getQuantityString(
                 R.plurals.days_left, event.daysLeft, event.daysLeft
@@ -153,7 +153,7 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
                 binding.apply {
                     imagePhoto.setImageResource(R.drawable.ic_anniversary)
                     textInfo.text = getString(
-                        R.string.anniversary_date, event.date.dateFormat("d MMMM")
+                        R.string.anniversary_date, event.date.toDateString("d MMMM")
                     )
                     textLastname.visibility = View.GONE
                     textMiddleName.visibility = View.GONE
@@ -165,7 +165,7 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
                 binding.apply {
                     imagePhoto.setImageResource(R.drawable.ic_birthday)
                     textInfo.text = getString(
-                        R.string.birthday_date, event.date.dateFormat("d MMMM")
+                        R.string.birthday_date, event.date.toDateString("d MMMM")
                     )
                 }
             }
