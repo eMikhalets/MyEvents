@@ -2,9 +2,7 @@ package com.emikhalets.mydates.ui.app_components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -57,24 +55,37 @@ fun AppBottomBar(
         backgroundColor = MaterialTheme.colors.primary,
         elevation = 0.dp
     ) {
-        Icon(
-            imageVector = Icons.Rounded.List,
-            contentDescription = "Home screen icon",
-            tint = MaterialTheme.colors.onPrimary,
+        Box(
             modifier = Modifier
-                .weight(1f)
+                .fillMaxSize()
                 .clickable { onHomeClick() }
-        )
-        AppAddButton(onClick = {})
-        Icon(
-            imageVector = Icons.Rounded.CalendarToday,
-            contentDescription = "Calendar screen icon",
-            tint = MaterialTheme.colors.onPrimary,
-            modifier = Modifier
                 .weight(1f)
-                .align(Alignment.CenterVertically)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.List,
+                contentDescription = "Home screen icon",
+                tint = MaterialTheme.colors.onPrimary,
+                modifier = Modifier
+                    .size(32.dp)
+                    .align(Alignment.Center)
+            )
+        }
+        AppAddButton(onClick = {})
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
                 .clickable { onCalendarClick() }
-        )
+                .weight(1f)
+        ) {
+            Icon(
+                imageVector = Icons.Rounded.CalendarToday,
+                contentDescription = "Calendar screen icon",
+                tint = MaterialTheme.colors.onPrimary,
+                modifier = Modifier
+                    .size(32.dp)
+                    .align(Alignment.Center)
+            )
+        }
     }
 }
 

@@ -82,8 +82,6 @@ dependencies {
 
     // Third-Party
     implementation "io.coil-kt:coil:$coil_version"
-    implementation "cafe.adriel.voyager:voyager-navigator:$voyager_version"
-    implementation "cafe.adriel.voyager:voyager-tab-navigator:$voyager_version"
 
     // Test
     testImplementation 'junit:junit:4.13.2'

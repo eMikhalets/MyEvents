@@ -26,11 +26,13 @@ import com.emikhalets.mydates.utils.pluralsResource
 import com.emikhalets.mydates.utils.toDateString
 
 @Composable
-fun EventDetailsScreen() {
-    val event by remember { mutableStateOf<Event?>(null) }
+fun EventDetailsScreen1(
+    event: Event
+) {
+//    val event by remember { mutableStateOf<Event?>(null) }
 
-    if (event != null) EventDetailsScreen(
-        event = event!!,
+    EventDetailsScreen(
+        event = event,
         onSaveEvent = {},
         onDeleteEvent = {}
     )

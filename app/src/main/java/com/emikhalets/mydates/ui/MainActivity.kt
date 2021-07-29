@@ -3,11 +3,6 @@ package com.emikhalets.mydates.ui
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.ui.AppBarConfiguration
-import com.emikhalets.mydates.databinding.ActivityMainBinding
-import com.emikhalets.mydates.ui.add_event.AddEventScreen
-import com.emikhalets.mydates.ui.settings.SettingsScreen
 import com.emikhalets.mydates.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
-                SettingsScreen()
             }
         }
 //        binding = ActivityMainBinding.inflate(layoutInflater)
