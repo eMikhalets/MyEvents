@@ -3,7 +3,6 @@ package com.emikhalets.mydates.ui.app_components
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Box
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -18,7 +17,39 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.emikhalets.mydates.ui.theme.AppTheme
-import com.emikhalets.mydates.utils.navigation.NavActions
+import com.emikhalets.mydates.utils.navigation.back
+import com.emikhalets.mydates.utils.navigation.toAddEvent
+import com.emikhalets.mydates.utils.navigation.toEventsList
+import com.emikhalets.mydates.utils.navigation.toSettings
+
+@Composable
+fun AppScaffold(
+    navController: NavHostController,
+    topBarTitle: String,
+    showBackButton: Boolean,
+    showSettingsButton: Boolean,
+    showBottomBar: Boolean,
+    content: @Composable () -> Unit
+) {
+    Scaffold(
+        backgroundColor = MaterialTheme.colors.surface,
+        topBar = {
+            AppTopBar(
+                navController = navController,
+                title = topBarTitle,
+                showBackIcon = showBackButton,
+                showSettingsIcon = showSettingsButton
+            )
+        },
+        bottomBar = {
+            if (showBottomBar) AppBottomBar(navController = navController)
+        },
+    ) {
+        Column(Modifier.padding(it)) {
+            content()
+        }
+    }
+}
 
 @Composable
 fun AppTopBar(
@@ -32,14 +63,15 @@ fun AppTopBar(
         elevation = 0.dp
     ) {
         if (showBackIcon) {
-            Row(modifier = Modifier.clickable { NavActions(navController).back }) {
-                Icon(
-                    imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = "Arrow back icon",
-                    tint = MaterialTheme.colors.onPrimary,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
-            }
+            Icon(
+                imageVector = Icons.Rounded.ArrowBack,
+                contentDescription = "Arrow back icon",
+                tint = MaterialTheme.colors.onPrimary,
+                modifier = Modifier
+                    .clickable { navController.back() }
+                    .padding(top = 14.dp, bottom = 14.dp)
+                    .size(56.dp)
+            )
         }
         Spacer(modifier = Modifier.size(16.dp))
         Text(
@@ -54,11 +86,11 @@ fun AppTopBar(
                 contentDescription = "Settings icon",
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .clickable { NavActions(navController).toSettings }
+                    .clickable { navController.toSettings() }
+                    .padding(top = 14.dp, bottom = 14.dp)
+                    .size(56.dp)
             )
         }
-        Spacer(modifier = Modifier.size(16.dp))
     }
 }
 
@@ -69,36 +101,32 @@ fun AppBottomBar(navController: NavHostController) {
         elevation = 0.dp
     ) {
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
+                .clickable { navController.toEventsList() }
                 .fillMaxSize()
-                .clickable { NavActions(navController).toEventsList }
                 .weight(1f)
         ) {
             Icon(
                 imageVector = Icons.Rounded.List,
                 contentDescription = "Home screen icon",
                 tint = MaterialTheme.colors.onPrimary,
-                modifier = Modifier
-                    .size(32.dp)
-                    .align(Alignment.Center)
+                modifier = Modifier.size(32.dp)
             )
         }
-        AppAddButton(onClick = NavActions(navController).toAddEvent)
+        AppAddButton(onClick = { navController.toAddEvent() })
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
+                .clickable {}
                 .fillMaxSize()
-                .clickable {
-                    //TODO: navigation to calendar view
-                }
                 .weight(1f)
         ) {
             Icon(
                 imageVector = Icons.Rounded.CalendarToday,
                 contentDescription = "Calendar screen icon",
                 tint = MaterialTheme.colors.onPrimary,
-                modifier = Modifier
-                    .size(32.dp)
-                    .align(Alignment.Center)
+                modifier = Modifier.size(32.dp)
             )
         }
     }

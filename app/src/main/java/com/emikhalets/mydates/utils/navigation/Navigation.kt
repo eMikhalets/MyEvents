@@ -45,13 +45,12 @@ fun AppNavGraph(
             )
         }
         composable(EVENT_DETAILS) {
-            navController.previousBackStackEntry?.arguments
-                ?.getParcelable<Event>(ARGS_EVENT)?.let { event ->
-                    EventDetailsScreen(
-                        navController = navController,
-                        event
-                    )
-                }
+            navController.getArgument<Event>(ARGS_EVENT) { event ->
+                EventDetailsScreen(
+                    navController = navController,
+                    event = event
+                )
+            }
         }
         composable(SETTINGS) {
             SettingsScreen(
@@ -61,23 +60,22 @@ fun AppNavGraph(
     }
 }
 
-/**
- * Models the navigation actions in the app.
- */
-class NavActions(navController: NavHostController) {
-    val toEventsList: () -> Unit = {
-        navController.navigate(EVENTS_LIST)
-    }
-    val toAddEvent: () -> Unit = {
-        navController.navigate(ADD_EVENT)
-    }
-    val toEventDetails: (Event) -> Unit = { event ->
-        navController.navigate(EVENT_DETAILS, bundleOf(ARGS_EVENT to event))
-    }
-    val toSettings: () -> Unit = {
-        navController.navigate(SETTINGS)
-    }
-    val back: () -> Unit = {
-        navController.navigateUp()
-    }
+fun NavHostController.toEventsList() {
+    navigate(EVENTS_LIST)
+}
+
+fun NavHostController.toAddEvent() {
+    navigate(ADD_EVENT)
+}
+
+fun NavHostController.toEventDetails(event: Event) {
+    navigate(EVENT_DETAILS, bundleOf(ARGS_EVENT to event))
+}
+
+fun NavHostController.toSettings() {
+    navigate(SETTINGS)
+}
+
+fun NavHostController.back() {
+    navigateUp()
 }

@@ -1,5 +1,6 @@
 package com.emikhalets.mydates.ui.event_details
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -29,6 +30,7 @@ fun EventDetailsScreen(
     navController: NavHostController,
     event: Event
 ) {
+    Log.d("TAG", "${event.fullName()}")
     EventDetailsScreen(
         navController = navController,
         event = event,

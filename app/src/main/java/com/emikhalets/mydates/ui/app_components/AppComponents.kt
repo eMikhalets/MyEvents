@@ -104,6 +104,19 @@ fun EventListItem(
     }
 }
 
+@Composable
+fun AppLoader() {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        CircularProgressIndicator(
+            strokeWidth = 24.dp,
+            modifier = Modifier.size(300.dp)
+        )
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 private fun AppCheckboxPreview() {
