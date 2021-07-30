@@ -24,20 +24,6 @@ const val APP_UPDATE_ALARM_REQUEST_CODE = 8
 const val EVENTS_UPDATE_HOUR = 0
 const val EVENTS_UPDATE_MINUTE = 10
 
-const val APP_SHARED_PREFERENCES = "my_dates_shared_preferences"
-const val APP_SP_UPDATE_EVENTS_TIME = "my_dates_sp_update_event_time"
-const val APP_SP_EVENT_HOUR = "my_dates_sp_event_hour"
-const val APP_SP_EVENT_MINUTE = "my_dates_sp_event_minute"
-const val APP_SP_FIRST_LAUNCH = "my_dates_sp_first_launch"
-const val APP_SP_ALARM_EVENT_FLAG = "my_dates_sp_alarm_event_flag"
-const val APP_SP_ALARM_UPDATE_FLAG = "my_dates_sp_alarm_update_flag"
-const val APP_SP_NOTIF_ALL_FLAG = "my_dates_sp_notif_all_flag"
-const val APP_SP_NOTIF_MONTH_FLAG = "my_dates_sp_notif_month_flag"
-const val APP_SP_NOTIF_WEEK_FLAG = "my_dates_sp_notif_week_flag"
-const val APP_SP_NOTIF_TWO_DAY_FLAG = "my_dates_sp_two_day_month_flag"
-const val APP_SP_NOTIF_DAY_FLAG = "my_dates_sp_notif_day_flag"
-const val APP_SP_NOTIF_TODAY_FLAG = "my_dates_sp_notif_today_flag"
-
 @SuppressLint("ClickableViewAccessibility")
 inline fun EditText.setOnDrawableEndClick(crossinline callback: () -> Unit) {
     this.setOnTouchListener { v, event ->

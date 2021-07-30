@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,14 +25,13 @@ import com.emikhalets.mydates.ui.app_components.EventListItem
 import com.emikhalets.mydates.ui.theme.AppTheme
 import com.emikhalets.mydates.utils.buildEventsList
 import com.emikhalets.mydates.utils.navigation.toEventDetails
-import java.util.*
 
 @Composable
 fun EventsListsScreen(
     navController: NavHostController,
     viewModel: EventsListVM = hiltViewModel()
 ) {
-    if (viewModel.state == EventsListState.Init) viewModel.loadAllEvents(Date().time)
+    if (viewModel.state == EventsListState.Init) viewModel.loadAllEvents(LocalContext.current)
 
     EventsListsScreen(
         navController = navController,

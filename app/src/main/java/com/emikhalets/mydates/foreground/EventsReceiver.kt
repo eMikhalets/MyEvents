@@ -11,15 +11,14 @@ import com.emikhalets.mydates.utils.*
 class EventsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        val sp = context.getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE)
-        val isAll = sp.getBoolean(APP_SP_NOTIF_ALL_FLAG, false)
+        val isAll = context.spGetNotificationAll()
 
         if (isAll) {
-            val isMonth = sp.getBoolean(APP_SP_NOTIF_MONTH_FLAG, false)
-            val isWeek = sp.getBoolean(APP_SP_NOTIF_WEEK_FLAG, false)
-            val isTwoDays = sp.getBoolean(APP_SP_NOTIF_TWO_DAY_FLAG, false)
-            val isDays = sp.getBoolean(APP_SP_NOTIF_DAY_FLAG, false)
-            val isToday = sp.getBoolean(APP_SP_NOTIF_TODAY_FLAG, false)
+            val isMonth = context.spGetNotificationMonth()
+            val isWeek = context.spGetNotificationWeek()
+            val isTwoDays = context.spGetNotificationTwoDay()
+            val isDays = context.spGetNotificationDay()
+            val isToday = context.spGetNotificationToday()
 
             val data = workDataOf(
                 DATA_NOTIF_MONTH to isMonth,

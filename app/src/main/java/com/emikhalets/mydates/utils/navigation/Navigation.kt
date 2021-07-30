@@ -61,7 +61,7 @@ fun AppNavGraph(
 }
 
 fun NavHostController.toEventsList() {
-    navigate(EVENTS_LIST)
+    if (this.currentDestination?.route != EVENTS_LIST) navigate(EVENTS_LIST)
 }
 
 fun NavHostController.toAddEvent() {

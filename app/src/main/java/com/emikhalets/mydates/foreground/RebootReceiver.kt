@@ -10,9 +10,8 @@ class RebootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
-            val sp = context.getSharedPreferences(APP_SHARED_PREFERENCES, Context.MODE_PRIVATE)
-            val notificationsHour = sp.getInt(APP_SP_EVENT_HOUR, 11)
-            val notificationsMinute = sp.getInt(APP_SP_EVENT_MINUTE, 0)
+            val notificationsHour = context.spGetNotificationHour()
+            val notificationsMinute = context.spGetNotificationMinute()
 
             setRepeatingAlarm(
                 context,

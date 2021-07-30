@@ -5,6 +5,9 @@ import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.foreground.UpdateEventsReceiver
 import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @HiltAndroidApp
 class MyDatesApp : Application() {
@@ -12,56 +15,44 @@ class MyDatesApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        if (!isAlarmLaunched(APP_SP_FIRST_LAUNCH)) {
-            initSharedPreferencesNotification()
-        }
+        CoroutineScope(Dispatchers.IO).launch {
+            initSharedPreferences()
 
-        if (!isAlarmLaunched(APP_SP_ALARM_UPDATE_FLAG)) {
             setRepeatingAlarm(
-                context = this,
+                context = this@MyDatesApp,
                 hour = EVENTS_UPDATE_HOUR,
                 minute = EVENTS_UPDATE_MINUTE,
                 receiver = UpdateEventsReceiver::class.java,
                 requestCode = APP_UPDATE_ALARM_REQUEST_CODE
             )
-            saveAlarmLaunchState(APP_SP_ALARM_UPDATE_FLAG)
-        }
 
-        if (!isAlarmLaunched(APP_SP_ALARM_EVENT_FLAG)) {
             setRepeatingAlarm(
-                context = this,
+                context = this@MyDatesApp,
                 hour = 11,
                 minute = 0,
                 receiver = EventsReceiver::class.java,
                 requestCode = APP_EVENTS_ALARM_REQUEST_CODE
             )
-            saveAlarmLaunchState(APP_SP_ALARM_EVENT_FLAG)
         }
-
     }
 
-    private fun initSharedPreferencesNotification() {
-        val sp = getSharedPreferences(APP_SHARED_PREFERENCES, MODE_PRIVATE).edit()
-
-        sp.putInt(APP_SP_EVENT_HOUR, 11)
-        sp.putInt(APP_SP_EVENT_MINUTE, 0)
-        sp.putBoolean(APP_SP_NOTIF_ALL_FLAG, true)
-        sp.putBoolean(APP_SP_NOTIF_MONTH_FLAG, true)
-        sp.putBoolean(APP_SP_NOTIF_WEEK_FLAG, true)
-        sp.putBoolean(APP_SP_NOTIF_TWO_DAY_FLAG, true)
-        sp.putBoolean(APP_SP_NOTIF_DAY_FLAG, true)
-        sp.putBoolean(APP_SP_NOTIF_TODAY_FLAG, true)
-
-        sp.apply()
+    private fun initSharedPreferences() {
+        if (spGetAppFirstLaunch()) {
+            spSetAppFirstLaunch(false)
+            spSetNotificationAll(true)
+            spSetNotificationMonth(true)
+            spSetNotificationWeek(true)
+            spSetNotificationThreeDay(true)
+            spSetNotificationTwoDay(true)
+            spSetNotificationDay(true)
+            spSetNotificationToday(true)
+            spSetNotificationHour(DEFAULT_NOTIFICATION_HOUR)
+            spSetNotificationMinute(DEFAULT_NOTIFICATION_MINUTE)
+        }
     }
 
-    private fun isAlarmLaunched(key: String): Boolean {
-        return getSharedPreferences(APP_SHARED_PREFERENCES, MODE_PRIVATE)
-            .getBoolean(key, false)
-    }
-
-    private fun saveAlarmLaunchState(key: String) {
-        getSharedPreferences(APP_SHARED_PREFERENCES, MODE_PRIVATE).edit()
-            .putBoolean(key, true).apply()
+    companion object {
+        const val DEFAULT_NOTIFICATION_HOUR = 11
+        const val DEFAULT_NOTIFICATION_MINUTE = 0
     }
 }
