@@ -24,7 +24,7 @@ import com.emikhalets.mydates.ui.app_components.AppScaffold
 import com.emikhalets.mydates.ui.app_components.EventListItem
 import com.emikhalets.mydates.ui.theme.AppTheme
 import com.emikhalets.mydates.utils.buildEventsList
-import com.emikhalets.mydates.utils.navigation.toEventDetails
+import com.emikhalets.mydates.utils.navigation.navigateToEventDetails
 
 @Composable
 fun EventsListsScreen(
@@ -101,7 +101,7 @@ private fun EventsList(
                     )
                     else -> EventListItem(
                         event = event,
-                        onClick = { navController.toEventDetails(it) }
+                        onClick = { navController.navigateToEventDetails(it) }
                     )
                 }
                 if (event.id == events.last().id) Spacer(modifier = Modifier.size(8.dp))

@@ -1,7 +1,8 @@
 package com.emikhalets.mydates.ui.add_event
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.CompleteResult
@@ -17,11 +18,8 @@ class AddEventVM @Inject constructor(
     private val repository: RoomRepository
 ) : ViewModel() {
 
-    private val _eventAdd = MutableLiveData<Boolean>()
-    val eventAdd get(): LiveData<Boolean> = _eventAdd
-
-    private val _error = MutableLiveData<String>()
-    val error get(): LiveData<String> = _error
+    var state by mutableStateOf<AddEventState>(AddEventState.Init)
+        private set
 
     fun addNewAnniversary(name: String, date: Long, withoutYear: Boolean) {
         addNewEvent(Event(name, date, withoutYear))
@@ -39,10 +37,11 @@ class AddEventVM @Inject constructor(
 
     private fun addNewEvent(event: Event) {
         viewModelScope.launch {
+            state = AddEventState.Loading
             event.calculateParameters()
-            when (val result = repository.insertEvent(event)) {
-                CompleteResult.Complete -> _eventAdd.postValue(true)
-                is CompleteResult.Error -> _error.postValue(result.message)
+            state = when (val result = repository.insertEvent(event)) {
+                CompleteResult.Complete -> AddEventState.Saved
+                is CompleteResult.Error -> AddEventState.Error(result.exception)
             }
         }
     }

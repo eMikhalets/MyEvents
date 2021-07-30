@@ -57,7 +57,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
     }
 
     private fun observe() {
-        viewModel.eventAdd.observe(viewLifecycleOwner) { navigateBack() }
+//        viewModel.eventAdd.observe(viewLifecycleOwner) { navigateBack() }
     }
 
     private fun validateFields(): Boolean {

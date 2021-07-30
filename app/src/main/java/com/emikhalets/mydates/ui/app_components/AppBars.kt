@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.emikhalets.mydates.ui.theme.AppTheme
-import com.emikhalets.mydates.utils.navigation.back
-import com.emikhalets.mydates.utils.navigation.toAddEvent
-import com.emikhalets.mydates.utils.navigation.toEventsList
-import com.emikhalets.mydates.utils.navigation.toSettings
+import com.emikhalets.mydates.utils.navigation.navigateToBack
+import com.emikhalets.mydates.utils.navigation.navigateToAddEvent
+import com.emikhalets.mydates.utils.navigation.navigateToEventsList
+import com.emikhalets.mydates.utils.navigation.navigateToSettings
 
 @Composable
 fun AppScaffold(
@@ -68,7 +68,7 @@ fun AppTopBar(
                 contentDescription = "Arrow back icon",
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
-                    .clickable { navController.back() }
+                    .clickable { navController.navigateToBack() }
                     .padding(top = 14.dp, bottom = 14.dp)
                     .size(56.dp)
             )
@@ -86,7 +86,7 @@ fun AppTopBar(
                 contentDescription = "Settings icon",
                 tint = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
-                    .clickable { navController.toSettings() }
+                    .clickable { navController.navigateToSettings() }
                     .padding(top = 14.dp, bottom = 14.dp)
                     .size(56.dp)
             )
@@ -103,7 +103,7 @@ fun AppBottomBar(navController: NavHostController) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .clickable { navController.toEventsList() }
+                .clickable { navController.navigateToEventsList() }
                 .fillMaxSize()
                 .weight(1f)
         ) {
@@ -114,7 +114,7 @@ fun AppBottomBar(navController: NavHostController) {
                 modifier = Modifier.size(32.dp)
             )
         }
-        AppAddButton(onClick = { navController.toAddEvent() })
+        AppAddButton(onClick = { navController.navigateToAddEvent() })
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier

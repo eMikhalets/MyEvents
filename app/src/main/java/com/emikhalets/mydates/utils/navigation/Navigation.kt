@@ -60,22 +60,22 @@ fun AppNavGraph(
     }
 }
 
-fun NavHostController.toEventsList() {
+fun NavHostController.navigateToEventsList() {
     if (this.currentDestination?.route != EVENTS_LIST) navigate(EVENTS_LIST)
 }
 
-fun NavHostController.toAddEvent() {
+fun NavHostController.navigateToAddEvent() {
     navigate(ADD_EVENT)
 }
 
-fun NavHostController.toEventDetails(event: Event) {
+fun NavHostController.navigateToEventDetails(event: Event) {
     navigate(EVENT_DETAILS, bundleOf(ARGS_EVENT to event))
 }
 
-fun NavHostController.toSettings() {
+fun NavHostController.navigateToSettings() {
     navigate(SETTINGS)
 }
 
-fun NavHostController.back() {
+fun NavHostController.navigateToBack() {
     navigateUp()
 }

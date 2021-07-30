@@ -17,38 +17,34 @@ class MyDatesApp : Application() {
 
         CoroutineScope(Dispatchers.IO).launch {
             initSharedPreferences()
-
-            setRepeatingAlarm(
-                context = this@MyDatesApp,
-                hour = EVENTS_UPDATE_HOUR,
-                minute = EVENTS_UPDATE_MINUTE,
-                receiver = UpdateEventsReceiver::class.java,
-                requestCode = APP_UPDATE_ALARM_REQUEST_CODE
-            )
-
-            setRepeatingAlarm(
-                context = this@MyDatesApp,
-                hour = 11,
-                minute = 0,
-                receiver = EventsReceiver::class.java,
-                requestCode = APP_EVENTS_ALARM_REQUEST_CODE
-            )
+            startAlarmManager()
         }
     }
 
     private fun initSharedPreferences() {
         if (spGetAppFirstLaunch()) {
             spSetAppFirstLaunch(false)
-            spSetNotificationAll(true)
-            spSetNotificationMonth(true)
-            spSetNotificationWeek(true)
-            spSetNotificationThreeDay(true)
-            spSetNotificationTwoDay(true)
-            spSetNotificationDay(true)
-            spSetNotificationToday(true)
             spSetNotificationHour(DEFAULT_NOTIFICATION_HOUR)
             spSetNotificationMinute(DEFAULT_NOTIFICATION_MINUTE)
         }
+    }
+
+    private fun startAlarmManager() {
+        setRepeatingAlarm(
+            context = this@MyDatesApp,
+            hour = EVENTS_UPDATE_HOUR,
+            minute = EVENTS_UPDATE_MINUTE,
+            receiver = UpdateEventsReceiver::class.java,
+            requestCode = APP_UPDATE_ALARM_REQUEST_CODE
+        )
+
+        setRepeatingAlarm(
+            context = this@MyDatesApp,
+            hour = 11,
+            minute = 0,
+            receiver = EventsReceiver::class.java,
+            requestCode = APP_EVENTS_ALARM_REQUEST_CODE
+        )
     }
 
     companion object {
