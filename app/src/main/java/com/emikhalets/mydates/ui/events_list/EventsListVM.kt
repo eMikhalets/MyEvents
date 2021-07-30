@@ -1,5 +1,9 @@
 package com.emikhalets.mydates.ui.events_list
 
+import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +21,9 @@ class EventsListVM @Inject constructor(
     private val repository: RoomRepository
 ) : ViewModel() {
 
+    var state by mutableStateOf<EventsListState>(EventsListState.Init)
+        private set
+
     private val _events = MutableLiveData<List<Event>>()
     val events get(): LiveData<List<Event>> = _events
 
@@ -31,16 +38,13 @@ class EventsListVM @Inject constructor(
 
     fun loadAllEvents(lastUpdate: Long) {
         viewModelScope.launch {
-            _loading.postValue(true)
-            when (val result = repository.getAllEvents(lastUpdate)) {
-                ListResult.EmptyList -> _error.postValue("Empty events list")
-                is ListResult.Error -> _error.postValue(result.message)
-                is ListResult.Success -> {
-                    val events = sortWithDividers(result.data)
-                    _events.postValue(events)
-                }
+            Log.d("BEFORE", "state = $state")
+            state = when (val result = repository.getAllEvents(lastUpdate)) {
+                ListResult.EmptyList -> EventsListState.Empty
+                is ListResult.Error -> EventsListState.Error(result.exception)
+                is ListResult.Success -> EventsListState.Events(sortWithDividers(result.data))
             }
-            _loading.postValue(false)
+            Log.d("AFTER", "state = $state")
         }
     }
 }

@@ -24,7 +24,7 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setTitle(R.string.title_home)
+        setTitle(R.string.title_events_list)
         setHasOptionsMenu(true)
         initEventsAdapter()
         clickListeners()

@@ -7,7 +7,6 @@ import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
@@ -20,7 +19,6 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
 
     private val binding by viewBinding(FragmentEventDetailsBinding::bind)
     private val viewModel: EventDetailsVM by viewModels()
-    private val args: EventDetailsFragmentArgs by navArgs()
 
     private lateinit var event: Event
 
@@ -34,7 +32,7 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
     }
 
     private fun insertEventData() {
-        event = args.event
+//        event = args.event
         binding.apply {
             setViewsForEventType(EventType.get(event.eventType))
             textFullName.text = event.fullName()

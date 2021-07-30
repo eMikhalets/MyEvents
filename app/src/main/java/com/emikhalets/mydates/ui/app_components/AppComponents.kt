@@ -93,7 +93,7 @@ fun EventListItem(
             Icon(
                 imageVector = Icons.Rounded.ArrowForwardIos,
                 contentDescription = "Forward arrow icon",
-                tint = MaterialTheme.colors.onBackground,
+                tint = MaterialTheme.colors.surface,
                 modifier = Modifier
                     .height(80.dp)
                     .width(40.dp)

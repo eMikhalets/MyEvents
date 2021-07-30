@@ -8,15 +8,14 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.ui.app_components.*
@@ -26,12 +25,12 @@ import com.emikhalets.mydates.utils.pluralsResource
 import com.emikhalets.mydates.utils.toDateString
 
 @Composable
-fun EventDetailsScreen1(
+fun EventDetailsScreen(
+    navController: NavHostController,
     event: Event
 ) {
-//    val event by remember { mutableStateOf<Event?>(null) }
-
     EventDetailsScreen(
+        navController = navController,
         event = event,
         onSaveEvent = {},
         onDeleteEvent = {}
@@ -40,6 +39,7 @@ fun EventDetailsScreen1(
 
 @Composable
 private fun EventDetailsScreen(
+    navController: NavHostController,
     event: Event,
     onSaveEvent: () -> Unit,
     onDeleteEvent: () -> Unit
@@ -48,8 +48,10 @@ private fun EventDetailsScreen(
         backgroundColor = MaterialTheme.colors.surface,
         topBar = {
             AppTopBar(
+                navController = navController,
                 title = stringResource(R.string.title_event_details),
-                rootScreen = false
+                showBackIcon = true,
+                showSettingsIcon = true
             )
         }
     ) {
@@ -189,6 +191,7 @@ private fun EventDetailsEdit(
 private fun EventDetailsScreenPreview() {
     AppTheme {
         EventDetailsScreen(
+            rememberNavController(),
             event = buildEvent(),
             onSaveEvent = {},
             onDeleteEvent = {}
@@ -201,6 +204,7 @@ private fun EventDetailsScreenPreview() {
 private fun EventDetailsScreenDarkPreview() {
     AppTheme(darkTheme = true) {
         EventDetailsScreen(
+            rememberNavController(),
             event = buildEvent(),
             onSaveEvent = {},
             onDeleteEvent = {}

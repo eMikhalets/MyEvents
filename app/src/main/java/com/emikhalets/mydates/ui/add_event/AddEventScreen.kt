@@ -12,13 +12,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.ui.app_components.*
 import com.emikhalets.mydates.ui.theme.AppTheme
 import java.util.*
 
 @Composable
-fun AddEventScreen() {
+fun AddEventScreen(
+    navController: NavHostController
+) {
     var name by remember { mutableStateOf("") }
     var lastname by remember { mutableStateOf("") }
     var middleName by remember { mutableStateOf("") }
@@ -27,6 +31,7 @@ fun AddEventScreen() {
     var withoutYear by remember { mutableStateOf(false) }
 
     AddEventScreen(
+        navController = navController,
         name = name,
         lastname = lastname,
         middleName = middleName,
@@ -44,6 +49,7 @@ fun AddEventScreen() {
 
 @Composable
 private fun AddEventScreen(
+    navController: NavHostController,
     name: String,
     lastname: String,
     middleName: String,
@@ -62,7 +68,9 @@ private fun AddEventScreen(
         topBar = {
             AppTopBar(
                 title = stringResource(R.string.title_add_event),
-                rootScreen = false
+                navController = navController,
+                showBackIcon = true,
+                showSettingsIcon = true
             )
         }
     ) {
@@ -146,6 +154,7 @@ private fun AddEventTitle(
 private fun AddEventScreenPreview() {
     AppTheme {
         AddEventScreen(
+            navController = rememberNavController(),
             name = "Иван",
             lastname = "Иванов",
             middleName = "Иванович",
@@ -167,6 +176,7 @@ private fun AddEventScreenPreview() {
 private fun AddEventScreenDarkPreview() {
     AppTheme(darkTheme = true) {
         AddEventScreen(
+            navController = rememberNavController(),
             name = "Иван",
             lastname = "Иванов",
             middleName = "Иванович",

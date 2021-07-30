@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
@@ -19,7 +18,6 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
 
     private val binding by viewBinding(FragmentAddEventBinding::bind)
     private val viewModel: AddEventVM by viewModels()
-    private val args: AddEventFragmentArgs by navArgs()
 
     private var date = 0L
 
@@ -34,7 +32,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
     private fun prepareEventData() {
         date = Calendar.getInstance().timeInMillis
         binding.inputDate.setText(date.toDateString("d MMMM YYYY"))
-        setViewsForEventType(args.eventType)
+//        setViewsForEventType(args.eventType)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -80,21 +78,21 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
     }
 
     private fun onSaveClick() {
-        if (validateFields()) when (args.eventType) {
-            EventType.ANNIVERSARY -> viewModel.addNewAnniversary(
-                binding.inputName.text.toString(),
-                date,
-                binding.checkYear.isChecked
-            )
-            EventType.BIRTHDAY -> viewModel.addNewBirthday(
-                binding.inputName.text.toString(),
-                binding.inputLastname.text.toString(),
-                binding.inputMiddleName.text.toString(),
-                date,
-                binding.checkYear.isChecked
-            )
-        }
-        else toast(R.string.fields_empty)
+//        if (validateFields()) when (args.eventType) {
+//            EventType.ANNIVERSARY -> viewModel.addNewAnniversary(
+//                binding.inputName.text.toString(),
+//                date,
+//                binding.checkYear.isChecked
+//            )
+//            EventType.BIRTHDAY -> viewModel.addNewBirthday(
+//                binding.inputName.text.toString(),
+//                binding.inputLastname.text.toString(),
+//                binding.inputMiddleName.text.toString(),
+//                date,
+//                binding.checkYear.isChecked
+//            )
+//        }
+//        else toast(R.string.fields_empty)
     }
 
     private fun setViewsForEventType(eventType: EventType) {

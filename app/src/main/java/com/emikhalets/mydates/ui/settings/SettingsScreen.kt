@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.ui.app_components.AppTopBar
 import com.emikhalets.mydates.ui.theme.AppTheme
@@ -23,7 +25,9 @@ import com.emikhalets.mydates.utils.SettingTheme
 import com.emikhalets.mydates.utils.getName
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    navController: NavHostController
+) {
     var language by remember { mutableStateOf(SettingLanguage.RUSSIAN) }
     var expandLanguage by remember { mutableStateOf(false) }
 
@@ -42,6 +46,7 @@ fun SettingsScreen() {
     var notificationsToday by remember { mutableStateOf(false) }
 
     SettingsScreen(
+        navController = navController,
         language = language,
         languageChange = { language = it },
         expandLanguage = expandLanguage,
@@ -75,6 +80,7 @@ fun SettingsScreen() {
 
 @Composable
 fun SettingsScreen(
+    navController: NavHostController,
     language: SettingLanguage,
     languageChange: (SettingLanguage) -> Unit,
     expandLanguage: Boolean,
@@ -108,8 +114,10 @@ fun SettingsScreen(
         backgroundColor = MaterialTheme.colors.surface,
         topBar = {
             AppTopBar(
+                navController = navController,
                 title = stringResource(R.string.title_settings),
-                rootScreen = false
+                showBackIcon = true,
+                showSettingsIcon = false
             )
         }
     ) {
@@ -362,6 +370,7 @@ private fun SettingsTime(
 private fun SettingsScreenScreenPreview() {
     AppTheme {
         SettingsScreen(
+            navController = rememberNavController(),
             language = SettingLanguage.RUSSIAN,
             languageChange = {},
             expandLanguage = false,
@@ -399,6 +408,7 @@ private fun SettingsScreenScreenPreview() {
 private fun SettingsScreenDarkPreview() {
     AppTheme {
         SettingsScreen(
+            navController = rememberNavController(),
             language = SettingLanguage.RUSSIAN,
             languageChange = {},
             expandLanguage = false,

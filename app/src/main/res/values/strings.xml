@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">MyDates</string>
 
-    <string name="title_home">События</string>
+    <string name="title_events_list">События</string>
     <string name="title_event_details">Детали События</string>
     <string name="title_add_event">Новое Событие</string>
     <string name="title_groups">Все Группы</string>
@@ -15,6 +15,8 @@
     <string name="notification_text_two_day">Через 2 дня:</string>
     <string name="notification_text_day">Завтра:</string>
     <string name="notification_text_today">Сегодня:</string>
+
+    <string name="events_list_empty">Создайте новое событие</string>
 
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
