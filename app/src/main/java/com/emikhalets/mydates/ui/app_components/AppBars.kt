@@ -18,7 +18,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.emikhalets.mydates.ui.theme.AppTheme
 import com.emikhalets.mydates.utils.navigation.navigateToBack
-import com.emikhalets.mydates.utils.navigation.navigateToAddEvent
 import com.emikhalets.mydates.utils.navigation.navigateToEventsList
 import com.emikhalets.mydates.utils.navigation.navigateToSettings
 
@@ -29,6 +28,7 @@ fun AppScaffold(
     showBackButton: Boolean,
     showSettingsButton: Boolean,
     showBottomBar: Boolean,
+    onAddEventClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Scaffold(
@@ -42,7 +42,12 @@ fun AppScaffold(
             )
         },
         bottomBar = {
-            if (showBottomBar) AppBottomBar(navController = navController)
+            if (showBottomBar) {
+                AppBottomBar(
+                    navController = navController,
+                    onAddEventClick = onAddEventClick
+                )
+            }
         },
     ) {
         Column(Modifier.padding(it)) {
@@ -95,7 +100,10 @@ fun AppTopBar(
 }
 
 @Composable
-fun AppBottomBar(navController: NavHostController) {
+fun AppBottomBar(
+    navController: NavHostController,
+    onAddEventClick: () -> Unit
+) {
     BottomAppBar(
         backgroundColor = MaterialTheme.colors.primary,
         elevation = 0.dp
@@ -114,7 +122,7 @@ fun AppBottomBar(navController: NavHostController) {
                 modifier = Modifier.size(32.dp)
             )
         }
-        AppAddButton(onClick = { navController.navigateToAddEvent() })
+        AppAddButton(onClick = { onAddEventClick() })
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
@@ -162,7 +170,7 @@ private fun AppTopBarDarkPreview() {
 @Composable
 private fun AppBottomBarPreview() {
     AppTheme {
-        AppBottomBar(rememberNavController())
+        AppBottomBar(rememberNavController()) {}
     }
 }
 
@@ -171,6 +179,6 @@ private fun AppBottomBarPreview() {
 @Composable
 private fun AppBottomBarDarkPreview() {
     AppTheme {
-        AppBottomBar(rememberNavController())
+        AppBottomBar(rememberNavController()) {}
     }
 }

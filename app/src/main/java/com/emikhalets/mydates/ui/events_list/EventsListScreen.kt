@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +22,7 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.ui.app_components.AppLoader
 import com.emikhalets.mydates.ui.app_components.AppScaffold
 import com.emikhalets.mydates.ui.app_components.EventListItem
+import com.emikhalets.mydates.ui.dialogs.AddEventDialog
 import com.emikhalets.mydates.ui.theme.AppTheme
 import com.emikhalets.mydates.utils.buildEventsList
 import com.emikhalets.mydates.utils.navigation.navigateToEventDetails
@@ -44,18 +45,26 @@ private fun EventsListsScreen(
     navController: NavHostController,
     state: EventsListState
 ) {
+    var showDialog by remember { mutableStateOf(false) }
+
     AppScaffold(
         navController = navController,
         topBarTitle = stringResource(R.string.title_events_list),
         showBackButton = false,
         showSettingsButton = true,
-        showBottomBar = true
+        showBottomBar = true,
+        onAddEventClick = { showDialog = true }
     ) {
         when (state) {
             is EventsListState.Error -> {
             }
             is EventsListState.Events -> {
                 EventsList(navController, state.events)
+                AddEventDialog(
+                    navController = navController,
+                    showDialog = showDialog,
+                    onShowDialogChange = { showDialog = it }
+                )
             }
             EventsListState.Empty -> {
                 EmptyEvents()

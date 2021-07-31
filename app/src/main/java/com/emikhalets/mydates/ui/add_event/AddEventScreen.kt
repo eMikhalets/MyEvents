@@ -7,7 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,12 +17,16 @@ import androidx.navigation.compose.rememberNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.ui.app_components.*
 import com.emikhalets.mydates.ui.theme.AppTheme
+import com.emikhalets.mydates.utils.EventType
+import com.emikhalets.mydates.utils.getEventTypeImage
+import com.emikhalets.mydates.utils.getEventTypeName
 import com.emikhalets.mydates.utils.navigation.navigateToBack
 import java.util.*
 
 @Composable
 fun AddEventScreen(
     navController: NavHostController,
+    eventType: EventType,
     viewModel: AddEventVM = hiltViewModel()
 ) {
     var name by remember { mutableStateOf("") }
@@ -34,6 +38,7 @@ fun AddEventScreen(
 
     AddEventScreen(
         navController = navController,
+        eventType = eventType,
         state = viewModel.state,
         name = name,
         lastname = lastname,
@@ -53,6 +58,7 @@ fun AddEventScreen(
 @Composable
 private fun AddEventScreen(
     navController: NavHostController,
+    eventType: EventType,
     state: AddEventState,
     name: String,
     lastname: String,
@@ -72,7 +78,8 @@ private fun AddEventScreen(
         topBarTitle = stringResource(R.string.title_add_event),
         showBackButton = true,
         showSettingsButton = true,
-        showBottomBar = false
+        showBottomBar = false,
+        onAddEventClick = {}
     ) {
         when (state) {
             is AddEventState.Error -> {
@@ -85,6 +92,7 @@ private fun AddEventScreen(
             }
             AddEventState.Init -> {
                 AddEventContent(
+                    eventType = eventType,
                     name = name,
                     lastname = lastname,
                     middleName = middleName,
@@ -105,6 +113,7 @@ private fun AddEventScreen(
 
 @Composable
 private fun AddEventContent(
+    eventType: EventType,
     name: String,
     lastname: String,
     middleName: String,
@@ -121,7 +130,10 @@ private fun AddEventContent(
     Column(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
     ) {
-        AddEventTitle(title = stringResource(R.string.add_event_text_birthday))
+        AddEventTitle(
+            title = eventType.getEventTypeName(),
+            image = eventType.getEventTypeImage()
+        )
         Spacer(modifier = Modifier.size(16.dp))
         AppTextField(
             label = stringResource(R.string.add_event_text_name),
@@ -129,20 +141,22 @@ private fun AddEventContent(
             onValueChange = onNameChange,
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.size(16.dp))
-        AppTextField(
-            label = stringResource(R.string.add_event_text_lastname),
-            value = lastname,
-            onValueChange = onLastnameChange,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.size(16.dp))
-        AppTextField(
-            label = stringResource(R.string.add_event_text_middle_name),
-            value = middleName,
-            onValueChange = onMiddleNameChange,
-            modifier = Modifier.fillMaxWidth()
-        )
+        if (eventType == EventType.BIRTHDAY) {
+            Spacer(modifier = Modifier.size(16.dp))
+            AppTextField(
+                label = stringResource(R.string.add_event_text_lastname),
+                value = lastname,
+                onValueChange = onLastnameChange,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            AppTextField(
+                label = stringResource(R.string.add_event_text_middle_name),
+                value = middleName,
+                onValueChange = onMiddleNameChange,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         Spacer(modifier = Modifier.size(16.dp))
         AppDateField(
             label = stringResource(R.string.add_event_text_date),
@@ -171,15 +185,16 @@ private fun AddEventContent(
 
 @Composable
 private fun AddEventTitle(
-    title: String
+    title: String,
+    image: Painter
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxWidth()
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_birthday),
-            contentDescription = "Event type icon",
+            painter = image,
+            contentDescription = "",
             modifier = Modifier.size(40.dp)
         )
         Spacer(modifier = Modifier.size(16.dp))
@@ -198,6 +213,7 @@ private fun AddEventScreenPreview() {
     AppTheme {
         AddEventScreen(
             navController = rememberNavController(),
+            eventType = EventType.BIRTHDAY,
             state = AddEventState.Init,
             name = "Иван",
             lastname = "Иванов",
@@ -221,6 +237,7 @@ private fun AddEventScreenDarkPreview() {
     AppTheme(darkTheme = true) {
         AddEventScreen(
             navController = rememberNavController(),
+            eventType = EventType.ANNIVERSARY,
             state = AddEventState.Init,
             name = "Иван",
             lastname = "Иванов",

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyDates</string>
+    <string name="app_name">MyEvents</string>
 
     <string name="title_events_list">События</string>
     <string name="title_event_details">Детали События</string>

@@ -11,12 +11,14 @@ import com.emikhalets.mydates.ui.add_event.AddEventScreen
 import com.emikhalets.mydates.ui.event_details.EventDetailsScreen
 import com.emikhalets.mydates.ui.events_list.EventsListsScreen
 import com.emikhalets.mydates.ui.settings.SettingsScreen
+import com.emikhalets.mydates.utils.EventType
 import com.emikhalets.mydates.utils.navigation.AppDestinations.ADD_EVENT
 import com.emikhalets.mydates.utils.navigation.AppDestinations.EVENTS_LIST
 import com.emikhalets.mydates.utils.navigation.AppDestinations.EVENT_DETAILS
 import com.emikhalets.mydates.utils.navigation.AppDestinations.SETTINGS
 
 private const val ARGS_EVENT = "argument_event"
+private const val ARGS_EVENT_TYPE = "argument_event_type"
 
 object AppDestinations {
     const val EVENTS_LIST = "events_list"
@@ -40,22 +42,31 @@ fun AppNavGraph(
             )
         }
         composable(ADD_EVENT) {
-            AddEventScreen(
-                navController = navController
-            )
-        }
-        composable(EVENT_DETAILS) {
-            navController.getArgument<Event>(ARGS_EVENT) { event ->
-                EventDetailsScreen(
+            navController.previousBackStackEntry?.arguments?.getSerializable(ARGS_EVENT_TYPE)?.let {
+                AddEventScreen(
                     navController = navController,
-                    event = event
+                    eventType = it as EventType
                 )
             }
-        }
-        composable(SETTINGS) {
-            SettingsScreen(
-                navController = navController
-            )
+//            navController.getArgParcelable<EventType>(ARGS_EVENT_TYPE) { eventType ->
+//                AddEventScreen(
+//                    navController = navController,
+//                    eventType = eventType
+//                )
+//            }
+            composable(EVENT_DETAILS) {
+                navController.getArgParcelable<Event>(ARGS_EVENT) { event ->
+                    EventDetailsScreen(
+                        navController = navController,
+                        event = event
+                    )
+                }
+            }
+            composable(SETTINGS) {
+                SettingsScreen(
+                    navController = navController
+                )
+            }
         }
     }
 }
@@ -64,8 +75,8 @@ fun NavHostController.navigateToEventsList() {
     if (this.currentDestination?.route != EVENTS_LIST) navigate(EVENTS_LIST)
 }
 
-fun NavHostController.navigateToAddEvent() {
-    navigate(ADD_EVENT)
+fun NavHostController.navigateToAddEvent(eventType: EventType) {
+    navigate(ADD_EVENT, bundleOf(ARGS_EVENT_TYPE to eventType))
 }
 
 fun NavHostController.navigateToEventDetails(event: Event) {
