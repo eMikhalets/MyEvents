@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CalendarToday
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,12 +48,24 @@ fun AddEventScreen(
         date = date,
         dateString = dateString,
         withoutYear = withoutYear,
-        onNameChange = { name = it },
+        onNameChange = {
+            viewModel.onNameChanged()
+            name = it
+        },
         onLastnameChange = { lastname = it },
         onMiddleNameChange = { middleName = it },
         onDateChange = { date = it },
         onDateStringChange = { dateString = it },
-        onWithoutYearChange = { withoutYear = it }
+        onWithoutYearChange = { withoutYear = it },
+        onSaveClick = {
+            viewModel.saveEvent(
+                name = name,
+                lastname = lastname,
+                middleName = middleName,
+                date = date,
+                withoutYear = withoutYear
+            )
+        }
     )
 }
 
@@ -71,7 +85,8 @@ private fun AddEventScreen(
     onMiddleNameChange: (String) -> Unit,
     onDateChange: (Long) -> Unit,
     onDateStringChange: (String) -> Unit,
-    onWithoutYearChange: (Boolean) -> Unit
+    onWithoutYearChange: (Boolean) -> Unit,
+    onSaveClick: () -> Unit
 ) {
     AppScaffold(
         navController = navController,
@@ -86,6 +101,25 @@ private fun AddEventScreen(
             }
             AddEventState.Saved -> {
                 navController.navigateToBack()
+            }
+            AddEventState.EmptyName -> {
+                AddEventContent(
+                    eventType = eventType,
+                    name = name,
+                    lastname = lastname,
+                    middleName = middleName,
+                    date = date,
+                    dateString = dateString,
+                    withoutYear = withoutYear,
+                    onNameChange = onNameChange,
+                    onLastnameChange = onLastnameChange,
+                    onMiddleNameChange = onMiddleNameChange,
+                    onDateChange = onDateChange,
+                    onDateStringChange = onDateStringChange,
+                    onWithoutYearChange = onWithoutYearChange,
+                    onSaveClick = onSaveClick,
+                    nameEmptyError = true
+                )
             }
             AddEventState.Loading -> {
                 AppLoader()
@@ -104,7 +138,8 @@ private fun AddEventScreen(
                     onMiddleNameChange = onMiddleNameChange,
                     onDateChange = onDateChange,
                     onDateStringChange = onDateStringChange,
-                    onWithoutYearChange = onWithoutYearChange
+                    onWithoutYearChange = onWithoutYearChange,
+                    onSaveClick = onSaveClick
                 )
             }
         }
@@ -125,7 +160,9 @@ private fun AddEventContent(
     onMiddleNameChange: (String) -> Unit,
     onDateChange: (Long) -> Unit,
     onDateStringChange: (String) -> Unit,
-    onWithoutYearChange: (Boolean) -> Unit
+    onWithoutYearChange: (Boolean) -> Unit,
+    onSaveClick: () -> Unit,
+    nameEmptyError: Boolean = false
 ) {
     Column(
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
@@ -138,14 +175,17 @@ private fun AddEventContent(
         AppTextField(
             label = stringResource(R.string.add_event_text_name),
             value = name,
+            singleLine = false,
             onValueChange = onNameChange,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            requiredError = nameEmptyError
         )
         if (eventType == EventType.BIRTHDAY) {
             Spacer(modifier = Modifier.size(16.dp))
             AppTextField(
                 label = stringResource(R.string.add_event_text_lastname),
                 value = lastname,
+                singleLine = false,
                 onValueChange = onLastnameChange,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -153,16 +193,19 @@ private fun AddEventContent(
             AppTextField(
                 label = stringResource(R.string.add_event_text_middle_name),
                 value = middleName,
+                singleLine = false,
                 onValueChange = onMiddleNameChange,
                 modifier = Modifier.fillMaxWidth()
             )
         }
         Spacer(modifier = Modifier.size(16.dp))
-        AppDateField(
+        AppTextField(
             label = stringResource(R.string.add_event_text_date),
             value = dateString,
             onValueChange = onDateStringChange,
             onClick = {},
+            singleLine = true,
+            imageVector = Icons.Rounded.CalendarToday,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.size(16.dp))
@@ -175,7 +218,7 @@ private fun AddEventContent(
         Spacer(modifier = Modifier.size(40.dp))
         AppButton(
             text = stringResource(R.string.event_details_text_save),
-            onClick = {},
+            onClick = onSaveClick,
             modifier = Modifier
                 .padding(start = 52.dp, end = 52.dp)
                 .fillMaxWidth()
@@ -201,6 +244,7 @@ private fun AddEventTitle(
         Text(
             text = title,
             style = MaterialTheme.typography.h4,
+            color = AppTheme.colors.onBackground,
             modifier = Modifier.align(Alignment.CenterVertically)
 
         )
@@ -226,7 +270,8 @@ private fun AddEventScreenPreview() {
             onMiddleNameChange = {},
             onDateChange = {},
             onDateStringChange = {},
-            onWithoutYearChange = {}
+            onWithoutYearChange = {},
+            onSaveClick = {}
         )
     }
 }
@@ -250,7 +295,8 @@ private fun AddEventScreenDarkPreview() {
             onMiddleNameChange = {},
             onDateChange = {},
             onDateStringChange = {},
-            onWithoutYearChange = {}
+            onWithoutYearChange = {},
+            onSaveClick = {}
         )
     }
 }

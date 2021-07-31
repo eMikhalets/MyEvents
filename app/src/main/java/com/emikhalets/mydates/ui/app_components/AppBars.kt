@@ -32,7 +32,7 @@ fun AppScaffold(
     content: @Composable () -> Unit
 ) {
     Scaffold(
-        backgroundColor = MaterialTheme.colors.surface,
+        backgroundColor = AppTheme.colors.background,
         topBar = {
             AppTopBar(
                 navController = navController,
@@ -64,14 +64,14 @@ fun AppTopBar(
     showSettingsIcon: Boolean
 ) {
     TopAppBar(
-        backgroundColor = MaterialTheme.colors.primary,
+        backgroundColor = AppTheme.colors.bar,
         elevation = 0.dp
     ) {
         if (showBackIcon) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBack,
-                contentDescription = "Arrow back icon",
-                tint = MaterialTheme.colors.onPrimary,
+                contentDescription = "",
+                tint = AppTheme.colors.onBar,
                 modifier = Modifier
                     .clickable { navController.navigateToBack() }
                     .padding(top = 14.dp, bottom = 14.dp)
@@ -82,14 +82,14 @@ fun AppTopBar(
         Text(
             text = title,
             style = MaterialTheme.typography.h5,
-            color = MaterialTheme.colors.onPrimary,
+            color = AppTheme.colors.onBar,
             modifier = Modifier.weight(1f)
         )
         if (showSettingsIcon) {
             Icon(
                 imageVector = Icons.Rounded.Settings,
                 contentDescription = "Settings icon",
-                tint = MaterialTheme.colors.onPrimary,
+                tint = AppTheme.colors.onBar,
                 modifier = Modifier
                     .clickable { navController.navigateToSettings() }
                     .padding(top = 14.dp, bottom = 14.dp)
@@ -105,7 +105,7 @@ fun AppBottomBar(
     onAddEventClick: () -> Unit
 ) {
     BottomAppBar(
-        backgroundColor = MaterialTheme.colors.primary,
+        backgroundColor = AppTheme.colors.bar,
         elevation = 0.dp
     ) {
         Box(
@@ -118,7 +118,7 @@ fun AppBottomBar(
             Icon(
                 imageVector = Icons.Rounded.List,
                 contentDescription = "Home screen icon",
-                tint = MaterialTheme.colors.onPrimary,
+                tint = AppTheme.colors.onBar,
                 modifier = Modifier.size(32.dp)
             )
         }
@@ -133,7 +133,7 @@ fun AppBottomBar(
             Icon(
                 imageVector = Icons.Rounded.CalendarToday,
                 contentDescription = "Calendar screen icon",
-                tint = MaterialTheme.colors.onPrimary,
+                tint = AppTheme.colors.onBar,
                 modifier = Modifier.size(32.dp)
             )
         }
@@ -142,43 +142,31 @@ fun AppBottomBar(
 
 @Preview(showBackground = true)
 @Composable
-private fun AppTopBarPreview() {
+private fun AppScaffoldPreview() {
     AppTheme {
-        AppTopBar(
-            title = "Some Title",
+        AppScaffold(
             navController = rememberNavController(),
-            showBackIcon = true,
-            showSettingsIcon = true
-        )
-    }
-}
-
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-private fun AppTopBarDarkPreview() {
-    AppTheme {
-        AppTopBar(
-            title = "Some Title",
-            navController = rememberNavController(),
-            showBackIcon = true,
-            showSettingsIcon = true
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun AppBottomBarPreview() {
-    AppTheme {
-        AppBottomBar(rememberNavController()) {}
+            topBarTitle = "Some title",
+            showBackButton = true,
+            showSettingsButton = true,
+            showBottomBar = true,
+            onAddEventClick = {}
+        ) {}
     }
 }
 
 
 @Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun AppBottomBarDarkPreview() {
+private fun AppScaffoldDarkPreview() {
     AppTheme {
-        AppBottomBar(rememberNavController()) {}
+        AppScaffold(
+            navController = rememberNavController(),
+            topBarTitle = "Some title",
+            showBackButton = true,
+            showSettingsButton = true,
+            showBottomBar = true,
+            onAddEventClick = {}
+        ) {}
     }
 }

@@ -44,7 +44,7 @@ fun AddEventDialog(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .background(
-                        color = MaterialTheme.colors.surface,
+                        color = AppTheme.colors.card,
                         shape = RoundedCornerShape(12.dp)
                     )
             ) {
@@ -52,6 +52,7 @@ fun AddEventDialog(
                     Text(
                         text = stringResource(R.string.add_event_text_new_event),
                         style = MaterialTheme.typography.h5,
+                        color = AppTheme.colors.onCard,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -91,6 +92,7 @@ private fun AddEventCard(
 ) {
     Card(
         shape = RoundedCornerShape(8.dp),
+        backgroundColor = AppTheme.colors.card,
         elevation = 4.dp,
         modifier = modifier
             .padding(4.dp)
@@ -109,6 +111,7 @@ private fun AddEventCard(
             Text(
                 text = title,
                 style = MaterialTheme.typography.body1,
+                color = AppTheme.colors.onCard,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
 

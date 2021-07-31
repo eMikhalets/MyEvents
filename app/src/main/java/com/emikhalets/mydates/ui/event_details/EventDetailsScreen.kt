@@ -69,9 +69,10 @@ private fun EventDetailsScreen(
                 age = event.age
             )
             Spacer(modifier = Modifier.size(16.dp))
-            AppTextFieldMultiline(
+            AppTextField(
                 label = stringResource(R.string.event_details_text_notes),
                 value = event.notes,
+                singleLine = true,
                 onValueChange = { event.notes = it },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -153,6 +154,7 @@ private fun EventDetailsEdit(
         AppTextField(
             label = stringResource(R.string.event_details_text_name),
             value = event.name,
+            singleLine = false,
             onValueChange = { event.name = it },
             modifier = Modifier.fillMaxWidth()
         )
@@ -160,6 +162,7 @@ private fun EventDetailsEdit(
         AppTextField(
             label = stringResource(R.string.add_event_text_lastname),
             value = event.lastName,
+            singleLine = false,
             onValueChange = { event.lastName = it },
             modifier = Modifier.fillMaxWidth()
         )
@@ -167,13 +170,15 @@ private fun EventDetailsEdit(
         AppTextField(
             label = stringResource(R.string.add_event_text_middle_name),
             value = event.middleName,
+            singleLine = false,
             onValueChange = { event.middleName = it },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.size(16.dp))
-        AppDateField(
+        AppTextField(
             label = stringResource(R.string.add_event_text_date),
             value = date.toDateString(),
+            singleLine = true,
             onValueChange = {},
             onClick = {},
             modifier = Modifier.fillMaxWidth()

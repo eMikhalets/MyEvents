@@ -29,12 +29,17 @@ fun AppCheckbox(
     Row(modifier = modifier) {
         Checkbox(
             checked = checked,
-            onCheckedChange = onCheckedChange
+            onCheckedChange = onCheckedChange,
+            colors = CheckboxDefaults.colors(
+                checkedColor = AppTheme.colors.button,
+                uncheckedColor = AppTheme.colors.button,
+                checkmarkColor = AppTheme.colors.onButton,
+            )
         )
         Text(
             text = label,
             style = MaterialTheme.typography.body1,
-            color = MaterialTheme.colors.onSurface,
+            color = AppTheme.colors.onBackground,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp)
         )
     }
@@ -49,7 +54,7 @@ fun EventListItem(
     Card(
         shape = RoundedCornerShape(16.dp),
         elevation = 4.dp,
-        backgroundColor = MaterialTheme.colors.background,
+        backgroundColor = AppTheme.colors.card,
         modifier = modifier
             .padding(top = 8.dp)
             .fillMaxWidth()
@@ -72,20 +77,24 @@ fun EventListItem(
                 Text(
                     text = event.fullName(),
                     style = MaterialTheme.typography.h5,
+                    color = AppTheme.colors.onCard
                 )
                 Text(
                     text = EventType.get(event.eventType).getEventTypeName(),
                     style = MaterialTheme.typography.body1,
+                    color = AppTheme.colors.onCard
                 )
                 Row {
                     Text(
                         text = pluralsResource(R.plurals.days_left, event.daysLeft),
                         style = MaterialTheme.typography.body1,
+                        color = AppTheme.colors.onCard
                     )
                     Spacer(modifier = Modifier.size(8.dp))
                     Text(
                         text = pluralsResource(R.plurals.age, event.age),
                         style = MaterialTheme.typography.body1,
+                        color = AppTheme.colors.onCard
                     )
                 }
             }
@@ -93,7 +102,7 @@ fun EventListItem(
             Icon(
                 imageVector = Icons.Rounded.ArrowForwardIos,
                 contentDescription = "Forward arrow icon",
-                tint = MaterialTheme.colors.surface,
+                tint = AppTheme.colors.background,
                 modifier = Modifier
                     .height(80.dp)
                     .width(40.dp)

@@ -3,7 +3,6 @@ package com.emikhalets.mydates.ui.app_components
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -26,7 +25,11 @@ fun AppButton(
         onClick = onClick,
         enabled = enabled,
         shape = RoundedCornerShape(16.dp),
-        contentPadding = PaddingValues(16.dp, 16.dp, 16.dp, 16.dp),
+        contentPadding = PaddingValues(16.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = AppTheme.colors.button,
+            contentColor = AppTheme.colors.onButton,
+        ),
         modifier = modifier
     ) {
         Text(
@@ -47,13 +50,16 @@ fun AppTextButton(
         onClick = onClick,
         enabled = enabled,
         shape = RoundedCornerShape(16.dp),
-        contentPadding = PaddingValues(16.dp, 16.dp, 16.dp, 16.dp),
+        contentPadding = PaddingValues(16.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = AppTheme.colors.background,
+            contentColor = AppTheme.colors.onBackground,
+        ),
         modifier = modifier
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.button,
-            color = MaterialTheme.colors.onSurface
+            style = MaterialTheme.typography.button
         )
     }
 }
@@ -65,11 +71,12 @@ fun AppAddButton(
 ) {
     Button(
         onClick = onClick,
-        shape = CircleShape,
-        modifier = modifier.size(52.dp),
+        shape = RoundedCornerShape(12.dp),
+        modifier = modifier.size(56.dp, 40.dp),
+        contentPadding = PaddingValues(4.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.onPrimary,
-            contentColor = MaterialTheme.colors.primary
+            backgroundColor = AppTheme.colors.buttonBar,
+            contentColor = AppTheme.colors.onButtonBar,
         )
     ) {
         Icon(
@@ -88,7 +95,7 @@ private fun AppButtonPreview() {
     }
 }
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES, backgroundColor = 1)
 @Composable
 private fun AppButtonDarkPreview() {
     AppTheme {

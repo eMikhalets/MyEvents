@@ -87,6 +87,7 @@ private fun EmptyEvents() {
         Text(
             text = stringResource(R.string.events_list_empty),
             style = MaterialTheme.typography.h4,
+            color = AppTheme.colors.onBackground,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
     }

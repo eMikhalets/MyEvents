@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.RoomRepository
+import com.emikhalets.mydates.utils.EventType
 import com.emikhalets.mydates.utils.calculateParameters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,23 +22,31 @@ class AddEventVM @Inject constructor(
     var state by mutableStateOf<AddEventState>(AddEventState.Init)
         private set
 
-    fun addNewAnniversary(name: String, date: Long, withoutYear: Boolean) {
-        addNewEvent(Event(name, date, withoutYear))
+    fun onNameChanged() {
+        state = AddEventState.Init
     }
 
-    fun addNewBirthday(
+    fun saveEvent(
         name: String,
         lastname: String,
         middleName: String,
         date: Long,
         withoutYear: Boolean
     ) {
-        addNewEvent(Event(name, lastname, middleName, date, withoutYear))
-    }
+        if (name.isEmpty()) {
+            state = AddEventState.EmptyName
+            return
+        }
 
-    private fun addNewEvent(event: Event) {
         viewModelScope.launch {
             state = AddEventState.Loading
+            val event = Event(
+                name,
+                lastname,
+                middleName,
+                date,
+                withoutYear
+            )
             event.calculateParameters()
             state = when (val result = repository.insertEvent(event)) {
                 CompleteResult.Complete -> AddEventState.Saved

@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">MyEvents</string>
 
+    <string name="empty_text_field">Требуется заполнить</string>
+
     <string name="title_events_list">События</string>
     <string name="title_event_details">Детали События</string>
     <string name="title_add_event">Новое Событие</string>

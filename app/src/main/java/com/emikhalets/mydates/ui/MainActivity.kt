@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-
             AppNavGraph(
                 navController = navController,
                 startDestination = EVENTS_LIST
