@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/text_month"
-        style="@style/Text.Primary"
+        style="@style/TextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

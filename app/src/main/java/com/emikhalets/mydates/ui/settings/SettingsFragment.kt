@@ -110,7 +110,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun importEvents() {
-        startDeleteDialog(getString(R.string.import_alert)) {
+        startDeleteDialog(getString(R.string.dialog_import_alert)) {
             documentPicker.openFile()
         }
         viewModel.importEvents.observe(viewLifecycleOwner) {

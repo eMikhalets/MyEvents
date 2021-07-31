@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/space_small"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardCornerRadius="@dimen/corner_radius_small">
+    android:layout_marginTop="@dimen/space_small">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,20 +15,20 @@
             android:layout_width="@dimen/icon_size_large"
             android:layout_height="@dimen/icon_size_large"
             android:layout_margin="@dimen/space_small"
-            android:src="@drawable/placeholder_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_birthday" />
 
         <TextView
             android:id="@+id/text_name"
-            style="@style/Text.Primary"
+            style="@style/TextTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_normal"
             android:layout_marginEnd="@dimen/space_small"
-            app:layout_constraintBottom_toTopOf="@+id/text_info"
+            app:layout_constraintBottom_toTopOf="@+id/text_date"
             app:layout_constraintEnd_toStartOf="@+id/image_forward"
             app:layout_constraintStart_toEndOf="@+id/image_photo"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,8 +36,8 @@
             tools:text="Михалец Евгений" />
 
         <TextView
-            android:id="@+id/text_info"
-            style="@style/Text.Secondary"
+            android:id="@+id/text_date"
+            style="@style/TextPrimary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_normal"
@@ -53,18 +50,18 @@
 
         <TextView
             android:id="@+id/text_days_left"
-            style="@style/Text.Highlighted"
+            style="@style/TextPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_photo"
-            app:layout_constraintTop_toBottomOf="@+id/text_info"
+            app:layout_constraintTop_toBottomOf="@+id/text_date"
             tools:text="Через 5 дней" />
 
         <TextView
             android:id="@+id/text_age"
-            style="@style/Text.Highlighted"
+            style="@style/TextPrimary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_normal"
@@ -78,7 +75,8 @@
         <ImageView
             android:id="@+id/image_forward"
             android:layout_width="@dimen/icon_size_normal"
-            android:layout_height="@dimen/icon_size_very_large"
+            android:layout_height="80dp"
+            android:scaleY="1.5"
             android:src="@drawable/ic_arrow_forward"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,4 +85,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

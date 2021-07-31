@@ -8,17 +8,17 @@
 
     <ImageView
         android:id="@+id/image_label"
-        android:layout_width="@dimen/icon_size_small"
-        android:layout_height="@dimen/icon_size_small"
-        android:src="@drawable/placeholder_image"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/text_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_label"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_anniversary" />
 
     <TextView
         android:id="@+id/text_label"
-        style="@style/Text.Title"
+        style="@style/TextTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_normal"
@@ -27,117 +27,131 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="День рождения" />
 
-    <TextView
-        android:id="@+id/text_name"
-        style="@style/Text.Secondary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_large"
-        android:layout_marginTop="@dimen/space_normal"
-        android:text="@string/add_event_text_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_label" />
-
-    <EditText
-        android:id="@+id/input_name"
-        style="@style/Input"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_normal"
-        android:layout_marginTop="@dimen/space_very_small"
-        android:layout_marginEnd="@dimen/space_normal"
-        android:hint="@string/add_event_hint_name"
-        app:layout_constraintTop_toBottomOf="@+id/text_name"
-        tools:ignore="Autofill" />
-
-    <TextView
-        android:id="@+id/text_lastname"
-        style="@style/Text.Secondary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_large"
+        android:layout_marginStart="@dimen/space_small"
         android:layout_marginTop="@dimen/space_normal"
-        android:text="@string/add_event_text_lastname"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_name" />
+        android:layout_marginEnd="@dimen/space_small"
+        app:layout_constraintTop_toBottomOf="@+id/text_label">
 
-    <EditText
-        android:id="@+id/input_lastname"
-        style="@style/Input"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lay_input_name"
+            style="@style/InputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_name"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_lastname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_normal"
-        android:layout_marginTop="@dimen/space_very_small"
-        android:layout_marginEnd="@dimen/space_normal"
-        android:hint="@string/add_event_hint_lastname"
-        app:layout_constraintTop_toBottomOf="@+id/text_lastname"
-        tools:ignore="Autofill" />
-
-    <TextView
-        android:id="@+id/text_middle_name"
-        style="@style/Text.Secondary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_large"
+        android:layout_marginStart="@dimen/space_small"
         android:layout_marginTop="@dimen/space_normal"
-        android:text="@string/add_event_text_middle_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_lastname" />
+        android:layout_marginEnd="@dimen/space_small"
+        app:layout_constraintTop_toBottomOf="@+id/card_name">
 
-    <EditText
-        android:id="@+id/input_middle_name"
-        style="@style/Input"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lay_input_lastname"
+            style="@style/InputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/lastname">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_lastname"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_middle_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_normal"
-        android:layout_marginTop="@dimen/space_very_small"
-        android:layout_marginEnd="@dimen/space_normal"
-        android:hint="@string/add_event_hint_middle_name"
-        app:layout_constraintTop_toBottomOf="@+id/text_middle_name"
-        tools:ignore="Autofill" />
-
-    <TextView
-        android:id="@+id/text_date"
-        style="@style/Text.Secondary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_large"
+        android:layout_marginStart="@dimen/space_small"
         android:layout_marginTop="@dimen/space_normal"
-        android:text="@string/add_event_text_date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/input_middle_name" />
+        android:layout_marginEnd="@dimen/space_small"
+        app:layout_constraintTop_toBottomOf="@+id/card_lastname">
 
-    <EditText
-        android:id="@+id/input_date"
-        style="@style/Input.Date"
-        android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lay_input_middle_name"
+            style="@style/InputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/middle_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_middle_name"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_date"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_normal"
-        android:layout_marginTop="@dimen/space_very_small"
-        android:hint="@string/add_event_hint_date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_date"
-        tools:ignore="Autofill,TextFields" />
+        android:layout_marginStart="@dimen/space_small"
+        android:layout_marginTop="@dimen/space_normal"
+        android:layout_marginEnd="@dimen/space_small"
+        app:layout_constraintTop_toBottomOf="@+id/card_middle_name">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lay_input_date"
+            style="@style/InputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_date"
+                style="@style/Input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableEnd="@drawable/ic_calendar" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <CheckBox
         android:id="@+id/check_year"
-        style="@style/Text.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_normal"
         android:layout_marginTop="@dimen/space_small"
-        android:text="@string/add_event_text_year"
+        android:buttonTint="@color/jacksons_purple"
+        android:text="@string/not_remember_year"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_date" />
+        app:layout_constraintTop_toBottomOf="@+id/card_date" />
 
     <Button
         android:id="@+id/btn_save"
-        style="@style/Button.Positive"
-        android:layout_width="wrap_content"
+        style="@style/Button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_normal"
-        android:text="@string/event_details_text_save"
-        app:icon="@drawable/ic_save"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
+        android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/check_year" />

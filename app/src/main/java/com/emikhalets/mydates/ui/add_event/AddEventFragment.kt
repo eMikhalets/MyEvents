@@ -94,7 +94,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
                 binding.checkYear.isChecked
             )
         }
-        else toast(R.string.fields_empty)
+        else toast(R.string.required_field)
     }
 
     private fun setViewsForEventType(eventType: EventType) {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,153 +9,220 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_all_notif"
-            style="@style/Text.Settings"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/space_small"
-            android:paddingEnd="@dimen/space_small"
-            android:text="@string/settings_all_notif"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginEnd="@dimen/space_small">
 
-        <LinearLayout
-            android:id="@+id/layout_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/switch_all_notif">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/pink" />
-
-            <TextView
-                android:id="@+id/text_time_label"
-                style="@style/Text.Settings"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_small"
-                android:layout_marginTop="@dimen/space_small"
-                android:layout_marginEnd="@dimen/space_small"
-                android:text="@string/settings_time_label" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_time"
-                style="@style/Text.Settings"
+                <TextView
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:padding="@dimen/space_small"
+                    android:text="@string/settings_general" />
+
+                <TextView
+                    android:id="@+id/text_language_label"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingTop="@dimen/space_small"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:paddingBottom="@dimen/space_small"
+                    android:text="@string/settings_language" />
+
+                <TextView
+                    android:id="@+id/text_theme_label"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingTop="@dimen/space_small"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:paddingBottom="@dimen/space_small"
+                    android:text="@string/settings_theme" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginEnd="@dimen/space_small">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_small"
-                android:layout_marginEnd="@dimen/space_small"
-                android:paddingStart="@dimen/space_normal"
-                android:text="@string/settings_time"
-                tools:ignore="RtlSymmetry" />
+                android:orientation="vertical">
 
-            <View
+                <TextView
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:padding="@dimen/space_small"
+                    android:text="@string/settings_notifications" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_all_notifications"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:text="@string/settings_notifications_all" />
+
+                <LinearLayout
+                    android:id="@+id/lay_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="horizontal"
+                    android:paddingStart="24dp"
+                    android:paddingTop="@dimen/space_small"
+                    android:paddingEnd="24dp"
+                    android:paddingBottom="@dimen/space_small">
+
+                    <TextView
+                        style="@style/TextPrimary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/settings_notifications_time" />
+
+                    <TextView
+                        android:id="@+id/text_time"
+                        style="@style/TextPrimary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="11:00" />
+
+                </LinearLayout>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_month_notifications"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:text="@string/settings_notifications_month" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_week_notifications"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:text="@string/settings_notifications_week" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_two_day_notifications"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:text="@string/settings_notifications_two_day" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_day_notifications"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:text="@string/settings_notifications_day" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switch_today_notifications"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:text="@string/settings_notifications_today" />
+
+                <TextView
+                    android:id="@+id/text_restart_notifications"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingTop="@dimen/space_small"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:paddingBottom="@dimen/space_small"
+                    android:text="@string/settings_restart_notifications" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginEnd="@dimen/space_small"
+            android:layout_marginBottom="@dimen/space_small">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/space_small"
-                android:background="@color/pink" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <TextView
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:padding="@dimen/space_small"
+                    android:text="@string/settings_backup" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_month_notif"
-            style="@style/Text.Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/space_small"
-            android:paddingEnd="@dimen/space_small"
-            android:text="@string/settings_month_notif"
-            app:layout_constraintTop_toBottomOf="@id/layout_time" />
+                <TextView
+                    android:id="@+id/text_import"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingTop="@dimen/space_small"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:paddingBottom="@dimen/space_small"
+                    android:text="@string/settings_backup_import" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_week_notif"
-            style="@style/Text.Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/space_small"
-            android:paddingEnd="@dimen/space_small"
-            android:text="@string/settings_week_notif"
-            app:layout_constraintTop_toBottomOf="@id/switch_month_notif" />
+                <TextView
+                    android:id="@+id/text_export"
+                    style="@style/TextPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/space_normal"
+                    android:paddingTop="@dimen/space_small"
+                    android:paddingEnd="@dimen/space_normal"
+                    android:paddingBottom="@dimen/space_small"
+                    android:text="@string/settings_backup_export" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_two_day_notif"
-            style="@style/Text.Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/space_small"
-            android:paddingEnd="@dimen/space_small"
-            android:text="@string/settings_two_day_notif"
-            app:layout_constraintTop_toBottomOf="@id/switch_week_notif" />
+            </LinearLayout>
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_day_notif"
-            style="@style/Text.Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/space_small"
-            android:paddingEnd="@dimen/space_small"
-            android:text="@string/settings_day_notif"
-            app:layout_constraintTop_toBottomOf="@id/switch_two_day_notif" />
-
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/switch_today_notif"
-            style="@style/Text.Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/space_small"
-            android:paddingEnd="@dimen/space_small"
-            android:text="@string/settings_today_notif"
-            app:layout_constraintTop_toBottomOf="@id/switch_day_notif" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/pink" />
-
-        <TextView
-            android:id="@+id/text_restart_alarm_manager"
-            style="@style/Text.Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:paddingStart="@dimen/space_small"
-            android:paddingTop="@dimen/space_normal"
-            android:paddingEnd="@dimen/space_small"
-            android:paddingBottom="@dimen/space_normal"
-            android:text="@string/settings_restart_alarm_manager" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/pink" />
-
-        <TextView
-            android:id="@+id/text_import_events"
-            style="@style/Text.Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:paddingStart="@dimen/space_small"
-            android:paddingTop="@dimen/space_normal"
-            android:paddingEnd="@dimen/space_small"
-            android:paddingBottom="@dimen/space_normal"
-            android:text="@string/settings_import_events" />
-
-        <TextView
-            android:id="@+id/text_export_events"
-            style="@style/Text.Settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:paddingStart="@dimen/space_small"
-            android:paddingTop="@dimen/space_normal"
-            android:paddingEnd="@dimen/space_small"
-            android:paddingBottom="@dimen/space_normal"
-            android:text="@string/settings_export_events" />
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

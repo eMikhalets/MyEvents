@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:eventsEnabled="true"
-        app:headerColor="@color/orange"
         app:layout_constraintTop_toTopOf="parent"
-        app:selectionColor="@color/orange"
         app:type="one_day_picker" />
 
     <androidx.recyclerview.widget.RecyclerView

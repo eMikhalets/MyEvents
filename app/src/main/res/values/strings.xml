@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- General -->
     <string name="app_name">MyDates</string>
+    <string name="app_menu_search">Search</string>
+    <string name="app_menu_settings">Settings</string>
+
+    <!-- Toasts -->
+    <string name="alarm_managers_restarted">Ежедневные уведомления и обновления событий перезапущены!</string>
+    <string name="export_success">События экспортированы успешно!</string>
+    <string name="export_failure">Ошибка во время экспорта</string>
+    <string name="import_success">События импортированы успешно!</string>
+    <string name="import_failure">Ошибка во время импорта</string>
+    <string name="event_saved">Дата сохранена!</string>
+
+    <!-- Static -->
+    <string name="name">Имя</string>
+    <string name="lastname">Фамилия</string>
+    <string name="middle_name">Отчество</string>
+    <string name="date">Дата</string>
+    <string name="notes">Заметки</string>
+    <string name="not_remember_year">Я не помню год</string>
+    <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
+    <string name="apply">Принять</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="new_event">Новое событие</string>
+    <string name="today">Сегодня</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="birthday">День рождения</string>
+    <string name="anniversary">Годовщина</string>
+    <string name="required_field">Необходимо заполнить</string>
+
+    <string name="dialog_import_alert">Импорт дат удалит все существующие записи и создаст новые из выбранного файла. Продолжить?</string>
+    <string name="dialog_delete_event">Удалить это событие?</string>
 
     <string name="title_home">Все События</string>
     <string name="title_event_details">Детали События</string>
@@ -16,26 +49,31 @@
     <string name="notification_text_day">Завтра:</string>
     <string name="notification_text_today">Сегодня:</string>
 
-    <string name="today">Сегодня</string>
-    <string name="tomorrow">Завтра</string>
-    <string name="yes">Да</string>
-    <string name="no">Нет</string>
-    <string name="apply">Принять</string>
-    <string name="birthday_date">День рождения %s</string>
-    <string name="birthday">День рождения</string>
+    <string name="settings_general">Основные</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_language_ru">Русский</string>
+    <string name="settings_language_en">Английский</string>
+    <string name="settings_theme">Тема</string>
+    <string name="settings_theme_light">Светлая тема</string>
+    <string name="settings_theme_dark">Темная тема</string>
+    <string name="settings_notifications">Уведомления</string>
+    <string name="settings_notifications_all">Присылать уведомления</string>
+    <string name="settings_notifications_time">Время уведомлений</string>
+    <string name="settings_notifications_month">Уведомлять о событиях за месяц</string>
+    <string name="settings_notifications_week">Уведомлять о событиях за неделю</string>
+    <string name="settings_notifications_three_day">Уведомлять о событиях за 3 дня</string>
+    <string name="settings_notifications_two_day">Уведомлять о событиях за 2 дня</string>
+    <string name="settings_notifications_day">Уведомлять о событиях за день</string>
+    <string name="settings_notifications_today">Уведомлять о событиях утром</string>
+    <string name="settings_restart_notifications">Перезапустить ежедневные уведомления и обновления событий</string>
+    <string name="settings_backup">Резервные копии</string>
+    <string name="settings_backup_import">Импорт событий</string>
+    <string name="settings_backup_export">Экспорт событий</string>
+
+    <!-- Variable -->
+    <string name="birthday_date">День рождение %s</string>
     <string name="anniversary_date">Годовщина %s</string>
-    <string name="anniversary">Годовщина</string>
-    <string name="fields_empty">Необходимо заполнить имя и дату</string>
-    <string name="alarm_managers_restarted">Ежедневные уведомления и обновления событий перезапущены!</string>
-    <string name="event_saved">Дата сохранена!</string>
-    <string name="dialog_delete_event">Удалить это событие?</string>
-    <string name="export_success">События экспортированы успешно!</string>
-    <string name="export_failure">Ошибка во время экспорта</string>
-    <string name="import_success">События импортированы успешно!</string>
-    <string name="import_failure">Ошибка во время импорта</string>
-    <string name="import_alert">Импорт дат удалит все существующие записи и создаст новые из выбранного файла. Продолжить?</string>
-    <string name="time_hour_minute">%d:%d</string>
-    <string name="time_hour_minute_sub">%d:0%d</string>
+
     <plurals name="age">
         <item quantity="one">(%d год)</item>
         <item quantity="few">(%d года)</item>
@@ -48,51 +86,4 @@
         <item quantity="many">Через %d дней</item>
         <item quantity="other">Ошибка</item>
     </plurals>
-
-    <string name="menu_title_search">Search</string>
-    <string name="menu_title_settings">Settings</string>
-
-    <string name="add_event_text_new_event">Новое событие</string>
-    <string name="add_event_text_choose">Выберите тип события</string>
-    <string name="add_event_text_birthday">День рождения</string>
-    <string name="add_event_text_anniversary">Годовщина</string>
-    <string name="add_event_text_name">Имя</string>
-    <string name="add_event_hint_name">Введите имя</string>
-    <string name="add_event_text_lastname">Фамилия</string>
-    <string name="add_event_hint_lastname">Введите фамилию</string>
-    <string name="add_event_text_middle_name">Отчество</string>
-    <string name="add_event_hint_middle_name">Введите отчество</string>
-    <string name="add_event_text_date">Дата</string>
-    <string name="add_event_hint_date">31 декабря 1999</string>
-    <string name="add_event_text_year">Я не помню год</string>
-
-    <string name="event_details_text_edit">Редактирование</string>
-    <string name="event_details_text_notes">Заметки</string>
-    <string name="event_details_hint_notes">Введите заметки</string>
-    <string name="event_details_text_name">Имя</string>
-    <string name="event_details_hint_name">Введите имя</string>
-    <string name="event_details_text_lastname">Фамилия</string>
-    <string name="event_details_hint_lastname">Введите фамилию</string>
-    <string name="event_details_text_middle_name">Отчество</string>
-    <string name="event_details_hint_middle_name">Введите отчество</string>
-    <string name="event_details_text_date">Дата</string>
-    <string name="event_details_hint_date">31 декабря 1999</string>
-    <string name="event_details_text_year">Я не помню год</string>
-    <string name="event_details_text_delete">Удалить</string>
-    <string name="event_details_text_save">Сохранить</string>
-
-    <string name="calendar_text_no_saved_dates">Нет сохраненных дат</string>
-    <string name="calendar_date">%d %s</string>
-
-    <string name="settings_all_notif">Присылать уведомления</string>
-    <string name="settings_time_label">Время уведомлений</string>
-    <string name="settings_time">11:00</string>
-    <string name="settings_month_notif">Уведомлять о событиях месяца в первый день месяца</string>
-    <string name="settings_week_notif">Уведомлять о событиях за неделю</string>
-    <string name="settings_two_day_notif">Уведомлять о событиях за 2 дня</string>
-    <string name="settings_day_notif">Уведомлять о событиях за день</string>
-    <string name="settings_today_notif">Уведомлять о событиях утром</string>
-    <string name="settings_restart_alarm_manager">Перезапустить ежедневные уведомления и обновления событий</string>
-    <string name="settings_import_events">Импорт событий</string>
-    <string name="settings_export_events">Экспорт событий</string>
 </resources>

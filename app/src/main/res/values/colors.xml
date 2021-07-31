@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-    <color name="lighter_blue">#F7F7F7</color>
-    <color name="light_blue">#61CDE9</color>
-    <color name="blue">#217BE0</color>
-    <color name="dark_grey">#262626</color>
-    <color name="grey">#767676</color>
-    <color name="pink">#B0BEC1</color>
-    <color name="orange">#FFB63E</color>
-    <color name="yellow">#FFD54F</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="alice_blue">#FFF3F8FE</color>
+    <color name="jacksons_purple">#FF3E4685</color>
+    <color name="eclipse">#FF393939</color>
+    <color name="grey">#FF868686</color>
+    <color name="night_rider">#FF2D2D2D</color>
+    <color name="charcoal">#FF424242</color>
+    <color name="peach_orange">#FFFFC592</color>
+    <color name="whisper">#FFE8E8E8</color>
+    <color name="taupe">#FF483E36</color>
+    <color name="pink_swan">#FFB2B2B2</color>
 </resources>

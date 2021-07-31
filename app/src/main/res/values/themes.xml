@@ -1,6 +1,9 @@
 <resources>
 
     <style name="Theme.MyDates" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">@color/lighter_blue</item>
+        <item name="android:windowBackground">@color/alice_blue</item>
+        <item name="android:textViewStyle">@style/Text</item>
+        <item name="checkboxStyle">@style/Checkbox</item>
+        <item name="cardViewStyle">@style/Card</item>
     </style>
 </resources>

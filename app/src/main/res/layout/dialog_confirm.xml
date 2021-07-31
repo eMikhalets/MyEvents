@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Dialog"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/space_small">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/text_content"
-        style="@style/Text.Primary"
+        style="@style/TextPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_normal"
@@ -18,23 +18,26 @@
 
     <Button
         android:id="@+id/btn_no"
-        style="@style/Button.Neutral"
+        style="@style/ButtonText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_very_large"
-        android:layout_marginTop="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_normal"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/no"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_content" />
 
     <Button
         android:id="@+id/btn_yes"
-        style="@style/Button.Neutral"
+        style="@style/ButtonText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_large"
+        android:layout_marginTop="@dimen/space_normal"
         android:layout_marginEnd="@dimen/space_very_large"
         android:text="@string/yes"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_content" />
 
