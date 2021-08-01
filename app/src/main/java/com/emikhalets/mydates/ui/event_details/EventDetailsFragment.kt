@@ -152,19 +152,17 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
             EventType.ANNIVERSARY -> {
                 binding.apply {
                     imagePhoto.setImageResource(R.drawable.ic_anniversary)
-                    textInfo.text = getString(
+                    textDate.text = getString(
                         R.string.anniversary_date, event.date.dateFormat("d MMMM")
                     )
-                    textLastname.visibility = View.GONE
-                    textMiddleName.visibility = View.GONE
-                    inputLastname.visibility = View.GONE
-                    inputMiddleName.visibility = View.GONE
+                    cardLastname.visibility = View.GONE
+                    cardMiddleName.visibility = View.GONE
                 }
             }
             EventType.BIRTHDAY -> {
                 binding.apply {
                     imagePhoto.setImageResource(R.drawable.ic_birthday)
-                    textInfo.text = getString(
+                    textDate.text = getString(
                         R.string.birthday_date, event.date.dateFormat("d MMMM")
                     )
                 }

@@ -1,6 +1,8 @@
 package com.emikhalets.mydates.utils
 
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.ui.calendar.CalendarFragmentDirections
@@ -10,9 +12,9 @@ fun Fragment.navigateBack() {
     findNavController().popBackStack()
 }
 
-fun Fragment.navigateEventsToAddEvent(eventType: EventType) {
+fun View.navigateEventsToAddEvent(eventType: EventType) {
     val action = EventsListFragmentDirections.actionEventsToAddEvent(eventType)
-    findNavController().navigate(action)
+    findNavController(this).navigate(action)
 }
 
 fun Fragment.navigateEventsToEventDetails(event: Event) {

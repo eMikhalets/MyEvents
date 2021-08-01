@@ -205,7 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_normal"
             android:layout_marginTop="@dimen/space_small"
-            android:text="@string/add_event_text_year" />
+            android:text="@string/not_remember_year" />
 
         <Button
             android:id="@+id/btn_save"

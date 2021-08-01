@@ -27,7 +27,6 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
         setTitle(R.string.title_home)
         setHasOptionsMenu(true)
         initEventsAdapter()
-        clickListeners()
         observe()
     }
 
@@ -57,17 +56,6 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
         binding.listDates.apply {
             setHasFixedSize(true)
             adapter = eventsAdapter
-        }
-    }
-
-    private fun clickListeners() {
-        binding.btnAddEvent.setOnClickListener {
-            startAddEventDialog { eventType ->
-                when (eventType) {
-                    EventType.ANNIVERSARY -> navigateEventsToAddEvent(EventType.ANNIVERSARY)
-                    EventType.BIRTHDAY -> navigateEventsToAddEvent(EventType.BIRTHDAY)
-                }
-            }
         }
     }
 

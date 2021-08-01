@@ -8,7 +8,7 @@
         <item name="titleTextColor">@color/white</item>
         <item name="titleTextAppearance">@style/TextTopBar</item>
         <item name="theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
     </style>
 
     <style name="BottomBar" parent="Widget.MaterialComponents.BottomAppBar">
@@ -39,12 +39,12 @@
     <style name="TextTopBar" parent="Text">
         <item name="android:fontFamily">@font/montserrat_bold</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:letterSpacing">0.1</item>
+        <item name="android:letterSpacing">0.08</item>
     </style>
 
     <style name="TextTitle" parent="Text">
         <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="TextPrimary" parent="Text">
@@ -80,9 +80,9 @@
         <item name="tint">@color/jacksons_purple</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:src">@drawable/ic_add</item>
-        <item name="fabCustomSize">52dp</item>
+        <item name="fabCustomSize">50dp</item>
         <item name="shapeAppearanceOverlay">@style/ButtonFloating</item>
-        <item name="maxImageSize">40dp</item>
+        <item name="maxImageSize">36dp</item>
         <item name="cornerSizeBottomLeft">8dp</item>
         <item name="cornerSizeBottomRight">8dp</item>
         <item name="cornerSizeTopLeft">8dp</item>

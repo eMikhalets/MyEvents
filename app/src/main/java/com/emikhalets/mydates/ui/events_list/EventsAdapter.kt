@@ -62,7 +62,7 @@ class EventsAdapter(private val click: (Event) -> Unit) :
                 else textAge.visibility = View.VISIBLE
 
                 textName.text = item.fullName()
-                textInfo.text = root.context.getString(
+                textDate.text = root.context.getString(
                     info, item.date.dateFormat("d MMMM")
                 )
                 textAge.text = root.context.resources.getQuantityString(

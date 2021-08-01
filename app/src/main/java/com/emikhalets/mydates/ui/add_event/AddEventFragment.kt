@@ -102,17 +102,15 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
             EventType.ANNIVERSARY -> {
                 binding.apply {
                     imageLabel.setImageResource(R.drawable.ic_anniversary)
-                    textLabel.text = getString(R.string.add_event_text_anniversary)
-                    textLastname.visibility = View.GONE
-                    textMiddleName.visibility = View.GONE
-                    inputLastname.visibility = View.GONE
-                    inputMiddleName.visibility = View.GONE
+                    textLabel.text = getString(R.string.anniversary)
+                    cardLastname.visibility = View.GONE
+                    cardMiddleName.visibility = View.GONE
                 }
             }
             EventType.BIRTHDAY -> {
                 binding.apply {
                     imageLabel.setImageResource(R.drawable.ic_birthday)
-                    textLabel.text = getString(R.string.add_event_text_birthday)
+                    textLabel.text = getString(R.string.birthday)
                 }
             }
         }

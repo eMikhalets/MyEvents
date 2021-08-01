@@ -45,25 +45,25 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private fun prepareSettings() {
         binding.apply {
             binding.textTime.text = formatTime(getNotifHour(), getNotifMinute())
-            switchAllNotif.isChecked = getNotifPref(APP_SP_NOTIF_ALL_FLAG)
-            switchMonthNotif.isChecked = getNotifPref(APP_SP_NOTIF_MONTH_FLAG)
-            switchWeekNotif.isChecked = getNotifPref(APP_SP_NOTIF_WEEK_FLAG)
-            switchTwoDayNotif.isChecked = getNotifPref(APP_SP_NOTIF_TWO_DAY_FLAG)
-            switchDayNotif.isChecked = getNotifPref(APP_SP_NOTIF_DAY_FLAG)
-            switchTodayNotif.isChecked = getNotifPref(APP_SP_NOTIF_TODAY_FLAG)
+            switchAllNotifications.isChecked = getNotifPref(APP_SP_NOTIF_ALL_FLAG)
+            switchMonthNotifications.isChecked = getNotifPref(APP_SP_NOTIF_MONTH_FLAG)
+            switchWeekNotifications.isChecked = getNotifPref(APP_SP_NOTIF_WEEK_FLAG)
+            switchTwoDayNotifications.isChecked = getNotifPref(APP_SP_NOTIF_TWO_DAY_FLAG)
+            switchDayNotifications.isChecked = getNotifPref(APP_SP_NOTIF_DAY_FLAG)
+            switchTodayNotifications.isChecked = getNotifPref(APP_SP_NOTIF_TODAY_FLAG)
 
-            switchMonthNotif.isEnabled = switchAllNotif.isChecked
-            switchWeekNotif.isEnabled = switchAllNotif.isChecked
-            switchTwoDayNotif.isEnabled = switchAllNotif.isChecked
-            switchDayNotif.isEnabled = switchAllNotif.isChecked
-            switchTodayNotif.isEnabled = switchAllNotif.isChecked
+            switchMonthNotifications.isEnabled = switchAllNotifications.isChecked
+            switchWeekNotifications.isEnabled = switchAllNotifications.isChecked
+            switchTwoDayNotifications.isEnabled = switchAllNotifications.isChecked
+            switchDayNotifications.isEnabled = switchAllNotifications.isChecked
+            switchTodayNotifications.isEnabled = switchAllNotifications.isChecked
         }
     }
 
     private fun clickListeners() {
         binding.apply {
-            layoutTime.setOnClickListener {
-                if (switchAllNotif.isChecked) {
+            layTime.setOnClickListener {
+                if (switchAllNotifications.isChecked) {
                     startTimePickerDialog { hour, minute ->
                         binding.textTime.text = formatTime(hour, minute)
                         saveNotificationsTime(hour, minute)
@@ -71,41 +71,41 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 }
             }
 
-            switchAllNotif.setOnCheckedChangeListener { _, isChecked ->
+            switchAllNotifications.setOnCheckedChangeListener { _, isChecked ->
                 saveSharedPrefNotif(APP_SP_NOTIF_ALL_FLAG, isChecked)
-                switchMonthNotif.isEnabled = isChecked
-                switchWeekNotif.isEnabled = isChecked
-                switchTwoDayNotif.isEnabled = isChecked
-                switchDayNotif.isEnabled = isChecked
-                switchTodayNotif.isEnabled = isChecked
-                if (isChecked) layoutTime.visibility = View.VISIBLE
-                else layoutTime.visibility = View.GONE
+                switchMonthNotifications.isEnabled = isChecked
+                switchWeekNotifications.isEnabled = isChecked
+                switchTwoDayNotifications.isEnabled = isChecked
+                switchDayNotifications.isEnabled = isChecked
+                switchTodayNotifications.isEnabled = isChecked
+                if (isChecked) layTime.visibility = View.VISIBLE
+                else layTime.visibility = View.GONE
             }
 
-            switchMonthNotif.setOnCheckedChangeListener { _, isChecked ->
+            switchMonthNotifications.setOnCheckedChangeListener { _, isChecked ->
                 saveSharedPrefNotif(APP_SP_NOTIF_MONTH_FLAG, isChecked)
             }
 
-            switchWeekNotif.setOnCheckedChangeListener { _, isChecked ->
+            switchWeekNotifications.setOnCheckedChangeListener { _, isChecked ->
                 saveSharedPrefNotif(APP_SP_NOTIF_WEEK_FLAG, isChecked)
             }
 
-            switchTwoDayNotif.setOnCheckedChangeListener { _, isChecked ->
+            switchTwoDayNotifications.setOnCheckedChangeListener { _, isChecked ->
                 saveSharedPrefNotif(APP_SP_NOTIF_TWO_DAY_FLAG, isChecked)
             }
 
-            switchDayNotif.setOnCheckedChangeListener { _, isChecked ->
+            switchDayNotifications.setOnCheckedChangeListener { _, isChecked ->
                 saveSharedPrefNotif(APP_SP_NOTIF_DAY_FLAG, isChecked)
             }
 
-            switchTodayNotif.setOnCheckedChangeListener { _, isChecked ->
+            switchTodayNotifications.setOnCheckedChangeListener { _, isChecked ->
                 saveSharedPrefNotif(APP_SP_NOTIF_TODAY_FLAG, isChecked)
             }
-            textRestartAlarmManager.setOnClickListener {
+            textRestartNotifications.setOnClickListener {
                 restartAlarmManagers()
             }
-            textImportEvents.setOnClickListener { importEvents() }
-            textExportEvents.setOnClickListener { exportEvents() }
+            textImport.setOnClickListener { importEvents() }
+            textExport.setOnClickListener { exportEvents() }
         }
     }
 
@@ -188,7 +188,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun formatTime(hour: Int, minute: Int): String {
-        return if (minute > 9) requireContext().getString(R.string.time_hour_minute, hour, minute)
-        else requireContext().getString(R.string.time_hour_minute_sub, hour, minute)
+        return if (minute > 9) "$hour:$minute"
+        else "$hour:0$minute"
     }
 }

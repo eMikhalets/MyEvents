@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.databinding.DialogAddEventBinding
 import com.emikhalets.mydates.databinding.DialogConfirmBinding
@@ -11,9 +12,9 @@ import com.emikhalets.mydates.databinding.DialogDatePickerBinding
 import com.emikhalets.mydates.databinding.DialogTimePickerBinding
 import java.util.*
 
-inline fun Fragment.startAddEventDialog(crossinline callback: (EventType) -> Unit) {
-    val dialog = Dialog(requireContext())
-    val binding = DialogAddEventBinding.inflate(LayoutInflater.from(context))
+inline fun AppCompatActivity.startAddEventDialog(crossinline callback: (EventType) -> Unit) {
+    val dialog = Dialog(this)
+    val binding = DialogAddEventBinding.inflate(LayoutInflater.from(this))
     binding.root.alpha = 0f
     dialog.setContentView(binding.root)
     dialog.setCanceledOnTouchOutside(false)
