@@ -10,7 +10,7 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.ItemEventBinding
 import com.emikhalets.mydates.utils.EventType
-import com.emikhalets.mydates.utils.dateFormat
+import com.emikhalets.mydates.utils.formatDate
 
 class DayEventsAdapter(
     private val click: (Event) -> Unit
@@ -48,7 +48,7 @@ class DayEventsAdapter(
 
                 textName.text = item.fullName()
                 textDate.text = root.context.getString(
-                    info, item.date.dateFormat("d MMMM")
+                    info, item.date.formatDate("d MMMM")
                 )
                 textAge.text = root.context.resources.getQuantityString(
                     R.plurals.age,

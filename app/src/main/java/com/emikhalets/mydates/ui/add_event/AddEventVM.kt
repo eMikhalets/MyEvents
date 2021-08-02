@@ -1,15 +1,17 @@
 package com.emikhalets.mydates.ui.add_event
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.RoomRepository
+import com.emikhalets.mydates.utils.EventType
 import com.emikhalets.mydates.utils.calculateParameters
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,32 +19,34 @@ class AddEventVM @Inject constructor(
     private val repository: RoomRepository
 ) : ViewModel() {
 
-    private val _eventAdd = MutableLiveData<Boolean>()
-    val eventAdd get(): LiveData<Boolean> = _eventAdd
+    private val _state = MutableStateFlow<AddEventState>(AddEventState.Init)
+    val state: StateFlow<AddEventState> = _state
 
-    private val _error = MutableLiveData<String>()
-    val error get(): LiveData<String> = _error
+    var date = Date().time
 
-    fun addNewAnniversary(name: String, date: Long, withoutYear: Boolean) {
-        addNewEvent(Event(name, date, withoutYear))
-    }
-
-    fun addNewBirthday(
+    fun saveNewEvent(
+        eventType: EventType,
         name: String,
         lastname: String,
         middleName: String,
-        date: Long,
         withoutYear: Boolean
     ) {
-        addNewEvent(Event(name, lastname, middleName, date, withoutYear))
-    }
+        _state.value = AddEventState.Init
+        if (name.isEmpty()) {
+            _state.value = AddEventState.EmptyName
+            return
+        }
 
-    private fun addNewEvent(event: Event) {
         viewModelScope.launch {
+            _state.value = AddEventState.Loading
+            val event = when (eventType) {
+                EventType.ANNIVERSARY -> Event(name, date, withoutYear)
+                EventType.BIRTHDAY -> Event(name, lastname, middleName, date, withoutYear)
+            }
             event.calculateParameters()
             when (val result = repository.insertEvent(event)) {
-                CompleteResult.Complete -> _eventAdd.postValue(true)
-                is CompleteResult.Error -> _error.postValue(result.message)
+                CompleteResult.Complete -> _state.value = AddEventState.Added
+                is CompleteResult.Error -> AddEventState.Error(result.exception)
             }
         }
     }

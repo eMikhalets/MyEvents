@@ -6,24 +6,17 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/space_small">
 
-    <ImageView
-        android:id="@+id/image_label"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_label"
-        tools:ignore="ContentDescription"
-        tools:src="@drawable/ic_anniversary" />
-
     <TextView
-        android:id="@+id/text_label"
+        android:id="@+id/text_title"
         style="@style/TextTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_normal"
+        android:drawablePadding="@dimen/space_small"
+        android:gravity="center"
+        app:drawableStartCompat="@drawable/ic_birthday"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_label"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="День рождения" />
 
@@ -34,7 +27,7 @@
         android:layout_marginStart="@dimen/space_small"
         android:layout_marginTop="@dimen/space_normal"
         android:layout_marginEnd="@dimen/space_small"
-        app:layout_constraintTop_toBottomOf="@+id/text_label">
+        app:layout_constraintTop_toBottomOf="@+id/text_title">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/lay_input_name"
@@ -126,7 +119,9 @@
                 style="@style/Input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:drawableEnd="@drawable/ic_calendar" />
+                android:cursorVisible="false"
+                android:drawableEnd="@drawable/ic_calendar"
+                android:focusable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

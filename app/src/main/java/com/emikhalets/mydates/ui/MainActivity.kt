@@ -2,7 +2,6 @@ package com.emikhalets.mydates.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -68,13 +67,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOnAddEventClick() {
         binding.btnAddEvent.setOnClickListener { v ->
-            Toast.makeText(this, "dfhjiodgfijk", Toast.LENGTH_SHORT).show()
-//            startAddEventDialog { eventType ->
-//                when (eventType) {
-//                    EventType.ANNIVERSARY -> v.navigateEventsToAddEvent(EventType.ANNIVERSARY)
-//                    EventType.BIRTHDAY -> v.navigateEventsToAddEvent(EventType.BIRTHDAY)
-//                }
-//            }
+            startAddEventDialog { eventType ->
+                when (eventType) {
+                    EventType.ANNIVERSARY -> navController.navigateEventsToAddEvent(EventType.ANNIVERSARY)
+                    EventType.BIRTHDAY -> navController.navigateEventsToAddEvent(EventType.BIRTHDAY)
+                }
+            }
 
         }
     }
