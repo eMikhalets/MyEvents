@@ -72,6 +72,8 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
                 }
             }
             checkYear.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) textAge.visibility = View.GONE
+                else textAge.visibility = View.VISIBLE
                 event.withoutYear = isChecked
                 binding.inputDate.setDate(event.date, isChecked)
                 btnSave.isEnabled = true
@@ -82,7 +84,8 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
                 }
             }
             btnSave.setOnClickListener {
-                onSaveClick()
+                binding.layInputName.error = null
+                viewModel.updateEvent(event)
             }
             root.setOnTouchListener { _, _ ->
                 hideSoftKeyboard()
@@ -117,22 +120,6 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
         lifecycleScope.launch {
             viewModel.state.collect { renderState(it) }
         }
-    }
-
-    private fun onSaveClick() {
-        binding.layInputName.error = null
-        val name = binding.inputName.text.toString()
-        val lastname = binding.inputLastname.text.toString()
-        val middleName = binding.inputMiddleName.text.toString()
-        val withoutYear = binding.checkYear.isChecked
-        viewModel.updateEvent(
-            eventType = EventType.get(event.eventType),
-            name = name,
-            lastname = lastname,
-            middleName = middleName,
-            date = event.date,
-            withoutYear = withoutYear
-        )
     }
 
     private fun applyNewDate(ts: Long) {

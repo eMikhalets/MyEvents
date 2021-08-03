@@ -31,24 +31,15 @@ class EventDetailsVM @Inject constructor(
     }
 
     fun updateEvent(
-        eventType: EventType,
-        name: String,
-        lastname: String,
-        middleName: String,
-        date: Long,
-        withoutYear: Boolean
+        event: Event
     ) {
         _state.value = EventDetailsState.Init
-        if (name.isEmpty()) {
+        if (event.name.isEmpty()) {
             _state.value = EventDetailsState.EmptyNameError
             return
         }
 
         viewModelScope.launch {
-            val event = when (eventType) {
-                EventType.ANNIVERSARY -> Event(name, date, withoutYear)
-                EventType.BIRTHDAY -> Event(name, lastname, middleName, date, withoutYear)
-            }
             event.calculateParameters()
             when (val result = repository.updateEvent(event)) {
                 is CompleteResult.Error -> _state.value = EventDetailsState.Error(result.exception)

@@ -10,6 +10,8 @@ import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.repositories.RoomRepository
 import com.emikhalets.mydates.utils.BackupHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,37 +20,35 @@ class SettingsVM @Inject constructor(
     private val repository: RoomRepository
 ) : ViewModel() {
 
-    private val _exportEvents = MutableLiveData<Boolean>()
-    val exportEvents: LiveData<Boolean> = _exportEvents
-
-    private val _importEvents = MutableLiveData<Boolean>()
-    val importEvents: LiveData<Boolean> = _importEvents
-
-    private val _error = MutableLiveData<String>()
-    val error get(): LiveData<String> = _error
+    private val _state = MutableStateFlow<SettingsState>(SettingsState.Init)
+    val state: StateFlow<SettingsState> = _state
 
     fun getAllEventsAndFillFile(context: Context, uri: Uri) {
+        _state.value = SettingsState.Init
         viewModelScope.launch {
+            _state.value = SettingsState.Loading
             when (val result = repository.getAllEvents()) {
-                ListResult.EmptyList -> _error.postValue("Empty events list")
-                is ListResult.Error -> _error.postValue(result.message)
+                is ListResult.Error -> _state.value = SettingsState.Error(result.exception)
                 is ListResult.Success -> {
                     val complete = BackupHandler.fillCreatedFile(context, uri, result.data)
-                    _exportEvents.postValue(complete)
+                    _state.value = if (complete) SettingsState.Exported
+                    else SettingsState.ExportingError
                 }
             }
         }
     }
 
     fun readFileAndRecreateEventsTable(context: Context, uri: Uri) {
+        _state.value = SettingsState.Init
         viewModelScope.launch {
+            _state.value = SettingsState.Loading
             val complete = BackupHandler.readFileAndCreateEventsList(context, uri)
-            if (complete.isNotEmpty()) {
+            _state.value = if (complete.isNotEmpty()) {
                 repository.dropEvents()
                 repository.insertAllEvents(complete)
-                _importEvents.postValue(true)
+                SettingsState.Imported
             } else {
-                _importEvents.postValue(false)
+                SettingsState.ImportingError
             }
         }
     }

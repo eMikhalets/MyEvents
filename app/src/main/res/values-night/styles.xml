@@ -3,7 +3,7 @@
 
     <!-- General -->
 
-    <style name="Toolbar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
         <item name="android:background">@color/charcoal</item>
         <item name="titleTextColor">@color/whisper</item>
         <item name="titleTextAppearance">@style/TextTopBar</item>

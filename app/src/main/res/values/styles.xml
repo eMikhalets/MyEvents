@@ -3,11 +3,11 @@
 
     <!-- General -->
 
-    <style name="Toolbar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
         <item name="android:background">@color/jacksons_purple</item>
         <item name="titleTextColor">@color/white</item>
         <item name="titleTextAppearance">@style/TextTopBar</item>
-        <item name="theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
     </style>
 

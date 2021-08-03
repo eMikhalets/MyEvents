@@ -5,7 +5,29 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import com.emikhalets.mydates.foreground.EventsReceiver
 import java.util.*
+
+fun Context.restartAlarmManagers() {
+    val hour = Preferences.getNotificationHour(this)
+    val minute = Preferences.getNotificationMinute(this)
+
+    setRepeatingAlarm(
+        context = this,
+        hour = EVENTS_UPDATE_HOUR,
+        minute = EVENTS_UPDATE_MINUTE,
+        receiver = EventsReceiver::class.java,
+        requestCode = APP_UPDATE_ALARM_REQUEST_CODE
+    )
+
+    setRepeatingAlarm(
+        context = this,
+        hour = hour,
+        minute = minute,
+        receiver = EventsReceiver::class.java,
+        requestCode = APP_EVENTS_ALARM_REQUEST_CODE
+    )
+}
 
 fun setRepeatingAlarm(
     context: Context,

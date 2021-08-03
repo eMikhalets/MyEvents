@@ -1,4 +1,4 @@
-package com.emikhalets.mydates.utils
+package com.emikhalets.mydates.utils.activity_result
 
 import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
@@ -20,7 +20,7 @@ class DocumentPicker(
         ) { uri: Uri? -> uri?.let(onResult) }
 
     fun openFile() {
-        openDocument.launch(arrayOf("application/json"))
+        openDocument.launch(arrayOf("*/json"))
     }
 
     private companion object {

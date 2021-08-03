@@ -1,6 +1,5 @@
 package com.emikhalets.mydates.ui.events_list
 
-import android.app.Application
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -13,7 +12,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
-import com.emikhalets.mydates.utils.*
+import com.emikhalets.mydates.utils.Preferences
+import com.emikhalets.mydates.utils.navigateEventsToEventDetails
+import com.emikhalets.mydates.utils.navigateEventsToSettings
+import com.emikhalets.mydates.utils.setTitle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -35,11 +37,7 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadAllEvents(
-            requireActivity()
-                .getSharedPreferences(APP_SHARED_PREFERENCES, Application.MODE_PRIVATE)
-                .getLong(APP_SP_UPDATE_EVENTS_TIME, 0)
-        )
+        viewModel.loadAllEvents(Preferences.getEventsLastUpdateTime(requireContext()))
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

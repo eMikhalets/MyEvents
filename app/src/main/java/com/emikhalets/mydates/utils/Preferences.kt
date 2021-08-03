@@ -30,7 +30,7 @@ object Preferences {
         context.getSharedPreferences(NAME, 0).edit().putLong(EVENTS_UPDATE_TIME, value).apply()
 
     fun getNotificationHour(context: Context) =
-        context.getSharedPreferences(NAME, 0).getInt(NOTIFICATION_HOUR, 0)
+        context.getSharedPreferences(NAME, 0).getInt(NOTIFICATION_HOUR, 11)
 
     fun setNotificationHour(context: Context, value: Int) =
         context.getSharedPreferences(NAME, 0).edit().putInt(NOTIFICATION_HOUR, value).apply()

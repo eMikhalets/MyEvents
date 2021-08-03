@@ -79,13 +79,13 @@ inline fun Fragment.startTimePickerDialog(crossinline callback: (hour: Int, minu
     binding.root.animate().alpha(1f).setDuration(300).start()
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        binding.timePicker.hour = 11
-        binding.timePicker.minute = 11
+        binding.timePicker.hour = Preferences.getNotificationHour(requireContext())
+        binding.timePicker.minute = Preferences.getNotificationMinute(requireContext())
     } else {
         @Suppress("DEPRECATION")
-        binding.timePicker.currentHour = 11
+        binding.timePicker.currentHour = Preferences.getNotificationHour(requireContext())
         @Suppress("DEPRECATION")
-        binding.timePicker.currentMinute = 11
+        binding.timePicker.currentMinute = Preferences.getNotificationMinute(requireContext())
     }
 
     var hour = 11

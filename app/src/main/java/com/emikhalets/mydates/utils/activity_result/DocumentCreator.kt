@@ -1,4 +1,4 @@
-package com.emikhalets.mydates.utils
+package com.emikhalets.mydates.utils.activity_result
 
 import android.app.Activity
 import android.content.Context
@@ -36,8 +36,8 @@ class CreateFileContract : ActivityResultContract<String, Uri?>() {
 
     override fun createIntent(context: Context, input: String): Intent {
         return Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            type = "application/json"
-            putExtra(Intent.EXTRA_TITLE, "MyDates_backup_${Date().time}.json")
+            type = "*/json"
+            putExtra(Intent.EXTRA_TITLE, "MyEvents_backup_${Date().time}.json")
         }
     }
 
