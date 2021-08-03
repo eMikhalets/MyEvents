@@ -24,10 +24,30 @@ enum class EventType(val value: Int) {
             }
         }
 
+        fun EventType.getTypeDate(context: Context, date: Long): String {
+            return when (this) {
+                ANNIVERSARY -> context.getString(
+                    R.string.anniversary_date,
+                    date.formatDate("d MMMM")
+                )
+                BIRTHDAY -> context.getString(
+                    R.string.birthday_date,
+                    date.formatDate("d MMMM")
+                )
+            }
+        }
+
         fun EventType.getTypeImage(): Int {
             return when (this) {
                 ANNIVERSARY -> R.drawable.ic_anniversary
                 BIRTHDAY -> R.drawable.ic_birthday
+            }
+        }
+
+        fun EventType.getTypeImageLarge(): Int {
+            return when (this) {
+                ANNIVERSARY -> R.drawable.ic_anniversary_large
+                BIRTHDAY -> R.drawable.ic_birthday_large
             }
         }
     }

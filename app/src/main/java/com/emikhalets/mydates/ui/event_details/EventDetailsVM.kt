@@ -1,13 +1,15 @@
 package com.emikhalets.mydates.ui.event_details
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.RoomRepository
+import com.emikhalets.mydates.utils.EventType
+import com.emikhalets.mydates.utils.calculateParameters
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,34 +18,41 @@ class EventDetailsVM @Inject constructor(
     private val repository: RoomRepository
 ) : ViewModel() {
 
-    private var updateFlag = false
-
-    private val _eventUpdate = MutableLiveData<Boolean>()
-    val eventUpdate get(): LiveData<Boolean> = _eventUpdate
-
-    private val _eventDelete = MutableLiveData<Boolean>()
-    val eventDelete get(): LiveData<Boolean> = _eventDelete
-
-    private val _error = MutableLiveData<String>()
-    val error get(): LiveData<String> = _error
+    private val _state = MutableStateFlow<EventDetailsState>(EventDetailsState.Init)
+    val state: StateFlow<EventDetailsState> = _state
 
     fun deleteEvent(event: Event) {
         viewModelScope.launch {
             when (val result = repository.deleteEvent(event)) {
-                CompleteResult.Complete -> _eventDelete.postValue(true)
-                is CompleteResult.Error -> _error.postValue(result.message)
+                is CompleteResult.Error -> _state.value = EventDetailsState.Error(result.exception)
+                CompleteResult.Complete -> _state.value = EventDetailsState.Deleted
             }
         }
     }
 
-    fun updateEvent(event: Event) {
+    fun updateEvent(
+        eventType: EventType,
+        name: String,
+        lastname: String,
+        middleName: String,
+        date: Long,
+        withoutYear: Boolean
+    ) {
+        _state.value = EventDetailsState.Init
+        if (name.isEmpty()) {
+            _state.value = EventDetailsState.EmptyNameError
+            return
+        }
+
         viewModelScope.launch {
+            val event = when (eventType) {
+                EventType.ANNIVERSARY -> Event(name, date, withoutYear)
+                EventType.BIRTHDAY -> Event(name, lastname, middleName, date, withoutYear)
+            }
+            event.calculateParameters()
             when (val result = repository.updateEvent(event)) {
-                CompleteResult.Complete -> {
-                    updateFlag = !updateFlag
-                    _eventUpdate.postValue(updateFlag)
-                }
-                is CompleteResult.Error -> _error.postValue(result.message)
+                is CompleteResult.Error -> _state.value = EventDetailsState.Error(result.exception)
+                CompleteResult.Complete -> _state.value = EventDetailsState.Saved
             }
         }
     }

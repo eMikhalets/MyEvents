@@ -8,12 +8,15 @@ import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
 import com.emikhalets.mydates.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EventsListFragment : Fragment(R.layout.fragment_events_list) {
@@ -60,12 +63,28 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
     }
 
     private fun observe() {
-        viewModel.events.observe(viewLifecycleOwner) {
-            eventsAdapter.submitList(it)
+        lifecycleScope.launch {
+            viewModel.state.collect { renderState(it) }
         }
-        viewModel.loading.observe(viewLifecycleOwner) {
-            if (it) binding.loader.root.visibility = View.VISIBLE
-            else binding.loader.root.visibility = View.GONE
+    }
+
+    private fun renderState(state: EventsListState) {
+        when (state) {
+            is EventsListState.Error -> {
+                binding.loader.root.visibility = View.GONE
+            }
+            EventsListState.EmptyEvents -> {
+                binding.loader.root.visibility = View.GONE
+            }
+            is EventsListState.Events -> {
+                binding.loader.root.visibility = View.GONE
+                eventsAdapter.submitList(state.events)
+            }
+            EventsListState.Loading -> {
+                binding.loader.root.visibility = View.VISIBLE
+            }
+            EventsListState.Init -> {
+            }
         }
     }
 

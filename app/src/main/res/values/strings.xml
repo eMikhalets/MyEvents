@@ -28,7 +28,7 @@
     <string name="new_event">Новое событие</string>
     <string name="today">Сегодня</string>
     <string name="tomorrow">Завтра</string>
-    <string name="birthday">День рождение</string>
+    <string name="birthday">День рождения</string>
     <string name="anniversary">Годовщина</string>
     <string name="required_field">Необходимо заполнить</string>
 
@@ -71,7 +71,7 @@
     <string name="settings_backup_export">Экспорт событий</string>
 
     <!-- Variable -->
-    <string name="birthday_date">День рождение %s</string>
+    <string name="birthday_date">День рождения %s</string>
     <string name="anniversary_date">Годовщина %s</string>
 
     <plurals name="age">

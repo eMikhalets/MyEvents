@@ -33,12 +33,11 @@ class AddEventVM @Inject constructor(
     ) {
         _state.value = AddEventState.Init
         if (name.isEmpty()) {
-            _state.value = AddEventState.EmptyName
+            _state.value = AddEventState.EmptyNameError
             return
         }
 
         viewModelScope.launch {
-            _state.value = AddEventState.Loading
             val event = when (eventType) {
                 EventType.ANNIVERSARY -> Event(name, date, withoutYear)
                 EventType.BIRTHDAY -> Event(name, lastname, middleName, date, withoutYear)

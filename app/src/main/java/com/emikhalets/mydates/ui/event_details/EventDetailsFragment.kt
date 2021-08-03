@@ -3,17 +3,22 @@ package com.emikhalets.mydates.ui.event_details
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.utils.*
+import com.emikhalets.mydates.utils.EventType.Companion.getTypeDate
+import com.emikhalets.mydates.utils.EventType.Companion.getTypeImageLarge
+import com.emikhalets.mydates.utils.EventType.Companion.getTypeName
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
@@ -49,7 +54,7 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
             inputName.setText(event.name)
             inputLastname.setText(event.lastName)
             inputMiddleName.setText(event.middleName)
-            inputDate.setDate(event.withoutYear)
+            inputDate.setDate(event.date, event.withoutYear)
             checkYear.isChecked = event.withoutYear
             if (event.withoutYear) textAge.visibility = View.GONE
             else textAge.visibility = View.VISIBLE
@@ -59,16 +64,16 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
     @SuppressLint("ClickableViewAccessibility")
     private fun clickListeners() {
         binding.apply {
-            inputDate.setOnDrawableEndClick {
+            inputDate.setOnClickListener {
                 startDatePickerDialog(event.date) { timestamp ->
                     applyNewDate(timestamp)
-                    binding.inputDate.setDate(binding.checkYear.isChecked)
+                    binding.inputDate.setDate(event.date, binding.checkYear.isChecked)
                     btnSave.isEnabled = true
                 }
             }
             checkYear.setOnCheckedChangeListener { _, isChecked ->
                 event.withoutYear = isChecked
-                binding.inputDate.setDate(isChecked)
+                binding.inputDate.setDate(event.date, isChecked)
                 btnSave.isEnabled = true
             }
             btnDelete.setOnClickListener {
@@ -77,7 +82,7 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
                 }
             }
             btnSave.setOnClickListener {
-                if (validateFields()) viewModel.updateEvent(event)
+                onSaveClick()
             }
             root.setOnTouchListener { _, _ ->
                 hideSoftKeyboard()
@@ -109,17 +114,25 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
     }
 
     private fun observe() {
-        viewModel.eventUpdate.observe(viewLifecycleOwner) { toast(R.string.event_saved) }
-        viewModel.eventDelete.observe(viewLifecycleOwner) { navigateBack() }
+        lifecycleScope.launch {
+            viewModel.state.collect { renderState(it) }
+        }
     }
 
-    private fun validateFields(): Boolean {
-        return binding.inputName.text.toString().isNotEmpty()
-    }
-
-    private fun EditText.setDate(withoutYear: Boolean) {
-        if (withoutYear) this.setText(event.date.formatDate("d MMMM"))
-        else this.setText(event.date.formatDate("d MMMM YYYY"))
+    private fun onSaveClick() {
+        binding.layInputName.error = null
+        val name = binding.inputName.text.toString()
+        val lastname = binding.inputLastname.text.toString()
+        val middleName = binding.inputMiddleName.text.toString()
+        val withoutYear = binding.checkYear.isChecked
+        viewModel.updateEvent(
+            eventType = EventType.get(event.eventType),
+            name = name,
+            lastname = lastname,
+            middleName = middleName,
+            date = event.date,
+            withoutYear = withoutYear
+        )
     }
 
     private fun applyNewDate(ts: Long) {
@@ -148,24 +161,35 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
     }
 
     private fun setViewsForEventType(eventType: EventType) {
-        when (eventType) {
-            EventType.ANNIVERSARY -> {
-                binding.apply {
-                    imagePhoto.setImageResource(R.drawable.ic_anniversary)
-                    textDate.text = getString(
-                        R.string.anniversary_date, event.date.formatDate("d MMMM")
-                    )
-                    cardLastname.visibility = View.GONE
-                    cardMiddleName.visibility = View.GONE
-                }
+        binding.textDate.text = eventType.getTypeDate(requireContext(), event.date)
+        binding.textFullName.apply {
+            text = eventType.getTypeName(requireContext())
+            setDrawableTop(eventType.getTypeImageLarge())
+        }
+
+        if (eventType == EventType.ANNIVERSARY) {
+            binding.apply {
+                cardLastname.visibility = View.GONE
+                cardMiddleName.visibility = View.GONE
             }
-            EventType.BIRTHDAY -> {
-                binding.apply {
-                    imagePhoto.setImageResource(R.drawable.ic_birthday)
-                    textDate.text = getString(
-                        R.string.birthday_date, event.date.formatDate("d MMMM")
-                    )
-                }
+        }
+    }
+
+    private fun renderState(state: EventDetailsState) {
+        when (state) {
+            is EventDetailsState.Error -> {
+                toast(state.message)
+            }
+            is EventDetailsState.EmptyNameError -> {
+                binding.layInputName.error = getString(R.string.required_field)
+            }
+            EventDetailsState.Deleted -> {
+                navigateBack()
+            }
+            EventDetailsState.Saved -> {
+                toast(R.string.event_saved)
+            }
+            EventDetailsState.Init -> {
             }
         }
     }

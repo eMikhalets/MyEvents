@@ -65,7 +65,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
     }
 
     private fun onSaveClick() {
-        binding.layInputName.setError(null)
+        binding.layInputName.error = null
         val name = binding.inputName.text.toString()
         val lastname = binding.inputLastname.text.toString()
         val middleName = binding.inputMiddleName.text.toString()
@@ -84,13 +84,11 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
             is AddEventState.Error -> {
                 toast(state.message)
             }
-            AddEventState.EmptyName -> {
-                binding.layInputName.setError(getString(R.string.required_field))
+            AddEventState.EmptyNameError -> {
+                binding.layInputName.error = getString(R.string.required_field)
             }
             AddEventState.Added -> {
                 navigateBack()
-            }
-            AddEventState.Loading -> {
             }
             AddEventState.Init -> {
             }

@@ -1,15 +1,15 @@
 package com.emikhalets.mydates.ui.events_list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.ListResult
-import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.RoomRepository
 import com.emikhalets.mydates.utils.sortWithDividers
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,30 +17,20 @@ class EventsListVM @Inject constructor(
     private val repository: RoomRepository
 ) : ViewModel() {
 
-    private val _events = MutableLiveData<List<Event>>()
-    val events get(): LiveData<List<Event>> = _events
+    private val _state = MutableStateFlow<EventsListState>(EventsListState.Init)
+    val state: StateFlow<EventsListState> = _state
 
-    private val _eventAdd = MutableLiveData<Event>()
-    val eventAdd get(): LiveData<Event> = _eventAdd
-
-    private val _loading = MutableLiveData<Boolean>()
-    val loading get(): LiveData<Boolean> = _loading
-
-    private val _error = MutableLiveData<String>()
-    val error get(): LiveData<String> = _error
-
-    fun loadAllEvents(lastUpdate: Long) {
+    fun loadAllEvents(lastUpdate: Long = Date().time) {
+        _state.value = EventsListState.Init
         viewModelScope.launch {
-            _loading.postValue(true)
+            _state.value = EventsListState.Loading
             when (val result = repository.getAllEvents(lastUpdate)) {
-                ListResult.EmptyList -> _error.postValue("Empty events list")
-                is ListResult.Error -> _error.postValue(result.message)
+                ListResult.EmptyList -> _state.value = EventsListState.EmptyEvents
+                is ListResult.Error -> _state.value = EventsListState.Error(result.exception)
                 is ListResult.Success -> {
-                    val events = sortWithDividers(result.data)
-                    _events.postValue(events)
+                    _state.value = EventsListState.Events(sortWithDividers(result.data))
                 }
             }
-            _loading.postValue(false)
         }
     }
 }

@@ -5,9 +5,7 @@ import android.app.Activity
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.data.database.entities.Event
@@ -32,15 +30,6 @@ const val APP_SP_NOTIF_WEEK_FLAG = "my_dates_sp_notif_week_flag"
 const val APP_SP_NOTIF_TWO_DAY_FLAG = "my_dates_sp_two_day_month_flag"
 const val APP_SP_NOTIF_DAY_FLAG = "my_dates_sp_notif_day_flag"
 const val APP_SP_NOTIF_TODAY_FLAG = "my_dates_sp_notif_today_flag"
-
-fun TextView.setDrawableStart(@DrawableRes resource: Int) {
-    this.setCompoundDrawablesRelativeWithIntrinsicBounds(resource, 0, 0, 0)
-}
-
-fun EditText.setDate(date: Long, withoutYear: Boolean) {
-    if (withoutYear) this.setText(date.formatDate("d MMMM"))
-    else this.setText(date.formatDate("d MMMM y"))
-}
 
 fun Long.formatDate(pattern: String = "d MMMM y", withoutYear: Boolean = false): String {
     return try {

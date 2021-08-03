@@ -16,16 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image_photo"
-                android:layout_width="@dimen/icon_size_very_large"
-                android:layout_height="@dimen/icon_size_very_large"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="ContentDescription"
-                tools:src="@drawable/ic_anniversary" />
-
             <TextView
                 android:id="@+id/text_full_name"
                 style="@style/TextTitle"
@@ -33,7 +23,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_normal"
                 android:textAlignment="center"
-                app:layout_constraintTop_toBottomOf="@+id/image_photo"
+                app:drawableTopCompat="@drawable/ic_birthday_large"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Михалец Евгений" />
 
             <TextView
@@ -193,7 +184,9 @@
                     style="@style/Input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableEnd="@drawable/ic_calendar" />
+                    android:cursorVisible="false"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:focusable="false" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
