@@ -1,7 +1,8 @@
-package com.emikhalets.mydates.utils
+package com.emikhalets.mydates.utils.enums
 
 import android.content.Context
 import com.emikhalets.mydates.R
+import com.emikhalets.mydates.utils.formatDate
 
 enum class EventType(val value: Int) {
     ANNIVERSARY(1),

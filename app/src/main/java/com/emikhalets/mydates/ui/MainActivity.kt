@@ -1,5 +1,6 @@
 package com.emikhalets.mydates.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,10 +11,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
-import com.emikhalets.mydates.utils.EventType
+import com.emikhalets.mydates.utils.Preferences
+import com.emikhalets.mydates.utils.enums.EventType
+import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.navigateEventsToAddEvent
 import com.emikhalets.mydates.utils.startAddEventDialog
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -36,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) checkLanguage()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -75,5 +80,22 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun checkLanguage() {
+        val language = Preferences.getLanguage(this)
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        resources.configuration.setLocale(locale)
+        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+    }
+
+    fun setLanguage(language: Language) {
+        val locale = Locale(language.value)
+        Locale.setDefault(locale)
+        resources.configuration.setLocale(locale)
+        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+        Preferences.setLanguage(this, language.value)
+        recreate()
     }
 }

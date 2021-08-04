@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.ItemEventBinding
-import com.emikhalets.mydates.utils.EventType
+import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.formatDate
 
 class DayEventsAdapter(

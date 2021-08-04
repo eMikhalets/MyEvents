@@ -10,6 +10,7 @@ import com.emikhalets.mydates.databinding.DialogAddEventBinding
 import com.emikhalets.mydates.databinding.DialogConfirmBinding
 import com.emikhalets.mydates.databinding.DialogDatePickerBinding
 import com.emikhalets.mydates.databinding.DialogTimePickerBinding
+import com.emikhalets.mydates.utils.enums.EventType
 import java.util.*
 
 inline fun AppCompatActivity.startAddEventDialog(crossinline callback: (EventType) -> Unit) {

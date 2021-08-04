@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.ui.MainActivity
+import com.emikhalets.mydates.utils.enums.Language
 
 fun Fragment.toast(@StringRes resource: Int) =
     Toast.makeText(requireContext(), resource, Toast.LENGTH_SHORT).show()
@@ -21,6 +22,6 @@ fun Fragment.hideSoftKeyboard() {
     }
 }
 
-fun Fragment.setTitle(@StringRes stringRes: Int) {
-    (activity as MainActivity).supportActionBar?.title = getString(stringRes)
+fun Fragment.setActivityLanguage(language: Language) {
+    (activity as MainActivity).setLanguage(language)
 }

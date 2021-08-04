@@ -13,9 +13,10 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.utils.*
-import com.emikhalets.mydates.utils.EventType.Companion.getTypeDate
-import com.emikhalets.mydates.utils.EventType.Companion.getTypeImageLarge
-import com.emikhalets.mydates.utils.EventType.Companion.getTypeName
+import com.emikhalets.mydates.utils.enums.EventType
+import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
+import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImageLarge
+import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -31,7 +32,6 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setTitle(R.string.title_event_details)
         insertEventData()
         clickListeners()
         textWatchers()

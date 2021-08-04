@@ -15,6 +15,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.emikhalets.mydates.ui.MainActivity
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
+import com.emikhalets.mydates.utils.enums.EventType
 
 const val DATA_NOTIF_MONTH = "worker_notif_month"
 const val DATA_NOTIF_WEEK = "worker_notif_week"

@@ -16,6 +16,8 @@ object Preferences {
     private const val NOTIFICATION_TWO_DAY = "com.emikhalets.mydates.notification_two_day"
     private const val NOTIFICATION_DAY = "com.emikhalets.mydates.notification_day"
     private const val NOTIFICATION_TODAY = "com.emikhalets.mydates.notification_today"
+    private const val THEME = "com.emikhalets.mydates.theme"
+    private const val LANGUAGE = "com.emikhalets.mydates.language"
 
     fun getAppFirstLaunch(context: Context) =
         context.getSharedPreferences(NAME, 0).getBoolean(APP_FIRST_LAUNCH, true)
@@ -83,4 +85,16 @@ object Preferences {
 
     fun setNotificationToday(context: Context, value: Boolean) =
         context.getSharedPreferences(NAME, 0).edit().putBoolean(NOTIFICATION_TODAY, value).apply()
+
+    fun getTheme(context: Context) =
+        context.getSharedPreferences(NAME, 0).getInt(THEME, 0)
+
+    fun setTheme(context: Context, value: Int) =
+        context.getSharedPreferences(NAME, 0).edit().putInt(THEME, value).apply()
+
+    fun getLanguage(context: Context) =
+        context.getSharedPreferences(NAME, 0).getString(LANGUAGE, "ru") ?: "ru"
+
+    fun setLanguage(context: Context, value: String) =
+        context.getSharedPreferences(NAME, 0).edit().putString(LANGUAGE, value).apply()
 }

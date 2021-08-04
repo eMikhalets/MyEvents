@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.RoomRepository
-import com.emikhalets.mydates.utils.EventType
 import com.emikhalets.mydates.utils.calculateParameters
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

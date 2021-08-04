@@ -50,17 +50,17 @@
     <fragment
         android:id="@+id/addEventFragment"
         android:name="com.emikhalets.mydates.ui.add_event.AddEventFragment"
-        android:label="AddBirthdayFragment"
+        android:label="@string/title_add_event"
         tools:layout="@layout/fragment_add_event">
         <argument
             android:name="event_type"
-            app:argType="com.emikhalets.mydates.utils.EventType" />
+            app:argType="com.emikhalets.mydates.utils.enums.EventType" />
     </fragment>
 
     <fragment
         android:id="@+id/eventDetailsFragment"
         android:name="com.emikhalets.mydates.ui.event_details.EventDetailsFragment"
-        android:label="BirthdayDetailsFragment"
+        android:label="@string/title_event_details"
         tools:layout="@layout/fragment_event_details">
         <argument
             android:name="event"
@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.emikhalets.mydates.ui.settings.SettingsFragment"
-        android:label="SettingsFragment"
+        android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 
 </navigation>

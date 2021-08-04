@@ -15,7 +15,6 @@ import com.emikhalets.mydates.databinding.FragmentEventsListBinding
 import com.emikhalets.mydates.utils.Preferences
 import com.emikhalets.mydates.utils.navigateEventsToEventDetails
 import com.emikhalets.mydates.utils.navigateEventsToSettings
-import com.emikhalets.mydates.utils.setTitle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -29,7 +28,6 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setTitle(R.string.title_home)
         setHasOptionsMenu(true)
         initEventsAdapter()
         observe()

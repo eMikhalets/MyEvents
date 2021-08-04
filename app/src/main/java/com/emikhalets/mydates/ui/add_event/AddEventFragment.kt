@@ -11,8 +11,9 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
 import com.emikhalets.mydates.utils.*
-import com.emikhalets.mydates.utils.EventType.Companion.getTypeImage
-import com.emikhalets.mydates.utils.EventType.Companion.getTypeName
+import com.emikhalets.mydates.utils.enums.EventType
+import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
+import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -26,7 +27,6 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setTitle(R.string.title_add_event)
         prepareEventData()
         clickListeners()
         observe()

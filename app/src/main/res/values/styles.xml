@@ -3,6 +3,11 @@
 
     <!-- General -->
 
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
     <style name="Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
         <item name="android:background">@color/jacksons_purple</item>
         <item name="titleTextColor">@color/white</item>

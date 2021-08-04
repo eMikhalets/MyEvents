@@ -1,89 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- General -->
-    <string name="app_name">MyDates</string>
+    <string name="app_name" translatable="false">MyEvents</string>
     <string name="app_menu_search">Search</string>
     <string name="app_menu_settings">Settings</string>
 
     <!-- Toasts -->
-    <string name="alarm_managers_restarted">Ежедневные уведомления и обновления событий перезапущены!</string>
-    <string name="export_success">События экспортированы успешно!</string>
-    <string name="export_failure">Ошибка во время экспорта</string>
-    <string name="import_success">События импортированы успешно!</string>
-    <string name="import_failure">Ошибка во время импорта</string>
-    <string name="event_saved">Дата сохранена!</string>
+    <string name="alarm_managers_restarted">Daily notifications and event updates have been restarted!</string>
+    <string name="export_success">Events exported successfully!</string>
+    <string name="export_failure">Error during export</string>
+    <string name="import_success">Events imported successfully!</string>
+    <string name="import_failure">Error during import</string>
+    <string name="event_saved">Date saved!</string>
 
     <!-- Static -->
-    <string name="name">Имя</string>
-    <string name="lastname">Фамилия</string>
-    <string name="middle_name">Отчество</string>
-    <string name="date">Дата</string>
-    <string name="notes">Заметки</string>
-    <string name="not_remember_year">Я не помню год</string>
-    <string name="save">Сохранить</string>
-    <string name="delete">Удалить</string>
-    <string name="apply">Принять</string>
-    <string name="yes">Да</string>
-    <string name="no">Нет</string>
-    <string name="new_event">Новое событие</string>
-    <string name="today">Сегодня</string>
-    <string name="tomorrow">Завтра</string>
-    <string name="birthday">День рождения</string>
-    <string name="anniversary">Годовщина</string>
-    <string name="required_field">Необходимо заполнить</string>
+    <string name="name">Name</string>
+    <string name="lastname">Last name</string>
+    <string name="middle_name">Patronymic</string>
+    <string name="date">Date</string>
+    <string name="notes">Notes</string>
+    <string name="not_remember_year">I don\'t remember the year</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="apply">Accept</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="new_event">New event</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="birthday">Birthday</string>
+    <string name="anniversary">Anniversary</string>
+    <string name="required_field">Required</string>
 
-    <string name="dialog_import_alert">Импорт дат удалит все существующие записи и создаст новые из выбранного файла. Продолжить?</string>
-    <string name="dialog_delete_event">Удалить это событие?</string>
+    <string name="dialog_import_alert">Importing dates will delete all existing records and create new ones from the selected file. Continue?</string>
+    <string name="dialog_delete_event">Delete this event?</string>
 
-    <string name="title_home">Все События</string>
-    <string name="title_event_details">Детали События</string>
-    <string name="title_add_event">Новое Событие</string>
-    <string name="title_groups">Все Группы</string>
-    <string name="title_calendar">Календарь</string>
-    <string name="title_settings">Настройки</string>
+    <string name="title_home">All Events</string>
+    <string name="title_event_details">Event Details</string>
+    <string name="title_add_event">New Event</string>
+    <string name="title_groups">All Groups</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_settings">Settings</string>
 
-    <string name="notification_title">Предстоящие события</string>
-    <string name="notification_text_month">Через месяц:</string>
-    <string name="notification_text_week">Через неделю:</string>
-    <string name="notification_text_two_day">Через 2 дня:</string>
-    <string name="notification_text_day">Завтра:</string>
-    <string name="notification_text_today">Сегодня:</string>
+    <string name="notification_title">Upcoming events</string>
+    <string name="notification_text_month">In a month:</string>
+    <string name="notification_text_week">In a week:</string>
+    <string name="notification_text_two_day">After 2 days:</string>
+    <string name="notification_text_day">Tomorrow:</string>
+    <string name="notification_text_today">Today:</string>
 
-    <string name="settings_general">Основные</string>
-    <string name="settings_language">Язык</string>
-    <string name="settings_language_ru">Русский</string>
-    <string name="settings_language_en">Английский</string>
-    <string name="settings_theme">Тема</string>
-    <string name="settings_theme_light">Светлая тема</string>
-    <string name="settings_theme_dark">Темная тема</string>
-    <string name="settings_notifications">Уведомления</string>
-    <string name="settings_notifications_all">Присылать уведомления</string>
-    <string name="settings_notifications_time">Время уведомлений</string>
-    <string name="settings_notifications_month">Уведомлять о событиях за месяц</string>
-    <string name="settings_notifications_week">Уведомлять о событиях за неделю</string>
-    <string name="settings_notifications_three_day">Уведомлять о событиях за 3 дня</string>
-    <string name="settings_notifications_two_day">Уведомлять о событиях за 2 дня</string>
-    <string name="settings_notifications_day">Уведомлять о событиях за день</string>
-    <string name="settings_notifications_today">Уведомлять о событиях утром</string>
-    <string name="settings_restart_notifications">Перезапустить ежедневные уведомления и обновления событий</string>
-    <string name="settings_backup">Резервные копии</string>
-    <string name="settings_backup_import">Импорт событий</string>
-    <string name="settings_backup_export">Экспорт событий</string>
+    <string name="settings_general">General</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_ru">Russian</string>
+    <string name="settings_language_en">English</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_light">Light theme</string>
+    <string name="settings_theme_dark">Dark theme</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_notifications_all">Send notifications</string>
+    <string name="settings_notifications_time">Notification time</string>
+    <string name="settings_notifications_month">Notify about monthly events</string>
+    <string name="settings_notifications_week">Notify about weekly events</string>
+    <string name="settings_notifications_three_day">Notify about events 3 days in advance</string>
+    <string name="settings_notifications_two_day">Notify about events 2 days in advance</string>
+    <string name="settings_notifications_day">Notify about daily events</string>
+    <string name="settings_notifications_today">Notify about events in the morning</string>
+    <string name="settings_restart_notifications">Restart daily notifications and event updates</string>
+    <string name="settings_backup">Backups</string>
+    <string name="settings_backup_import">Importing events</string>
+    <string name="settings_backup_export">Export events</string>
 
     <!-- Variable -->
-    <string name="birthday_date">День рождения %s</string>
-    <string name="anniversary_date">Годовщина %s</string>
+    <string name="birthday_date">Birthday %s</string>
+    <string name="anniversary_date">Anniversary %s</string>
 
     <plurals name="age">
-        <item quantity="one">(%d год)</item>
-        <item quantity="few">(%d года)</item>
-        <item quantity="many">(%d лет)</item>
-        <item quantity="other">Error</item>
+        <item quantity="one">(%d year)</item>
+        <item quantity="other">(%d years)</item>
     </plurals>
     <plurals name="days_left">
-        <item quantity="one">Через %d день</item>
-        <item quantity="few">Через %d дня</item>
-        <item quantity="many">Через %d дней</item>
-        <item quantity="other">Ошибка</item>
+        <item quantity="one">After %d day</item>
+        <item quantity="other">After %d days</item>
     </plurals>
 </resources>

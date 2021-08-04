@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.ui.calendar.CalendarFragmentDirections
 import com.emikhalets.mydates.ui.events_list.EventsListFragmentDirections
+import com.emikhalets.mydates.utils.enums.EventType
 
 fun Fragment.navigateBack() {
     findNavController().popBackStack()

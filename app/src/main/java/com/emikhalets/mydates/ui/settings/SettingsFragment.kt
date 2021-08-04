@@ -2,6 +2,7 @@ package com.emikhalets.mydates.ui.settings
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,10 @@ import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.utils.*
 import com.emikhalets.mydates.utils.activity_result.DocumentCreator
 import com.emikhalets.mydates.utils.activity_result.DocumentPicker
+import com.emikhalets.mydates.utils.enums.Language
+import com.emikhalets.mydates.utils.enums.Language.Companion.getLanguageName
+import com.emikhalets.mydates.utils.enums.Theme
+import com.emikhalets.mydates.utils.enums.Theme.Companion.getThemeName
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -25,9 +30,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private lateinit var documentCreator: DocumentCreator
     private lateinit var documentPicker: DocumentPicker
 
+    private var isLanguageExpanded = false
+    private var isThemeExpanded = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setTitle(R.string.title_settings)
         initActivityResult()
         prepareSettings()
         clickListeners()
@@ -49,6 +56,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun prepareSettings() {
         binding.apply {
+            textLanguage.text = Language.get(Preferences.getLanguage(requireContext()))
+                .getLanguageName(requireContext())
+            textTheme.text = Theme.get(Preferences.getTheme(requireContext()))
+                .getThemeName(requireContext())
+
             val hour = Preferences.getNotificationHour(requireContext())
             val minute = Preferences.getNotificationMinute(requireContext())
             binding.textTime.text = formatTime(hour, minute)
@@ -109,6 +121,71 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun clickListeners() {
+        generalClicks()
+        notificationsClicks()
+        backupsClicks()
+    }
+
+    private fun generalClicks() {
+        binding.apply {
+            layLanguage.setOnClickListener {
+                isLanguageExpanded = !isLanguageExpanded
+                textLanguageRu.setVisibility(isLanguageExpanded)
+                textLanguageEn.setVisibility(isLanguageExpanded)
+            }
+
+            textLanguageRu.setOnClickListener {
+                textLanguage.text = Language.RUSSIAN.getLanguageName(requireContext())
+                setLanguage(Language.RUSSIAN)
+            }
+
+            textLanguageEn.setOnClickListener {
+                textLanguage.text = Language.ENGLISH.getLanguageName(requireContext())
+                setLanguage(Language.ENGLISH)
+            }
+
+            layTheme.setOnClickListener {
+                isThemeExpanded = !isThemeExpanded
+                textThemeLight.setVisibility(isThemeExpanded)
+                textThemeDark.setVisibility(isThemeExpanded)
+            }
+
+            textThemeLight.setOnClickListener {
+                textTheme.text = Theme.LIGHT.getThemeName(requireContext())
+                setTheme(Theme.LIGHT)
+            }
+
+            textThemeDark.setOnClickListener {
+                textTheme.text = Theme.DARK.getThemeName(requireContext())
+                setTheme(Theme.DARK)
+            }
+        }
+    }
+
+    private fun setLanguage(language: Language) {
+        isLanguageExpanded = false
+        binding.textLanguageRu.setVisibility(false)
+        binding.textLanguageEn.setVisibility(false)
+        if (Preferences.getLanguage(requireContext()) != language.value) {
+            setActivityLanguage(language)
+        }
+    }
+
+    private fun setTheme(theme: Theme) {
+        isThemeExpanded = false
+        binding.textThemeLight.setVisibility(false)
+        binding.textThemeDark.setVisibility(false)
+        if (Preferences.getTheme(requireContext()) != theme.value) {
+            requireActivity().window.setWindowAnimations(R.style.WindowAnimationTransition)
+            when (theme) {
+                Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+        }
+        Preferences.setTheme(requireContext(), theme.value)
+    }
+
+    private fun notificationsClicks() {
         binding.apply {
             layTime.setOnClickListener {
                 startTimePickerDialog { hour, minute ->
@@ -121,24 +198,35 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 Preferences.setNotificationAll(requireContext(), isChecked)
                 setNotificationsEnabled(isChecked)
             }
+
             switchMonthNotifications.setOnCheckedChangeListener { _, isChecked ->
                 Preferences.setNotificationMonth(requireContext(), isChecked)
             }
+
             switchWeekNotifications.setOnCheckedChangeListener { _, isChecked ->
                 Preferences.setNotificationWeek(requireContext(), isChecked)
             }
+
             switchTwoDayNotifications.setOnCheckedChangeListener { _, isChecked ->
                 Preferences.setNotificationTwoDay(requireContext(), isChecked)
             }
+
             switchDayNotifications.setOnCheckedChangeListener { _, isChecked ->
                 Preferences.setNotificationDay(requireContext(), isChecked)
             }
+
             switchTodayNotifications.setOnCheckedChangeListener { _, isChecked ->
                 Preferences.setNotificationToday(requireContext(), isChecked)
             }
+        }
+    }
 
+    private fun backupsClicks() {
+        binding.apply {
             textRestartNotifications.setOnClickListener { restartAlarmManagers() }
+
             textImport.setOnClickListener { importEvents() }
+
             textExport.setOnClickListener { documentCreator.createFile() }
         }
     }

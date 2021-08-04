@@ -1,19 +1,25 @@
 package com.emikhalets.mydates
 
 import android.app.Application
+import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.foreground.UpdateEventsReceiver
 import com.emikhalets.mydates.utils.*
+import com.emikhalets.mydates.utils.enums.Language
+import com.emikhalets.mydates.utils.enums.Theme
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 @HiltAndroidApp
 class MyDatesApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        checkTheme()
 
         CoroutineScope(Dispatchers.IO).launch {
             initSharedPreferences()
@@ -45,6 +51,13 @@ class MyDatesApp : Application() {
             receiver = EventsReceiver::class.java,
             requestCode = APP_EVENTS_ALARM_REQUEST_CODE
         )
+    }
+
+    private fun checkTheme() {
+        when (Theme.get(Preferences.getTheme(this))) {
+            Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
     }
 
     companion object {
