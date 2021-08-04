@@ -3,13 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/space_small">
+    android:layout_height="match_parent">
 
     <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendar"
+        style="@style/Calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_small"
+        android:layout_marginTop="@dimen/space_small"
+        android:layout_marginEnd="@dimen/space_small"
         app:eventsEnabled="true"
         app:layout_constraintTop_toTopOf="parent"
         app:type="one_day_picker" />

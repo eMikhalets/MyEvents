@@ -34,6 +34,13 @@
         <item name="cardBackgroundColor">@color/white</item>
     </style>
 
+    <style name="Calendar">
+        <item name="headerColor">@color/jacksons_purple</item>
+        <item name="selectionColor">@color/jacksons_purple</item>
+        <item name="pagesColor">@color/white</item>
+        <item name="abbreviationsBarColor">@color/white</item>
+    </style>
+
     <!-- Text -->
 
     <style name="Text" parent="TextAppearance.AppCompat">

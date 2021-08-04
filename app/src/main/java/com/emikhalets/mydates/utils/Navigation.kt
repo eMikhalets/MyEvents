@@ -31,3 +31,8 @@ fun Fragment.navigateCalendarToEvent(event: Event) {
     val action = CalendarFragmentDirections.actionCalendarToEventDetails(event)
     findNavController().navigate(action)
 }
+
+fun Fragment.navigateCalendarToSettings() {
+    val action = CalendarFragmentDirections.actionCalendarToSettings()
+    findNavController().navigate(action)
+}

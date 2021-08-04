@@ -29,6 +29,13 @@
         <item name="cardBackgroundColor">@color/charcoal</item>
     </style>
 
+    <style name="Calendar">
+        <item name="headerColor">@color/charcoal</item>
+        <item name="selectionColor">@color/charcoal</item>
+        <item name="pagesColor">@color/grey</item>
+        <item name="abbreviationsBarColor">@color/grey</item>
+    </style>
+
     <!-- Text -->
 
     <style name="Text" parent="TextAppearance.AppCompat">

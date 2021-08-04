@@ -1,6 +1,9 @@
 package com.emikhalets.mydates.ui.calendar
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,13 +29,26 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         init()
-        clickListeners()
+        listeners()
         observe()
         if (savedInstanceState == null) {
             renderState(CalendarState.Init)
             viewModel.loadAllEvents()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_main, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_settings -> navigateCalendarToSettings()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun init() {
@@ -45,15 +61,17 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             setMinimumDate(min)
             setMaximumDate(max)
             setCalendarDayLayout(R.layout.layout_calendar_day)
+            setDate(viewModel.selectedDate)
         }
         eventsAdapter = DayEventsAdapter { onEventClick(it) }
         binding.listDates.adapter = eventsAdapter
         binding.listDates.setHasFixedSize(true)
     }
 
-    private fun clickListeners() {
+    private fun listeners() {
         binding.calendar.setOnDayClickListener(object : OnDayClickListener {
             override fun onDayClick(eventDay: EventDay) {
+                viewModel.selectedDate = eventDay.calendar
                 viewModel.getDayEvents(eventDay.calendar)
             }
         })

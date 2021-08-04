@@ -21,6 +21,8 @@ class CalendarVM @Inject constructor(
     private val _state = MutableStateFlow<CalendarState>(CalendarState.Init)
     val state: StateFlow<CalendarState> = _state
 
+    var selectedDate = Calendar.getInstance()
+
     fun loadAllEvents() {
         _state.value = CalendarState.Init
         viewModelScope.launch {
