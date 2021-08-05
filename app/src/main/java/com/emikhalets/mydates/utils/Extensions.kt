@@ -6,11 +6,6 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val APP_EVENTS_ALARM_REQUEST_CODE = 7
-const val APP_UPDATE_ALARM_REQUEST_CODE = 8
-const val EVENTS_UPDATE_HOUR = 0
-const val EVENTS_UPDATE_MINUTE = 10
-
 fun Calendar.day() = this.get(Calendar.DAY_OF_MONTH)
 fun Calendar.dayOfYear() = this.get(Calendar.DAY_OF_YEAR)
 fun Calendar.month() = this.get(Calendar.MONTH)

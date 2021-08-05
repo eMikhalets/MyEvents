@@ -1,5 +1,6 @@
 package com.emikhalets.mydates.utils
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent.getActivity
@@ -12,9 +13,9 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.emikhalets.mydates.ui.MainActivity
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
+import com.emikhalets.mydates.ui.MainActivity
 import com.emikhalets.mydates.utils.enums.EventType
 
 const val DATA_NOTIF_MONTH = "worker_notif_month"
@@ -23,13 +24,13 @@ const val DATA_NOTIF_TWO_DAY = "worker_notif_two_day"
 const val DATA_NOTIF_DAY = "worker_notif_day"
 const val DATA_NOTIF_TODAY = "worker_notif_today"
 
-private const val PENDING_ID = "my_dates_pending_id"
+private const val PENDING_ID = "com.emikhalets.mydates.pending_id"
 
-private const val ID_EVENTS = "my_dates_channel_id_events"
-private const val ID_UPDATE = "my_dates_channel_id_update"
+private const val ID_EVENTS = "com.emikhalets.mydates.notifications_events"
+private const val ID_UPDATE = "com.emikhalets.mydates.notifications_updating"
 
-private const val NAME_EVENTS = "my_dates_channel_name_events"
-private const val NAME_UPDATE = "my_dates_channel_name_update"
+private const val NAME_EVENTS = "Events"
+private const val NAME_UPDATE = "Updating"
 
 fun sendErrorUpdateNotification(context: Context) {
     val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -127,6 +128,7 @@ fun NotificationManager.setNotificationChannel(
     createNotificationChannel(channel)
 }
 
+@SuppressLint("UnspecifiedImmutableFlag")
 fun NotificationCompat.Builder.setPendingIntent(context: Context, id: Int) {
     val intent = Intent(context, MainActivity::class.java)
     val pendingIntent = getActivity(context, 0, intent, 0)

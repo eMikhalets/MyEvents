@@ -1,35 +1,39 @@
 package com.emikhalets.mydates.utils
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.emikhalets.mydates.foreground.EventsReceiver
+import com.emikhalets.mydates.foreground.UpdateEventsReceiver
 import java.util.*
 
-fun Context.restartAlarmManagers() {
+fun Context.setEventAlarm() {
     val hour = Preferences.getNotificationHour(this)
     val minute = Preferences.getNotificationMinute(this)
-
-    setRepeatingAlarm(
-        context = this,
-        hour = EVENTS_UPDATE_HOUR,
-        minute = EVENTS_UPDATE_MINUTE,
-        receiver = EventsReceiver::class.java,
-        requestCode = APP_UPDATE_ALARM_REQUEST_CODE
-    )
-
     setRepeatingAlarm(
         context = this,
         hour = hour,
         minute = minute,
         receiver = EventsReceiver::class.java,
-        requestCode = APP_EVENTS_ALARM_REQUEST_CODE
+        requestCode = 7
     )
 }
 
-fun setRepeatingAlarm(
+fun Context.setUpdatingAlarm() {
+    setRepeatingAlarm(
+        context = this,
+        hour = 0,
+        minute = 5,
+        receiver = UpdateEventsReceiver::class.java,
+        requestCode = 8
+    )
+}
+
+@SuppressLint("UnspecifiedImmutableFlag")
+private fun setRepeatingAlarm(
     context: Context,
     hour: Int,
     minute: Int,
@@ -43,18 +47,16 @@ fun setRepeatingAlarm(
     if (calendar.time < Date()) calendar.add(Calendar.DAY_OF_MONTH, 1)
 
     val alarmManager = context.getSystemService(Application.ALARM_SERVICE) as AlarmManager
-    val intent = Intent(context, receiver)
     val pendingIntent = PendingIntent.getBroadcast(
         context,
         requestCode,
-        intent,
-        PendingIntent.FLAG_UPDATE_CURRENT
+        Intent(context, receiver),
+        PendingIntent.FLAG_CANCEL_CURRENT
     )
 
-    alarmManager.setRepeating(
-        AlarmManager.RTC_WAKEUP,
+    alarmManager.setExact(
+        AlarmManager.RTC,
         calendar.timeInMillis,
-        AlarmManager.INTERVAL_DAY,
         pendingIntent
     )
 }

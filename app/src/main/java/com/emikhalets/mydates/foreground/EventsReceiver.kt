@@ -11,6 +11,7 @@ import com.emikhalets.mydates.utils.*
 class EventsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        context.setEventAlarm()
         if (Preferences.getNotificationAll(context)) {
             val isMonth = Preferences.getNotificationMonth(context)
             val isWeek = Preferences.getNotificationWeek(context)

@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentSettingsBinding
-import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.utils.*
 import com.emikhalets.mydates.utils.activity_result.DocumentCreator
 import com.emikhalets.mydates.utils.activity_result.DocumentPicker
@@ -238,20 +237,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun restartAlarmManagers() {
-        requireContext().restartAlarmManagers()
+        requireContext().setUpdatingAlarm()
+        requireContext().setEventAlarm()
         toast(R.string.alarm_managers_restarted)
     }
 
     private fun saveNotificationsTime(hour: Int, minute: Int) {
         Preferences.setNotificationHour(requireContext(), hour)
         Preferences.setNotificationMinute(requireContext(), minute)
-        setRepeatingAlarm(
-            context = requireContext(),
-            hour = 11,
-            minute = 0,
-            receiver = EventsReceiver::class.java,
-            requestCode = APP_EVENTS_ALARM_REQUEST_CODE
-        )
+        requireContext().setEventAlarm()
     }
 
     private fun formatTime(hour: Int, minute: Int): String {

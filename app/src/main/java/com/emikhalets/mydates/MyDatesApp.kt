@@ -1,18 +1,15 @@
 package com.emikhalets.mydates
 
 import android.app.Application
-import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
-import com.emikhalets.mydates.foreground.EventsReceiver
-import com.emikhalets.mydates.foreground.UpdateEventsReceiver
-import com.emikhalets.mydates.utils.*
-import com.emikhalets.mydates.utils.enums.Language
+import com.emikhalets.mydates.utils.Preferences
 import com.emikhalets.mydates.utils.enums.Theme
+import com.emikhalets.mydates.utils.setEventAlarm
+import com.emikhalets.mydates.utils.setUpdatingAlarm
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 @HiltAndroidApp
 class MyDatesApp : Application() {
@@ -22,35 +19,18 @@ class MyDatesApp : Application() {
         checkTheme()
 
         CoroutineScope(Dispatchers.IO).launch {
-            initSharedPreferences()
-            startAlarmManager()
+            initNotifications()
         }
     }
 
-    private fun initSharedPreferences() {
+    private fun initNotifications() {
         if (Preferences.getAppFirstLaunch(this)) {
             Preferences.setAppFirstLaunch(this, false)
             Preferences.setNotificationHour(this, DEFAULT_NOTIFICATION_HOUR)
             Preferences.setNotificationMinute(this, DEFAULT_NOTIFICATION_MINUTE)
+            setUpdatingAlarm()
+            setEventAlarm()
         }
-    }
-
-    private fun startAlarmManager() {
-        setRepeatingAlarm(
-            context = this@MyDatesApp,
-            hour = EVENTS_UPDATE_HOUR,
-            minute = EVENTS_UPDATE_MINUTE,
-            receiver = UpdateEventsReceiver::class.java,
-            requestCode = APP_UPDATE_ALARM_REQUEST_CODE
-        )
-
-        setRepeatingAlarm(
-            context = this@MyDatesApp,
-            hour = 11,
-            minute = 0,
-            receiver = EventsReceiver::class.java,
-            requestCode = APP_EVENTS_ALARM_REQUEST_CODE
-        )
     }
 
     private fun checkTheme() {
