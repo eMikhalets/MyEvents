@@ -5,7 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.emikhalets.mydates.data.database.AppDatabase
 import com.emikhalets.mydates.data.database.CompleteResult
-import com.emikhalets.mydates.data.repositories.RoomRepository
+import com.emikhalets.mydates.data.repositories.RoomRepositoryImpl
 import com.emikhalets.mydates.utils.Preferences
 import com.emikhalets.mydates.utils.sendErrorUpdateNotification
 import java.util.*
@@ -15,7 +15,7 @@ class UpdateEventsWorker(context: Context, parameters: WorkerParameters) :
 
     override suspend fun doWork(): Result {
         val database = AppDatabase.get(applicationContext).eventDao
-        val repo = RoomRepository(database)
+        val repo = RoomRepositoryImpl(database)
 
         when (repo.updateEvents()) {
             is CompleteResult.Error -> {

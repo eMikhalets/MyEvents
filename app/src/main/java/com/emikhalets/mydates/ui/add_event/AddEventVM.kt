@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.entities.Event
-import com.emikhalets.mydates.data.repositories.RoomRepository
-import com.emikhalets.mydates.utils.enums.EventType
+import com.emikhalets.mydates.data.repositories.DatabaseRepository
 import com.emikhalets.mydates.utils.calculateParameters
+import com.emikhalets.mydates.utils.enums.EventType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddEventVM @Inject constructor(
-    private val repository: RoomRepository
+    private val repository: DatabaseRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<AddEventState>(AddEventState.Init)
@@ -29,7 +29,7 @@ class AddEventVM @Inject constructor(
         name: String,
         lastname: String,
         middleName: String,
-        withoutYear: Boolean
+        withoutYear: Boolean,
     ) {
         _state.value = AddEventState.Init
         if (name.isEmpty()) {

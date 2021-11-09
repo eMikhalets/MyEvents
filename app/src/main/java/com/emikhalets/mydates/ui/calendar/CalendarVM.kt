@@ -3,9 +3,8 @@ package com.emikhalets.mydates.ui.calendar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.ListResult
-import com.emikhalets.mydates.data.repositories.RoomRepository
+import com.emikhalets.mydates.data.repositories.DatabaseRepository
 import com.emikhalets.mydates.utils.dayOfYear
-import com.emikhalets.mydates.utils.sortWithDividers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CalendarVM @Inject constructor(
-    private val repository: RoomRepository
+    private val repository: DatabaseRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<CalendarState>(CalendarState.Init)

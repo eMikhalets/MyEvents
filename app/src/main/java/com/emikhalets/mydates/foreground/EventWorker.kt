@@ -6,7 +6,7 @@ import androidx.work.WorkerParameters
 import com.emikhalets.mydates.data.database.AppDatabase
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.entities.Event
-import com.emikhalets.mydates.data.repositories.RoomRepository
+import com.emikhalets.mydates.data.repositories.RoomRepositoryImpl
 import com.emikhalets.mydates.utils.*
 
 class EventWorker(context: Context, parameters: WorkerParameters) :
@@ -14,7 +14,7 @@ class EventWorker(context: Context, parameters: WorkerParameters) :
 
     override suspend fun doWork(): Result {
         val database = AppDatabase.get(applicationContext).eventDao
-        val repo = RoomRepository(database)
+        val repo = RoomRepositoryImpl(database)
 
         val events = HashMap<String, List<Event>>()
 

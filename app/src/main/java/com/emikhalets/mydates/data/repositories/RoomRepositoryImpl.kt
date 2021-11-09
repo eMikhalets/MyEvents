@@ -9,7 +9,7 @@ import com.emikhalets.mydates.utils.calculateParameters
 import java.util.*
 import javax.inject.Inject
 
-class RoomRepository @Inject constructor(
+class RoomRepositoryImpl @Inject constructor(
     private val eventDao: EventDao
 ) : DatabaseRepository {
 

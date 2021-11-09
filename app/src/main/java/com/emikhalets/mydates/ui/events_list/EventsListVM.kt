@@ -3,7 +3,7 @@ package com.emikhalets.mydates.ui.events_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.ListResult
-import com.emikhalets.mydates.data.repositories.RoomRepository
+import com.emikhalets.mydates.data.repositories.DatabaseRepository
 import com.emikhalets.mydates.utils.sortWithDividers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EventsListVM @Inject constructor(
-    private val repository: RoomRepository
+    private val repository: DatabaseRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<EventsListState>(EventsListState.Init)

@@ -1,4 +1,4 @@
-package com.emikhalets.mydates.di
+package com.emikhalets.mydates.utils.di
 
 import android.content.Context
 import com.emikhalets.mydates.data.database.AppDatabase

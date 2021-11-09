@@ -2,12 +2,10 @@ package com.emikhalets.mydates.ui.settings
 
 import android.content.Context
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.ListResult
-import com.emikhalets.mydates.data.repositories.RoomRepository
+import com.emikhalets.mydates.data.repositories.DatabaseRepository
 import com.emikhalets.mydates.utils.BackupHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsVM @Inject constructor(
-    private val repository: RoomRepository
+    private val repository: DatabaseRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<SettingsState>(SettingsState.Init)
