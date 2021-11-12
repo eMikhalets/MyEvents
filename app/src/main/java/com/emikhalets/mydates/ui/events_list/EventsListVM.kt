@@ -5,14 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.repositories.DatabaseRepository
 import com.emikhalets.mydates.utils.sortWithDividers
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-@HiltViewModel
 class EventsListVM @Inject constructor(
     private val repository: DatabaseRepository,
 ) : ViewModel() {

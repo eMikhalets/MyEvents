@@ -3,24 +3,31 @@ package com.emikhalets.mydates
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.emikhalets.mydates.utils.Preferences
+import com.emikhalets.mydates.utils.di.AppComponent
+import com.emikhalets.mydates.utils.di.DaggerAppComponent
 import com.emikhalets.mydates.utils.enums.Theme
 import com.emikhalets.mydates.utils.setEventAlarm
 import com.emikhalets.mydates.utils.setUpdatingAlarm
-import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@HiltAndroidApp
 class MyDatesApp : Application() {
+
+    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
+        buildDaggerDependencies()
         checkTheme()
 
         CoroutineScope(Dispatchers.IO).launch {
             initNotifications()
         }
+    }
+
+    private fun buildDaggerDependencies() {
+        appComponent = DaggerAppComponent.factory().create(applicationContext)
     }
 
     private fun initNotifications() {

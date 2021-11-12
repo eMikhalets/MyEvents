@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -14,17 +13,20 @@ import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentCalendarBinding
-import com.emikhalets.mydates.utils.*
-import dagger.hilt.android.AndroidEntryPoint
+import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.navigateCalendarToEvent
+import com.emikhalets.mydates.utils.navigateCalendarToSettings
+import com.emikhalets.mydates.utils.toCalendar
+import com.emikhalets.mydates.utils.toast
+import com.emikhalets.mydates.utils.year
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 
-@AndroidEntryPoint
-class CalendarFragment : Fragment(R.layout.fragment_calendar) {
+class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
 
     private val binding by viewBinding(FragmentCalendarBinding::bind)
-    private val viewModel: CalendarVM by viewModels()
+    private val viewModel by viewModels<CalendarVM> { viewModelFactory }
     private lateinit var eventsAdapter: DayEventsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

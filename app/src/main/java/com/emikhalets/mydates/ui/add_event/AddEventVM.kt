@@ -7,14 +7,12 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.DatabaseRepository
 import com.emikhalets.mydates.utils.calculateParameters
 import com.emikhalets.mydates.utils.enums.EventType
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-@HiltViewModel
 class AddEventVM @Inject constructor(
     private val repository: DatabaseRepository,
 ) : ViewModel() {

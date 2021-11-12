@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -12,20 +11,27 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
-import com.emikhalets.mydates.utils.*
+import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.calculateParameters
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImageLarge
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
-import dagger.hilt.android.AndroidEntryPoint
+import com.emikhalets.mydates.utils.formatDate
+import com.emikhalets.mydates.utils.hideSoftKeyboard
+import com.emikhalets.mydates.utils.navigateBack
+import com.emikhalets.mydates.utils.setDate
+import com.emikhalets.mydates.utils.setDrawableTop
+import com.emikhalets.mydates.utils.startDatePickerDialog
+import com.emikhalets.mydates.utils.startDeleteDialog
+import com.emikhalets.mydates.utils.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
+class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
     private val binding by viewBinding(FragmentEventDetailsBinding::bind)
-    private val viewModel: EventDetailsVM by viewModels()
+    private val viewModel by viewModels<EventDetailsVM> { viewModelFactory }
     private val args: EventDetailsFragmentArgs by navArgs()
 
     private lateinit var event: Event

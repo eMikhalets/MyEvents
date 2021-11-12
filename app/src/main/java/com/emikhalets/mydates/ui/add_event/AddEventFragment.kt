@@ -3,26 +3,30 @@ package com.emikhalets.mydates.ui.add_event
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
-import com.emikhalets.mydates.utils.*
+import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
-import dagger.hilt.android.AndroidEntryPoint
+import com.emikhalets.mydates.utils.formatDate
+import com.emikhalets.mydates.utils.hideSoftKeyboard
+import com.emikhalets.mydates.utils.navigateBack
+import com.emikhalets.mydates.utils.setDate
+import com.emikhalets.mydates.utils.setDrawableStart
+import com.emikhalets.mydates.utils.startDatePickerDialog
+import com.emikhalets.mydates.utils.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class AddEventFragment : Fragment(R.layout.fragment_add_event) {
+class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
 
     private val binding by viewBinding(FragmentAddEventBinding::bind)
-    private val viewModel: AddEventVM by viewModels()
+    private val viewModel by viewModels<AddEventVM> { viewModelFactory }
     private val args: AddEventFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

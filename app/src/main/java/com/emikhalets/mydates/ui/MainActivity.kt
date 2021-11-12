@@ -1,6 +1,5 @@
 package com.emikhalets.mydates.ui
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,14 +11,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
 import com.emikhalets.mydates.utils.Preferences
+import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.navigateEventsToAddEvent
 import com.emikhalets.mydates.utils.startAddEventDialog
-import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -40,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        appComponent.inject(this)
         if (savedInstanceState == null) checkLanguage()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
