@@ -2,7 +2,7 @@ buildscript {
     ext {
         versions = [
                 kotlin: '1.5.31',
-                hilt: '2.40',
+                dagger: '2.40.1',
                 navigation: '2.3.5',
                 room: '2.3.0',
                 lifecycle: '2.4.0',
@@ -22,7 +22,6 @@ buildscript {
         ]
         libraries = [
                 kotlinGradle: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
-                hiltGradle: "com.google.dagger:hilt-android-gradle-plugin:${versions.hilt}",
                 navigationGradle: "androidx.navigation:navigation-safe-args-gradle-plugin:${versions.navigation}",
                 core: "androidx.core:core-ktx:${versions.core}",
                 appcompat: "androidx.appcompat:appcompat:${versions.appcompat}",
@@ -39,8 +38,8 @@ buildscript {
                 roomCompiler: "androidx.room:room-compiler:${versions.room}",
                 navigation: "androidx.navigation:navigation-fragment-ktx:${versions.navigation}",
                 navigationUi: "androidx.navigation:navigation-ui-ktx:${versions.navigation}",
-                hilt: "com.google.dagger:hilt-android:${versions.hilt}",
-                hiltCompiler: "com.google.dagger:hilt-android-compiler:${versions.hilt}",
+                dagger: "com.google.dagger:dagger:${versions.dagger}",
+                daggerCompiler: "com.google.dagger:dagger-compiler:${versions.dagger}",
                 coil: "io.coil-kt:coil:${versions.coil}",
                 calendar: "com.applandeo:material-calendar-view:${versions.calendar}",
                 junit: "junit:junit:${versions.junit}",
@@ -56,7 +55,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.3'
         classpath libraries.kotlinGradle
-        classpath libraries.hiltGradle
         classpath libraries.navigationGradle
     }
 }

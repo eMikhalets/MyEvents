@@ -16,11 +16,9 @@ import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.enums.Language.Companion.getLanguageName
 import com.emikhalets.mydates.utils.enums.Theme
 import com.emikhalets.mydates.utils.enums.Theme.Companion.getThemeName
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private val binding by viewBinding(FragmentSettingsBinding::bind)
