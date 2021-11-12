@@ -20,7 +20,7 @@
         <item name="labelVisibilityMode">unlabeled</item>
         <item name="itemIconSize">@dimen/icon_size_bottom_bar</item>
         <item name="backgroundTint">@color/jacksons_purple</item>
-        <item name="itemIconTint">@color/grey</item>
+        <item name="itemIconTint">@color/selector_bottom_bar_icon_color</item>
     </style>
 
     <style name="Dialog" parent="Theme.AppCompat">
@@ -95,10 +95,10 @@
         <item name="fabCustomSize">50dp</item>
         <item name="shapeAppearanceOverlay">@style/ButtonFloating</item>
         <item name="maxImageSize">36dp</item>
-        <item name="cornerSizeBottomLeft">8dp</item>
-        <item name="cornerSizeBottomRight">8dp</item>
-        <item name="cornerSizeTopLeft">8dp</item>
-        <item name="cornerSizeTopRight">8dp</item>
+        <item name="cornerSizeBottomLeft">16dp</item>
+        <item name="cornerSizeBottomRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
     </style>
 
     <!-- Text Fields -->
