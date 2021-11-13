@@ -6,7 +6,7 @@ import androidx.work.WorkerParameters
 import com.emikhalets.mydates.data.database.AppDatabase
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.repositories.RoomRepositoryImpl
-import com.emikhalets.mydates.utils.Preferences
+import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.sendErrorUpdateNotification
 import java.util.*
 
@@ -22,7 +22,7 @@ class UpdateEventsWorker(context: Context, parameters: WorkerParameters) :
                 sendErrorUpdateNotification(applicationContext)
             }
             CompleteResult.Complete -> {
-                Preferences.setEventsLastUpdateTime(applicationContext, Date().time)
+                applicationContext.appComponent.appPreferences.setEventsLastUpdateTime(Date().time)
             }
         }
 

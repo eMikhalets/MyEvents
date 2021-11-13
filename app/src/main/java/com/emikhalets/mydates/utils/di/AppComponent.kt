@@ -1,6 +1,7 @@
 package com.emikhalets.mydates.utils.di
 
 import android.content.Context
+import com.emikhalets.mydates.data.repositories.AppPrefsRepository
 import com.emikhalets.mydates.ui.MainActivity
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.di.viewmodel.ViewModelModule
@@ -17,6 +18,7 @@ import javax.inject.Singleton
 interface AppComponent {
 
     val applicationContext: AppComponent
+    val appPreferences: AppPrefsRepository
 
     @Component.Factory
     interface Factory {

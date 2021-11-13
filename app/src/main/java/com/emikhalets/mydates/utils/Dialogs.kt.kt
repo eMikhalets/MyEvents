@@ -10,6 +10,7 @@ import com.emikhalets.mydates.databinding.DialogAddEventBinding
 import com.emikhalets.mydates.databinding.DialogConfirmBinding
 import com.emikhalets.mydates.databinding.DialogDatePickerBinding
 import com.emikhalets.mydates.databinding.DialogTimePickerBinding
+import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
 import java.util.*
 
@@ -80,13 +81,13 @@ inline fun Fragment.startTimePickerDialog(crossinline callback: (hour: Int, minu
     binding.root.animate().alpha(1f).setDuration(300).start()
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        binding.timePicker.hour = Preferences.getNotificationHour(requireContext())
-        binding.timePicker.minute = Preferences.getNotificationMinute(requireContext())
+        binding.timePicker.hour = appComponent.appPreferences.getNotificationHour()
+        binding.timePicker.minute = appComponent.appPreferences.getNotificationMinute()
     } else {
         @Suppress("DEPRECATION")
-        binding.timePicker.currentHour = Preferences.getNotificationHour(requireContext())
+        binding.timePicker.currentHour = appComponent.appPreferences.getNotificationHour()
         @Suppress("DEPRECATION")
-        binding.timePicker.currentMinute = Preferences.getNotificationMinute(requireContext())
+        binding.timePicker.currentMinute = appComponent.appPreferences.getNotificationMinute()
     }
 
     var hour = 11

@@ -10,7 +10,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
-import com.emikhalets.mydates.utils.Preferences
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.Language
@@ -82,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkLanguage() {
-        val language = Preferences.getLanguage(this)
+        val language = appComponent.appPreferences.getLanguage()
         val locale = Locale(language)
         Locale.setDefault(locale)
         resources.configuration.setLocale(locale)
@@ -94,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         Locale.setDefault(locale)
         resources.configuration.setLocale(locale)
         resources.updateConfiguration(resources.configuration, resources.displayMetrics)
-        Preferences.setLanguage(this, language.value)
+        appComponent.appPreferences.setLanguage(language.value)
         recreate()
     }
 }
