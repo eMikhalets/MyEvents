@@ -51,6 +51,7 @@ dependencies {
     implementation libraries.activity
     implementation libraries.fragment
     implementation libraries.work
+    implementation libraries.datastore
 
     // Architecture
     implementation libraries.viewbindingdelegate

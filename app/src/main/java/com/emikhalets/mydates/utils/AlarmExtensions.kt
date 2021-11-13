@@ -8,18 +8,21 @@ import android.content.Context
 import android.content.Intent
 import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.foreground.UpdateEventsReceiver
+import com.emikhalets.mydates.utils.di.appComponent
 import java.util.*
 
 fun Context.setEventAlarm() {
-    val hour = Preferences.getNotificationHour(this)
-    val minute = Preferences.getNotificationMinute(this)
-    setRepeatingAlarm(
-        context = this,
-        hour = hour,
-        minute = minute,
-        receiver = EventsReceiver::class.java,
-        requestCode = 7
-    )
+    launchMainScope {
+        val hour = appComponent.appPreferences.getNotificationHour()
+        val minute = appComponent.appPreferences.getNotificationMinute()
+        setRepeatingAlarm(
+            context = this@setEventAlarm,
+            hour = hour,
+            minute = minute,
+            receiver = EventsReceiver::class.java,
+            requestCode = 7
+        )
+    }
 }
 
 fun Context.setUpdatingAlarm() {
@@ -38,7 +41,7 @@ private fun setRepeatingAlarm(
     hour: Int,
     minute: Int,
     receiver: Class<*>,
-    requestCode: Int
+    requestCode: Int,
 ) {
     val calendar = Calendar.getInstance()
     calendar.set(Calendar.HOUR_OF_DAY, hour)

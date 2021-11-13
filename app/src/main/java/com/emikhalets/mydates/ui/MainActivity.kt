@@ -10,10 +10,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
-import com.emikhalets.mydates.utils.Preferences
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.Language
+import com.emikhalets.mydates.utils.launchMainScope
 import com.emikhalets.mydates.utils.navigateEventsToAddEvent
 import com.emikhalets.mydates.utils.startAddEventDialog
 import java.util.*
@@ -82,19 +82,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkLanguage() {
-        val language = Preferences.getLanguage(this)
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-        resources.configuration.setLocale(locale)
-        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+        launchMainScope {
+            val language = appComponent.appPreferences.getLanguage()
+            val locale = Locale(language)
+            Locale.setDefault(locale)
+            resources.configuration.setLocale(locale)
+            resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+        }
     }
 
     fun setLanguage(language: Language) {
-        val locale = Locale(language.value)
-        Locale.setDefault(locale)
-        resources.configuration.setLocale(locale)
-        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
-        Preferences.setLanguage(this, language.value)
-        recreate()
+        launchMainScope {
+            val locale = Locale(language.value)
+            Locale.setDefault(locale)
+            resources.configuration.setLocale(locale)
+            resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+            appComponent.appPreferences.setLanguage(language.value)
+            recreate()
+        }
     }
 }

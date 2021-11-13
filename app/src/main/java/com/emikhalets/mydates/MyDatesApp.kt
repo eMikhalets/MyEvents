@@ -2,15 +2,14 @@ package com.emikhalets.mydates
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.emikhalets.mydates.utils.Preferences
 import com.emikhalets.mydates.utils.di.AppComponent
 import com.emikhalets.mydates.utils.di.DaggerAppComponent
+import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_HOUR
+import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_MINUTE
 import com.emikhalets.mydates.utils.enums.Theme
+import com.emikhalets.mydates.utils.launchMainScope
 import com.emikhalets.mydates.utils.setEventAlarm
 import com.emikhalets.mydates.utils.setUpdatingAlarm
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MyDatesApp : Application() {
 
@@ -20,10 +19,7 @@ class MyDatesApp : Application() {
         super.onCreate()
         buildDaggerDependencies()
         checkTheme()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            initNotifications()
-        }
+        initNotifications()
     }
 
     private fun buildDaggerDependencies() {
@@ -31,24 +27,24 @@ class MyDatesApp : Application() {
     }
 
     private fun initNotifications() {
-        if (Preferences.getAppFirstLaunch(this)) {
-            Preferences.setAppFirstLaunch(this, false)
-            Preferences.setNotificationHour(this, DEFAULT_NOTIFICATION_HOUR)
-            Preferences.setNotificationMinute(this, DEFAULT_NOTIFICATION_MINUTE)
-            setUpdatingAlarm()
-            setEventAlarm()
+        launchMainScope {
+            val isAppFirstLaunch = appComponent.appPreferences.getAppFirstLaunch()
+            if (isAppFirstLaunch) {
+                appComponent.appPreferences.setAppFirstLaunch(false)
+                appComponent.appPreferences.setNotificationHour(DEFAULT_NOTIFICATION_HOUR)
+                appComponent.appPreferences.setNotificationMinute(DEFAULT_NOTIFICATION_MINUTE)
+                setUpdatingAlarm()
+                setEventAlarm()
+            }
         }
     }
 
     private fun checkTheme() {
-        when (Theme.get(Preferences.getTheme(this))) {
-            Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        launchMainScope {
+            when (Theme.get(appComponent.appPreferences.getTheme())) {
+                Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
         }
-    }
-
-    companion object {
-        const val DEFAULT_NOTIFICATION_HOUR = 11
-        const val DEFAULT_NOTIFICATION_MINUTE = 0
     }
 }
