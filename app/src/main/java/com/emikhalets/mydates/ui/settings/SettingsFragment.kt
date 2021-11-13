@@ -3,12 +3,12 @@ package com.emikhalets.mydates.ui.settings
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentSettingsBinding
+import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.activity_result.DocumentCreator
 import com.emikhalets.mydates.utils.activity_result.DocumentPicker
 import com.emikhalets.mydates.utils.di.appComponent
@@ -16,6 +16,7 @@ import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.enums.Language.Companion.getLanguageName
 import com.emikhalets.mydates.utils.enums.Theme
 import com.emikhalets.mydates.utils.enums.Theme.Companion.getThemeName
+import com.emikhalets.mydates.utils.launchMainScope
 import com.emikhalets.mydates.utils.setActivityLanguage
 import com.emikhalets.mydates.utils.setEventAlarm
 import com.emikhalets.mydates.utils.setUpdatingAlarm
@@ -26,10 +27,10 @@ import com.emikhalets.mydates.utils.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private val binding by viewBinding(FragmentSettingsBinding::bind)
-    private val viewModel: SettingsVM by viewModels()
+    private val viewModel by viewModels<SettingsVM> { viewModelFactory }
 
     private lateinit var documentCreator: DocumentCreator
     private lateinit var documentPicker: DocumentPicker
@@ -59,37 +60,39 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun prepareSettings() {
-        binding.apply {
-            textLanguage.text = Language.get(appComponent.appPreferences.getLanguage())
-                .getLanguageName(requireContext())
-            textTheme.text = Theme.get(appComponent.appPreferences.getTheme())
-                .getThemeName(requireContext())
+        launchMainScope {
+            binding.apply {
+                textLanguage.text = Language.get(appComponent.appPreferences.getLanguage())
+                    .getLanguageName(requireContext())
+                textTheme.text = Theme.get(appComponent.appPreferences.getTheme())
+                    .getThemeName(requireContext())
 
-            val hour = appComponent.appPreferences.getNotificationHour()
-            val minute = appComponent.appPreferences.getNotificationMinute()
-            binding.textTime.text = formatTime(hour, minute)
+                val hour = appComponent.appPreferences.getNotificationHour()
+                val minute = appComponent.appPreferences.getNotificationMinute()
+                binding.textTime.text = formatTime(hour, minute)
 
-            switchAllNotifications.isChecked =
-                appComponent.appPreferences.getNotificationAll()
-            switchMonthNotifications.isChecked =
-                appComponent.appPreferences.getNotificationMonth()
-            switchWeekNotifications.isChecked =
-                appComponent.appPreferences.getNotificationWeek()
-            switchTwoDayNotifications.isChecked =
-                appComponent.appPreferences.getNotificationTwoDay()
-            switchDayNotifications.isChecked =
-                appComponent.appPreferences.getNotificationDay()
-            switchTodayNotifications.isChecked =
-                appComponent.appPreferences.getNotificationToday()
+                switchAllNotifications.isChecked =
+                    appComponent.appPreferences.getNotificationAll()
+                switchMonthNotifications.isChecked =
+                    appComponent.appPreferences.getNotificationMonth()
+                switchWeekNotifications.isChecked =
+                    appComponent.appPreferences.getNotificationWeek()
+                switchTwoDayNotifications.isChecked =
+                    appComponent.appPreferences.getNotificationTwoDay()
+                switchDayNotifications.isChecked =
+                    appComponent.appPreferences.getNotificationDay()
+                switchTodayNotifications.isChecked =
+                    appComponent.appPreferences.getNotificationToday()
 
-            switchAllNotifications.isChecked.apply {
-                if (this) layTime.visibility = View.VISIBLE
-                else layTime.visibility = View.GONE
-                switchMonthNotifications.isEnabled = this
-                switchWeekNotifications.isEnabled = this
-                switchTwoDayNotifications.isEnabled = this
-                switchDayNotifications.isEnabled = this
-                switchTodayNotifications.isEnabled = this
+                switchAllNotifications.isChecked.apply {
+                    if (this) layTime.visibility = View.VISIBLE
+                    else layTime.visibility = View.GONE
+                    switchMonthNotifications.isEnabled = this
+                    switchWeekNotifications.isEnabled = this
+                    switchTwoDayNotifications.isEnabled = this
+                    switchDayNotifications.isEnabled = this
+                    switchTodayNotifications.isEnabled = this
+                }
             }
         }
     }
@@ -170,8 +173,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         isLanguageExpanded = false
         binding.textLanguageRu.setVisibility(false)
         binding.textLanguageEn.setVisibility(false)
-        if (appComponent.appPreferences.getLanguage() != language.value) {
-            setActivityLanguage(language)
+        launchMainScope {
+            if (appComponent.appPreferences.getLanguage() != language.value) {
+                setActivityLanguage(language)
+            }
         }
     }
 
@@ -179,14 +184,16 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         isThemeExpanded = false
         binding.textThemeLight.setVisibility(false)
         binding.textThemeDark.setVisibility(false)
-        if (appComponent.appPreferences.getTheme() != theme.value) {
-            requireActivity().window.setWindowAnimations(R.style.WindowAnimationTransition)
-            when (theme) {
-                Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        launchMainScope {
+            if (appComponent.appPreferences.getTheme() != theme.value) {
+                requireActivity().window.setWindowAnimations(R.style.WindowAnimationTransition)
+                when (theme) {
+                    Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                }
             }
+            appComponent.appPreferences.setTheme(theme.value)
         }
-        appComponent.appPreferences.setTheme(theme.value)
     }
 
     private fun notificationsClicks() {
@@ -199,28 +206,40 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
 
             switchAllNotifications.setOnCheckedChangeListener { _, isChecked ->
-                appComponent.appPreferences.setNotificationAll(isChecked)
-                setNotificationsEnabled(isChecked)
+                launchMainScope {
+                    appComponent.appPreferences.setNotificationAll(isChecked)
+                    setNotificationsEnabled(isChecked)
+                }
             }
 
             switchMonthNotifications.setOnCheckedChangeListener { _, isChecked ->
-                appComponent.appPreferences.setNotificationMonth(isChecked)
+                launchMainScope {
+                    appComponent.appPreferences.setNotificationMonth(isChecked)
+                }
             }
 
             switchWeekNotifications.setOnCheckedChangeListener { _, isChecked ->
-                appComponent.appPreferences.setNotificationWeek(isChecked)
+                launchMainScope {
+                    appComponent.appPreferences.setNotificationWeek(isChecked)
+                }
             }
 
             switchTwoDayNotifications.setOnCheckedChangeListener { _, isChecked ->
-                appComponent.appPreferences.setNotificationTwoDay(isChecked)
+                launchMainScope {
+                    appComponent.appPreferences.setNotificationTwoDay(isChecked)
+                }
             }
 
             switchDayNotifications.setOnCheckedChangeListener { _, isChecked ->
-                appComponent.appPreferences.setNotificationDay(isChecked)
+                launchMainScope {
+                    appComponent.appPreferences.setNotificationDay(isChecked)
+                }
             }
 
             switchTodayNotifications.setOnCheckedChangeListener { _, isChecked ->
-                appComponent.appPreferences.setNotificationToday(isChecked)
+                launchMainScope {
+                    appComponent.appPreferences.setNotificationToday(isChecked)
+                }
             }
         }
     }
@@ -248,9 +267,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun saveNotificationsTime(hour: Int, minute: Int) {
-        appComponent.appPreferences.setNotificationHour(hour)
-        appComponent.appPreferences.setNotificationMinute(minute)
-        requireContext().setEventAlarm()
+        launchMainScope {
+            appComponent.appPreferences.setNotificationHour(hour)
+            appComponent.appPreferences.setNotificationMinute(minute)
+            requireContext().setEventAlarm()
+        }
     }
 
     private fun formatTime(hour: Int, minute: Int): String {

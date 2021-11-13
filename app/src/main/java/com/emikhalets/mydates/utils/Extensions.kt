@@ -1,7 +1,9 @@
 package com.emikhalets.mydates.utils
 
 import com.emikhalets.mydates.data.database.entities.Event
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
@@ -81,4 +83,8 @@ fun Long.toCalendar(year: Int = Calendar.getInstance().year()): Calendar {
     calendar.timeInMillis = this
     calendar.set(Calendar.YEAR, year)
     return calendar
+}
+
+fun launchMainScope(block: suspend CoroutineScope.() -> Unit) {
+    CoroutineScope(Dispatchers.Main).launch { block() }
 }

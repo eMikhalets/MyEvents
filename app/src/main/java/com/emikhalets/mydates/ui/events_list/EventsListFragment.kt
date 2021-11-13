@@ -13,6 +13,7 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.di.appComponent
+import com.emikhalets.mydates.utils.launchMainScope
 import com.emikhalets.mydates.utils.navigateEventsToEventDetails
 import com.emikhalets.mydates.utils.navigateEventsToSettings
 import kotlinx.coroutines.flow.collect
@@ -33,8 +34,10 @@ class EventsListFragment : BaseFragment(R.layout.fragment_events_list) {
 
     override fun onResume() {
         super.onResume()
-        val lastUpdateTimestamp = appComponent.appPreferences.getEventsLastUpdateTime()
-        viewModel.loadAllEvents(lastUpdateTimestamp)
+        launchMainScope {
+            val lastUpdateTimestamp = appComponent.appPreferences.getEventsLastUpdateTime()
+            viewModel.loadAllEvents(lastUpdateTimestamp)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

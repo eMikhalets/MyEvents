@@ -2,42 +2,42 @@ package com.emikhalets.mydates.data.repositories
 
 interface AppPrefsRepository {
 
-    fun getAppFirstLaunch(): Boolean
-    fun setAppFirstLaunch(value: Boolean)
+    suspend fun getAppFirstLaunch(): Boolean
+    suspend fun setAppFirstLaunch(value: Boolean)
 
-    fun getEventsLastUpdateTime(): Long
-    fun setEventsLastUpdateTime(value: Long)
+    suspend fun getEventsLastUpdateTime(): Long
+    suspend fun setEventsLastUpdateTime(value: Long)
 
-    fun getNotificationHour(): Int
-    fun setNotificationHour(value: Int)
+    suspend fun getNotificationHour(): Int
+    suspend fun setNotificationHour(value: Int)
 
-    fun getNotificationMinute(): Int
-    fun setNotificationMinute(value: Int)
+    suspend fun getNotificationMinute(): Int
+    suspend fun setNotificationMinute(value: Int)
 
-    fun getNotificationAll(): Boolean
-    fun setNotificationAll(value: Boolean)
+    suspend fun getNotificationAll(): Boolean
+    suspend fun setNotificationAll(value: Boolean)
 
-    fun getNotificationMonth(): Boolean
-    fun setNotificationMonth(value: Boolean)
+    suspend fun getNotificationMonth(): Boolean
+    suspend fun setNotificationMonth(value: Boolean)
 
-    fun getNotificationWeek(): Boolean
-    fun setNotificationWeek(value: Boolean)
+    suspend fun getNotificationWeek(): Boolean
+    suspend fun setNotificationWeek(value: Boolean)
 
-    fun getNotificationThreeDay(): Boolean
-    fun setNotificationThreeDay(value: Boolean)
+    suspend fun getNotificationThreeDay(): Boolean
+    suspend fun setNotificationThreeDay(value: Boolean)
 
-    fun getNotificationTwoDay(): Boolean
-    fun setNotificationTwoDay(value: Boolean)
+    suspend fun getNotificationTwoDay(): Boolean
+    suspend fun setNotificationTwoDay(value: Boolean)
 
-    fun getNotificationDay(): Boolean
-    fun setNotificationDay(value: Boolean)
+    suspend fun getNotificationDay(): Boolean
+    suspend fun setNotificationDay(value: Boolean)
 
-    fun getNotificationToday(): Boolean
-    fun setNotificationToday(value: Boolean)
+    suspend fun getNotificationToday(): Boolean
+    suspend fun setNotificationToday(value: Boolean)
 
-    fun getTheme(): Int
-    fun setTheme(value: Int)
+    suspend fun getTheme(): Int
+    suspend fun setTheme(value: Int)
 
-    fun getLanguage(): String
-    fun setLanguage(value: String)
+    suspend fun getLanguage(): String
+    suspend fun setLanguage(value: String)
 }
