@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.emikhalets.mydates.utils.AppAlarmManager
 import com.emikhalets.mydates.utils.DATA_NOTIF_DAY
 import com.emikhalets.mydates.utils.DATA_NOTIF_MONTH
 import com.emikhalets.mydates.utils.DATA_NOTIF_TODAY
@@ -13,12 +14,11 @@ import com.emikhalets.mydates.utils.DATA_NOTIF_TWO_DAY
 import com.emikhalets.mydates.utils.DATA_NOTIF_WEEK
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.launchMainScope
-import com.emikhalets.mydates.utils.setEventAlarm
 
 class EventsReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        context.setEventAlarm()
+        AppAlarmManager.scheduleEventAlarm(context)
         launchMainScope {
             if (context.appComponent.appPreferences.getNotificationAll()) {
                 val isMonth = context.appComponent.appPreferences.getNotificationMonth()

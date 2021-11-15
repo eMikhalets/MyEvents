@@ -9,6 +9,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentSettingsBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.AppAlarmManager
 import com.emikhalets.mydates.utils.activity_result.DocumentCreator
 import com.emikhalets.mydates.utils.activity_result.DocumentPicker
 import com.emikhalets.mydates.utils.di.appComponent
@@ -18,8 +19,6 @@ import com.emikhalets.mydates.utils.enums.Theme
 import com.emikhalets.mydates.utils.enums.Theme.Companion.getThemeName
 import com.emikhalets.mydates.utils.launchMainScope
 import com.emikhalets.mydates.utils.setActivityLanguage
-import com.emikhalets.mydates.utils.setEventAlarm
-import com.emikhalets.mydates.utils.setUpdatingAlarm
 import com.emikhalets.mydates.utils.setVisibility
 import com.emikhalets.mydates.utils.startDeleteDialog
 import com.emikhalets.mydates.utils.startTimePickerDialog
@@ -261,8 +260,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     }
 
     private fun restartAlarmManagers() {
-        requireContext().setUpdatingAlarm()
-        requireContext().setEventAlarm()
+        AppAlarmManager.scheduleAllAlarms(requireContext())
         toast(R.string.alarm_managers_restarted)
     }
 
@@ -270,7 +268,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         launchMainScope {
             appComponent.appPreferences.setNotificationHour(hour)
             appComponent.appPreferences.setNotificationMinute(minute)
-            requireContext().setEventAlarm()
+            AppAlarmManager.scheduleEventAlarm(requireContext())
         }
     }
 

@@ -2,14 +2,13 @@ package com.emikhalets.mydates
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.emikhalets.mydates.utils.AppAlarmManager
 import com.emikhalets.mydates.utils.di.AppComponent
 import com.emikhalets.mydates.utils.di.DaggerAppComponent
 import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_HOUR
 import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_MINUTE
 import com.emikhalets.mydates.utils.enums.Theme
 import com.emikhalets.mydates.utils.launchMainScope
-import com.emikhalets.mydates.utils.setEventAlarm
-import com.emikhalets.mydates.utils.setUpdatingAlarm
 
 class MyDatesApp : Application() {
 
@@ -33,8 +32,7 @@ class MyDatesApp : Application() {
                 appComponent.appPreferences.setAppFirstLaunch(false)
                 appComponent.appPreferences.setNotificationHour(DEFAULT_NOTIFICATION_HOUR)
                 appComponent.appPreferences.setNotificationMinute(DEFAULT_NOTIFICATION_MINUTE)
-                setUpdatingAlarm()
-                setEventAlarm()
+                AppAlarmManager.scheduleAllAlarms(applicationContext)
             }
         }
     }
