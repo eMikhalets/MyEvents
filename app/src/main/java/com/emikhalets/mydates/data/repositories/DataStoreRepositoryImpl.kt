@@ -9,9 +9,9 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.emikhalets.mydates.utils.enums.DEFAULT_APP_LANGUAGE_CODE
-import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_HOUR
-import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_MINUTE
+import com.emikhalets.mydates.utils.DEFAULT_APP_LANGUAGE_CODE
+import com.emikhalets.mydates.utils.DEFAULT_NOTIFICATION_HOUR
+import com.emikhalets.mydates.utils.DEFAULT_NOTIFICATION_MINUTE
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

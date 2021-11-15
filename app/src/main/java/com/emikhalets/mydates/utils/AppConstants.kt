@@ -1,4 +1,4 @@
-package com.emikhalets.mydates.utils.enums
+package com.emikhalets.mydates.utils
 
 const val DEFAULT_APP_LANGUAGE_CODE = "ru"
 const val DEFAULT_NOTIFICATION_HOUR = 11

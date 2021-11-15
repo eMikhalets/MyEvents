@@ -10,12 +10,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
+import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.extentions.launchMainScope
 import com.emikhalets.mydates.utils.navigateEventsToAddEvent
-import com.emikhalets.mydates.utils.startAddEventDialog
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -70,14 +70,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setOnAddEventClick() {
-        binding.btnAddEvent.setOnClickListener { v ->
-            startAddEventDialog { eventType ->
+        binding.btnAddEvent.setOnClickListener {
+            AppDialogManager.showAddEventDialog(this) { eventType ->
                 when (eventType) {
-                    EventType.ANNIVERSARY -> navController.navigateEventsToAddEvent(EventType.ANNIVERSARY)
-                    EventType.BIRTHDAY -> navController.navigateEventsToAddEvent(EventType.BIRTHDAY)
+                    EventType.ANNIVERSARY -> {
+                        navController.navigateEventsToAddEvent(EventType.ANNIVERSARY)
+                    }
+                    EventType.BIRTHDAY -> {
+                        navController.navigateEventsToAddEvent(EventType.BIRTHDAY)
+                    }
                 }
             }
-
         }
     }
 

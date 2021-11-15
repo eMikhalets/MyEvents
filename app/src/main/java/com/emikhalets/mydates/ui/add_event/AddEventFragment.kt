@@ -10,6 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
@@ -18,7 +19,6 @@ import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
 import com.emikhalets.mydates.utils.navigateBack
 import com.emikhalets.mydates.utils.extentions.setDateText
 import com.emikhalets.mydates.utils.extentions.setDrawableStart
-import com.emikhalets.mydates.utils.startDatePickerDialog
 import com.emikhalets.mydates.utils.extentions.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -44,7 +44,7 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
     @SuppressLint("ClickableViewAccessibility")
     private fun clickListeners() {
         binding.inputDate.setOnClickListener {
-            startDatePickerDialog(viewModel.date) { timestamp ->
+            AppDialogManager.showDatePickerDialog(requireContext(), viewModel.date) { timestamp ->
                 viewModel.date = timestamp
                 binding.inputDate.setDateText(viewModel.date, binding.checkYear.isChecked)
             }

@@ -11,6 +11,7 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentSettingsBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppAlarmManager
+import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.activity_result.DocumentCreator
 import com.emikhalets.mydates.utils.activity_result.DocumentPicker
 import com.emikhalets.mydates.utils.di.appComponent
@@ -20,8 +21,6 @@ import com.emikhalets.mydates.utils.enums.Theme
 import com.emikhalets.mydates.utils.enums.Theme.Companion.getThemeName
 import com.emikhalets.mydates.utils.extentions.launchMainScope
 import com.emikhalets.mydates.utils.extentions.setActivityLanguage
-import com.emikhalets.mydates.utils.startDeleteDialog
-import com.emikhalets.mydates.utils.startTimePickerDialog
 import com.emikhalets.mydates.utils.extentions.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -198,7 +197,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     private fun notificationsClicks() {
         binding.apply {
             layTime.setOnClickListener {
-                startTimePickerDialog { hour, minute ->
+                AppDialogManager.showTimePickerDialog(requireContext()) { hour, minute ->
                     binding.textTime.text = formatTime(hour, minute)
                     saveNotificationsTime(hour, minute)
                 }
@@ -254,7 +253,10 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     }
 
     private fun importEvents() {
-        startDeleteDialog(getString(R.string.dialog_import_alert)) {
+        AppDialogManager.showDeleteDialog(
+            requireContext(),
+            getString(R.string.dialog_import_alert)
+        ) {
             documentPicker.openFile()
         }
     }

@@ -12,6 +12,7 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImageLarge
@@ -21,8 +22,6 @@ import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
 import com.emikhalets.mydates.utils.navigateBack
 import com.emikhalets.mydates.utils.extentions.setDateText
 import com.emikhalets.mydates.utils.extentions.setDrawableTop
-import com.emikhalets.mydates.utils.startDatePickerDialog
-import com.emikhalets.mydates.utils.startDeleteDialog
 import com.emikhalets.mydates.utils.extentions.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -70,7 +69,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
     private fun clickListeners() {
         binding.apply {
             inputDate.setOnClickListener {
-                startDatePickerDialog(event.date) { timestamp ->
+                AppDialogManager.showDatePickerDialog(requireContext(), event.date) { timestamp ->
                     applyNewDate(timestamp)
                     binding.inputDate.setDateText(event.date, binding.checkYear.isChecked)
                     btnSave.isEnabled = true
@@ -84,7 +83,10 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                 btnSave.isEnabled = true
             }
             btnDelete.setOnClickListener {
-                startDeleteDialog(getString(R.string.dialog_delete_event)) {
+                AppDialogManager.showDeleteDialog(
+                    requireContext(),
+                    getString(R.string.dialog_delete_event)
+                ) {
                     viewModel.deleteEvent(event)
                 }
             }

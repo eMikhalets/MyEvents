@@ -2,9 +2,9 @@ package com.emikhalets.mydates.data.repositories
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.emikhalets.mydates.utils.enums.DEFAULT_APP_LANGUAGE_CODE
-import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_HOUR
-import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_MINUTE
+import com.emikhalets.mydates.utils.DEFAULT_APP_LANGUAGE_CODE
+import com.emikhalets.mydates.utils.DEFAULT_NOTIFICATION_HOUR
+import com.emikhalets.mydates.utils.DEFAULT_NOTIFICATION_MINUTE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
