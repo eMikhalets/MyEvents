@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="appDialog" format="reference"/>
+    <attr name="appToolbar" format="reference"/>
+    <attr name="appBottomBar" format="reference"/>
+    <attr name="appCalendar" format="reference"/>
+    <attr name="appButton" format="reference"/>
+    <attr name="appTextButton" format="reference"/>
+    <attr name="appFloatingButton" format="reference"/>
+    <attr name="appTextInputLayout" format="reference"/>
+    <attr name="appEditText" format="reference"/>
+
+    <attr name="appColorArrowForwardIcon" format="color"/>
+    <attr name="appColorCalendarSelectCircleIcon" format="color"/>
+    <attr name="appColorCloseIcon" format="color"/>
+    <attr name="appColorSearchIcon" format="color"/>
+    <attr name="appColorSettingsIcon" format="color"/>
+</resources>

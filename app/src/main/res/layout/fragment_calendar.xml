@@ -7,7 +7,7 @@
 
     <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/calendar"
-        style="@style/Calendar"
+        style="?attr/appCalendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_small"

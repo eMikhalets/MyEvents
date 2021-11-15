@@ -2,7 +2,6 @@ package com.emikhalets.mydates.ui.settings
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -15,10 +14,10 @@ import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.activity_result.DocumentCreator
 import com.emikhalets.mydates.utils.activity_result.DocumentPicker
 import com.emikhalets.mydates.utils.di.appComponent
+import com.emikhalets.mydates.utils.enums.AppTheme
+import com.emikhalets.mydates.utils.enums.AppTheme.Companion.getThemeName
 import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.enums.Language.Companion.getLanguageName
-import com.emikhalets.mydates.utils.enums.Theme
-import com.emikhalets.mydates.utils.enums.Theme.Companion.getThemeName
 import com.emikhalets.mydates.utils.extentions.launchMainScope
 import com.emikhalets.mydates.utils.extentions.setActivityLanguage
 import com.emikhalets.mydates.utils.extentions.toast
@@ -62,7 +61,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             binding.apply {
                 textLanguage.text = Language.get(appComponent.appPreferences.getLanguage())
                     .getLanguageName(requireContext())
-                textTheme.text = Theme.get(appComponent.appPreferences.getTheme())
+                textTheme.text = AppTheme.get(appComponent.appPreferences.getTheme())
                     .getThemeName(requireContext())
 
                 val hour = appComponent.appPreferences.getNotificationHour()
@@ -156,13 +155,11 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             }
 
             textThemeLight.setOnClickListener {
-                textTheme.text = Theme.LIGHT.getThemeName(requireContext())
-                setTheme(Theme.LIGHT)
+                setTheme(AppTheme.LIGHT)
             }
 
             textThemeDark.setOnClickListener {
-                textTheme.text = Theme.DARK.getThemeName(requireContext())
-                setTheme(Theme.DARK)
+                setTheme(AppTheme.DARK)
             }
         }
     }
@@ -178,19 +175,14 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         }
     }
 
-    private fun setTheme(theme: Theme) {
+    private fun setTheme(selectedTheme: AppTheme) {
         isThemeExpanded = false
         binding.textThemeLight.isGone = false
         binding.textThemeDark.isGone = false
+        binding.textTheme.text = selectedTheme.getThemeName(requireContext())
         launchMainScope {
-            if (appComponent.appPreferences.getTheme() != theme.value) {
-                requireActivity().window.setWindowAnimations(R.style.WindowAnimationTransition)
-                when (theme) {
-                    Theme.LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    Theme.DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }
-            }
-            appComponent.appPreferences.setTheme(theme.value)
+            appComponent.appPreferences.setTheme(selectedTheme.themeRes)
+            requireActivity().recreate()
         }
     }
 

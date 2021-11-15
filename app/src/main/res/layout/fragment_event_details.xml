@@ -74,14 +74,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lay_input_notes"
-                style="@style/InputLayout"
+                style="?attr/appTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/notes">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_notes"
-                    style="@style/Input"
+                    style="?attr/appEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textCapSentences|textMultiLine" />
@@ -100,14 +100,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lay_input_name"
-                style="@style/InputLayout"
+                style="?attr/appTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_name"
-                    style="@style/Input"
+                    style="?attr/appEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -125,14 +125,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lay_input_lastname"
-                style="@style/InputLayout"
+                style="?attr/appTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/lastname">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_lastname"
-                    style="@style/Input"
+                    style="?attr/appEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -150,14 +150,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lay_input_middle_name"
-                style="@style/InputLayout"
+                style="?attr/appTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/middle_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_middle_name"
-                    style="@style/Input"
+                    style="?attr/appEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -175,14 +175,14 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/lay_input_date"
-                style="@style/InputLayout"
+                style="?attr/appTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/date">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_date"
-                    style="@style/Input"
+                    style="?attr/appEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:cursorVisible="false"
@@ -203,7 +203,7 @@
 
         <Button
             android:id="@+id/btn_save"
-            style="@style/Button"
+            style="?attr/appButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -216,7 +216,7 @@
 
         <Button
             android:id="@+id/btn_delete"
-            style="@style/ButtonText"
+            style="?attr/appTextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"

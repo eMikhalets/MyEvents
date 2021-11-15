@@ -13,9 +13,11 @@ import com.emikhalets.mydates.databinding.ActivityMainBinding
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.di.appComponent
+import com.emikhalets.mydates.utils.enums.AppTheme
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.extentions.launchMainScope
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         appComponent.inject(this)
+        setAppTheme()
         if (savedInstanceState == null) checkLanguage()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -102,6 +105,13 @@ class MainActivity : AppCompatActivity() {
             resources.updateConfiguration(resources.configuration, resources.displayMetrics)
             appComponent.appPreferences.setLanguage(language.value)
             recreate()
+        }
+    }
+
+    private fun setAppTheme() {
+        runBlocking {
+            val savedTheme = appComponent.appPreferences.getTheme()
+            setTheme(AppTheme.get(savedTheme).themeRes)
         }
     }
 }

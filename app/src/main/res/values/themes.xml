@@ -1,11 +1,48 @@
 <resources>
 
-    <style name="Theme.MyDates" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MyDates_Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
         <item name="colorPrimaryDark">@color/jacksons_purple</item>
         <item name="android:windowBackground">@color/alice_blue</item>
-        <item name="android:textViewStyle">@style/Text</item>
-        <item name="checkboxStyle">@style/Checkbox</item>
-        <item name="cardViewStyle">@style/Card</item>
+        <item name="android:textViewStyle">@style/Text_Light</item>
+        <item name="checkboxStyle">@style/Checkbox_Light</item>
+        <item name="cardViewStyle">@style/Card_Light</item>
+        <item name="appDialog">@style/Dialog_Light</item>
+        <item name="appToolbar">@style/Toolbar_Light</item>
+        <item name="appBottomBar">@style/BottomBar_Light</item>
+        <item name="appCalendar">@style/Calendar_Light</item>
+        <item name="appButton">@style/Button_Light</item>
+        <item name="appTextButton">@style/TextButton_Light</item>
+        <item name="appFloatingButton">@style/ButtonFloating_Light</item>
+        <item name="appTextInputLayout">@style/InputLayout_Light</item>
+        <item name="appEditText">@style/Input_Light</item>
+        <item name="appColorArrowForwardIcon">@color/alice_blue</item>
+        <item name="appColorCalendarSelectCircleIcon">@color/jacksons_purple</item>
+        <item name="appColorCloseIcon">@color/eclipse</item>
+        <item name="appColorSearchIcon">@color/white</item>
+        <item name="appColorSettingsIcon">@color/white</item>
+    </style>
+
+    <style name="Theme.MyDates_Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="colorPrimaryDark">@color/charcoal</item>
+        <item name="android:windowBackground">@color/night_rider</item>
+        <item name="android:textViewStyle">@style/Text_Dark</item>
+        <item name="checkboxStyle">@style/Checkbox_Dark</item>
+        <item name="cardViewStyle">@style/Card_Dark</item>
+        <item name="appDialog">@style/Dialog_Dark</item>
+        <item name="appToolbar">@style/Toolbar_Dark</item>
+        <item name="appBottomBar">@style/BottomBar_Dark</item>
+        <item name="appCalendar">@style/Calendar_Dark</item>
+        <item name="appButton">@style/Button_Dark</item>
+        <item name="appTextButton">@style/TextButton_Dark</item>
+        <item name="appFloatingButton">@style/ButtonFloating_Dark</item>
+        <item name="appTextInputLayout">@style/InputLayout_Dark</item>
+        <item name="appEditText">@style/Input_Dark</item>
+        <item name="appColorArrowForwardIcon">@color/night_rider</item>
+        <item name="appColorCalendarSelectCircleIcon">@color/charcoal</item>
+        <item name="appColorCloseIcon">@color/whisper</item>
+        <item name="appColorSearchIcon">@color/whisper</item>
+        <item name="appColorSettingsIcon">@color/whisper</item>
     </style>
 </resources>
