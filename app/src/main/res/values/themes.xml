@@ -16,6 +16,11 @@
         <item name="appFloatingButton">@style/ButtonFloating_Light</item>
         <item name="appTextInputLayout">@style/InputLayout_Light</item>
         <item name="appEditText">@style/Input_Light</item>
+        <item name="appColorArrowForwardIcon">@color/alice_blue</item>
+        <item name="appColorCalendarSelectCircleIcon">@color/jacksons_purple</item>
+        <item name="appColorCloseIcon">@color/eclipse</item>
+        <item name="appColorSearchIcon">@color/white</item>
+        <item name="appColorSettingsIcon">@color/white</item>
     </style>
 
     <style name="Theme.MyDates_Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -34,5 +39,10 @@
         <item name="appFloatingButton">@style/ButtonFloating_Dark</item>
         <item name="appTextInputLayout">@style/InputLayout_Dark</item>
         <item name="appEditText">@style/Input_Dark</item>
+        <item name="appColorArrowForwardIcon">@color/night_rider</item>
+        <item name="appColorCalendarSelectCircleIcon">@color/charcoal</item>
+        <item name="appColorCloseIcon">@color/whisper</item>
+        <item name="appColorSearchIcon">@color/whisper</item>
+        <item name="appColorSettingsIcon">@color/whisper</item>
     </style>
 </resources>

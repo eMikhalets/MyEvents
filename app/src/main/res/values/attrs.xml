@@ -9,4 +9,10 @@
     <attr name="appFloatingButton" format="reference"/>
     <attr name="appTextInputLayout" format="reference"/>
     <attr name="appEditText" format="reference"/>
+
+    <attr name="appColorArrowForwardIcon" format="color"/>
+    <attr name="appColorCalendarSelectCircleIcon" format="color"/>
+    <attr name="appColorCloseIcon" format="color"/>
+    <attr name="appColorSearchIcon" format="color"/>
+    <attr name="appColorSettingsIcon" format="color"/>
 </resources>
