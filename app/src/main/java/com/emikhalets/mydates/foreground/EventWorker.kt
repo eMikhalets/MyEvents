@@ -18,52 +18,54 @@ class EventWorker(context: Context, parameters: WorkerParameters) :
 
         val events = HashMap<String, List<Event>>()
 
-        if (inputData.getBoolean(DATA_NOTIF_MONTH, false)) {
+        if (inputData.getBoolean(AppNotificationManager.DATA_NOTIFICATION_MONTH, false)) {
             when (val result = repo.getAllByDaysLeft(30)) {
-                is ListResult.Success -> events[DATA_NOTIF_MONTH] = result.data
+                is ListResult.Success -> events[AppNotificationManager.DATA_NOTIFICATION_MONTH] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
                 }
             }
         }
 
-        if (inputData.getBoolean(DATA_NOTIF_WEEK, false)) {
+        if (inputData.getBoolean(AppNotificationManager.DATA_NOTIFICATION_WEEK, false)) {
             when (val result = repo.getAllByDaysLeft(7)) {
-                is ListResult.Success -> events[DATA_NOTIF_WEEK] = result.data
+                is ListResult.Success -> events[AppNotificationManager.DATA_NOTIFICATION_WEEK] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
                 }
             }
         }
 
-        if (inputData.getBoolean(DATA_NOTIF_TWO_DAY, false)) {
+        if (inputData.getBoolean(AppNotificationManager.DATA_NOTIFICATION_TWO_DAY, false)) {
             when (val result = repo.getAllByDaysLeft(2)) {
-                is ListResult.Success -> events[DATA_NOTIF_TWO_DAY] = result.data
+                is ListResult.Success -> events[AppNotificationManager.DATA_NOTIFICATION_TWO_DAY] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
                 }
             }
         }
 
-        if (inputData.getBoolean(DATA_NOTIF_DAY, false)) {
+        if (inputData.getBoolean(AppNotificationManager.DATA_NOTIFICATION_TWO_DAY, false)) {
             when (val result = repo.getAllByDaysLeft(1)) {
-                is ListResult.Success -> events[DATA_NOTIF_DAY] = result.data
+                is ListResult.Success -> events[AppNotificationManager.DATA_NOTIFICATION_TWO_DAY] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
                 }
             }
         }
 
-        if (inputData.getBoolean(DATA_NOTIF_TODAY, false)) {
+        if (inputData.getBoolean(AppNotificationManager.DATA_NOTIFICATION_TODAY, false)) {
             when (val result = repo.getAllByDaysLeft(0)) {
-                is ListResult.Success -> events[DATA_NOTIF_TODAY] = result.data
+                is ListResult.Success -> events[AppNotificationManager.DATA_NOTIFICATION_TODAY] = result.data
                 is ListResult.Error -> return Result.failure()
                 ListResult.EmptyList -> {
                 }
             }
         }
 
-        if (events.isNotEmpty()) sendEventsNotification(applicationContext, events)
+        if (events.isNotEmpty()) {
+            AppNotificationManager.sendEventsNotification(applicationContext, events)
+        }
 
         return Result.success()
     }
