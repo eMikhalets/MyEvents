@@ -12,19 +12,18 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
-import com.emikhalets.mydates.utils.calculateParameters
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImageLarge
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
-import com.emikhalets.mydates.utils.formatDate
-import com.emikhalets.mydates.utils.hideSoftKeyboard
+import com.emikhalets.mydates.utils.extentions.formatDate
+import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
 import com.emikhalets.mydates.utils.navigateBack
-import com.emikhalets.mydates.utils.setDate
-import com.emikhalets.mydates.utils.setDrawableTop
+import com.emikhalets.mydates.utils.extentions.setDateText
+import com.emikhalets.mydates.utils.extentions.setDrawableTop
 import com.emikhalets.mydates.utils.startDatePickerDialog
 import com.emikhalets.mydates.utils.startDeleteDialog
-import com.emikhalets.mydates.utils.toast
+import com.emikhalets.mydates.utils.extentions.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -60,7 +59,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             inputName.setText(event.name)
             inputLastname.setText(event.lastName)
             inputMiddleName.setText(event.middleName)
-            inputDate.setDate(event.date, event.withoutYear)
+            inputDate.setDateText(event.date, event.withoutYear)
             checkYear.isChecked = event.withoutYear
             if (event.withoutYear) textAge.visibility = View.GONE
             else textAge.visibility = View.VISIBLE
@@ -73,7 +72,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             inputDate.setOnClickListener {
                 startDatePickerDialog(event.date) { timestamp ->
                     applyNewDate(timestamp)
-                    binding.inputDate.setDate(event.date, binding.checkYear.isChecked)
+                    binding.inputDate.setDateText(event.date, binding.checkYear.isChecked)
                     btnSave.isEnabled = true
                 }
             }
@@ -81,7 +80,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                 if (isChecked) textAge.visibility = View.GONE
                 else textAge.visibility = View.VISIBLE
                 event.withoutYear = isChecked
-                binding.inputDate.setDate(event.date, isChecked)
+                binding.inputDate.setDateText(event.date, isChecked)
                 btnSave.isEnabled = true
             }
             btnDelete.setOnClickListener {

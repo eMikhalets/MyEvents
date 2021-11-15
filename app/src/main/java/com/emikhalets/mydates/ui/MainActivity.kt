@@ -13,7 +13,7 @@ import com.emikhalets.mydates.databinding.ActivityMainBinding
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.Language
-import com.emikhalets.mydates.utils.launchMainScope
+import com.emikhalets.mydates.utils.extentions.launchMainScope
 import com.emikhalets.mydates.utils.navigateEventsToAddEvent
 import com.emikhalets.mydates.utils.startAddEventDialog
 import java.util.*

@@ -13,7 +13,7 @@ import com.emikhalets.mydates.utils.DATA_NOTIF_TODAY
 import com.emikhalets.mydates.utils.DATA_NOTIF_TWO_DAY
 import com.emikhalets.mydates.utils.DATA_NOTIF_WEEK
 import com.emikhalets.mydates.utils.di.appComponent
-import com.emikhalets.mydates.utils.launchMainScope
+import com.emikhalets.mydates.utils.extentions.launchMainScope
 
 class EventsReceiver : BroadcastReceiver() {
 

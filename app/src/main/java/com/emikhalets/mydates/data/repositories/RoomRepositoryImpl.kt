@@ -5,7 +5,6 @@ import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.database.SingleResult
 import com.emikhalets.mydates.data.database.dao.EventDao
 import com.emikhalets.mydates.data.database.entities.Event
-import com.emikhalets.mydates.utils.calculateParameters
 import java.util.*
 import javax.inject.Inject
 

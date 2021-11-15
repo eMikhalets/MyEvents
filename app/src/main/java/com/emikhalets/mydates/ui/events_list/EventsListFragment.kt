@@ -13,7 +13,7 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.di.appComponent
-import com.emikhalets.mydates.utils.launchMainScope
+import com.emikhalets.mydates.utils.extentions.launchMainScope
 import com.emikhalets.mydates.utils.navigateEventsToEventDetails
 import com.emikhalets.mydates.utils.navigateEventsToSettings
 import kotlinx.coroutines.flow.collect

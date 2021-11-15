@@ -13,13 +13,13 @@ import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
-import com.emikhalets.mydates.utils.formatDate
-import com.emikhalets.mydates.utils.hideSoftKeyboard
+import com.emikhalets.mydates.utils.extentions.formatDate
+import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
 import com.emikhalets.mydates.utils.navigateBack
-import com.emikhalets.mydates.utils.setDate
-import com.emikhalets.mydates.utils.setDrawableStart
+import com.emikhalets.mydates.utils.extentions.setDateText
+import com.emikhalets.mydates.utils.extentions.setDrawableStart
 import com.emikhalets.mydates.utils.startDatePickerDialog
-import com.emikhalets.mydates.utils.toast
+import com.emikhalets.mydates.utils.extentions.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -46,11 +46,11 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
         binding.inputDate.setOnClickListener {
             startDatePickerDialog(viewModel.date) { timestamp ->
                 viewModel.date = timestamp
-                binding.inputDate.setDate(viewModel.date, binding.checkYear.isChecked)
+                binding.inputDate.setDateText(viewModel.date, binding.checkYear.isChecked)
             }
         }
         binding.checkYear.setOnCheckedChangeListener { _, isChecked ->
-            binding.inputDate.setDate(viewModel.date, isChecked)
+            binding.inputDate.setDateText(viewModel.date, isChecked)
         }
         binding.btnSave.setOnClickListener {
             onSaveClick()

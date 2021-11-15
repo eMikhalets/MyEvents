@@ -3,6 +3,7 @@ package com.emikhalets.mydates.ui.settings
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -17,12 +18,11 @@ import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.enums.Language.Companion.getLanguageName
 import com.emikhalets.mydates.utils.enums.Theme
 import com.emikhalets.mydates.utils.enums.Theme.Companion.getThemeName
-import com.emikhalets.mydates.utils.launchMainScope
-import com.emikhalets.mydates.utils.setActivityLanguage
-import com.emikhalets.mydates.utils.setVisibility
+import com.emikhalets.mydates.utils.extentions.launchMainScope
+import com.emikhalets.mydates.utils.extentions.setActivityLanguage
 import com.emikhalets.mydates.utils.startDeleteDialog
 import com.emikhalets.mydates.utils.startTimePickerDialog
-import com.emikhalets.mydates.utils.toast
+import com.emikhalets.mydates.utils.extentions.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -136,8 +136,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         binding.apply {
             layLanguage.setOnClickListener {
                 isLanguageExpanded = !isLanguageExpanded
-                textLanguageRu.setVisibility(isLanguageExpanded)
-                textLanguageEn.setVisibility(isLanguageExpanded)
+                textLanguageRu.isGone = isLanguageExpanded
+                textLanguageEn.isGone = isLanguageExpanded
             }
 
             textLanguageRu.setOnClickListener {
@@ -152,8 +152,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
             layTheme.setOnClickListener {
                 isThemeExpanded = !isThemeExpanded
-                textThemeLight.setVisibility(isThemeExpanded)
-                textThemeDark.setVisibility(isThemeExpanded)
+                textThemeLight.isGone = isThemeExpanded
+                textThemeDark.isGone = isLanguageExpanded
             }
 
             textThemeLight.setOnClickListener {
@@ -170,8 +170,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private fun setLanguage(language: Language) {
         isLanguageExpanded = false
-        binding.textLanguageRu.setVisibility(false)
-        binding.textLanguageEn.setVisibility(false)
+        binding.textLanguageRu.isGone = false
+        binding.textLanguageEn.isGone = false
         launchMainScope {
             if (appComponent.appPreferences.getLanguage() != language.value) {
                 setActivityLanguage(language)
@@ -181,8 +181,8 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     private fun setTheme(theme: Theme) {
         isThemeExpanded = false
-        binding.textThemeLight.setVisibility(false)
-        binding.textThemeDark.setVisibility(false)
+        binding.textThemeLight.isGone = false
+        binding.textThemeDark.isGone = false
         launchMainScope {
             if (appComponent.appPreferences.getTheme() != theme.value) {
                 requireActivity().window.setWindowAnimations(R.style.WindowAnimationTransition)

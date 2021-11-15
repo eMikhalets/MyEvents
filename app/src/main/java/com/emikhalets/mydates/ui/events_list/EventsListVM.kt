@@ -3,11 +3,13 @@ package com.emikhalets.mydates.ui.events_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.ListResult
+import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.DatabaseRepository
-import com.emikhalets.mydates.utils.sortWithDividers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -29,6 +31,25 @@ class EventsListVM @Inject constructor(
                     _state.value = EventsListState.Events(sortWithDividers(result.data))
                 }
             }
+        }
+    }
+
+    private suspend fun sortWithDividers(events: List<Event>): List<Event> {
+        return withContext(Dispatchers.IO) {
+            val sorted = events.sortedBy { it.daysLeft }
+            val result = mutableListOf<Event>()
+
+            var insert = 0
+            result.add(insert++, Event(sorted.first().monthNumber()))
+            for (i in 0..(sorted.size - 2)) {
+                result.add(insert++, sorted[i])
+                val current = sorted[i].monthNumber()
+                val next = sorted[i + 1].monthNumber()
+                if (current != next) result.add(insert++, Event(next))
+            }
+            result.add(insert, sorted.last())
+
+            result
         }
     }
 }

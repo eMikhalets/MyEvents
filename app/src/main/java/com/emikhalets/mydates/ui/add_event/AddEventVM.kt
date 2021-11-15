@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.data.repositories.DatabaseRepository
-import com.emikhalets.mydates.utils.calculateParameters
 import com.emikhalets.mydates.utils.enums.EventType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

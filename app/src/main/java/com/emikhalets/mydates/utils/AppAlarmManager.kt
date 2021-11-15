@@ -9,6 +9,7 @@ import android.content.Intent
 import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.foreground.UpdateEventsReceiver
 import com.emikhalets.mydates.utils.di.appComponent
+import com.emikhalets.mydates.utils.extentions.launchMainScope
 import java.util.*
 
 object AppAlarmManager {

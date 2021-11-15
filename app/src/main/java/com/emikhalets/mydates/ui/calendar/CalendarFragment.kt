@@ -16,9 +16,9 @@ import com.emikhalets.mydates.databinding.FragmentCalendarBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.navigateCalendarToEvent
 import com.emikhalets.mydates.utils.navigateCalendarToSettings
-import com.emikhalets.mydates.utils.toCalendar
-import com.emikhalets.mydates.utils.toast
-import com.emikhalets.mydates.utils.year
+import com.emikhalets.mydates.utils.extentions.toCalendar
+import com.emikhalets.mydates.utils.extentions.toast
+import com.emikhalets.mydates.utils.extentions.year
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*

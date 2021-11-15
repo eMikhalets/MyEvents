@@ -8,7 +8,7 @@ import com.emikhalets.mydates.utils.di.DaggerAppComponent
 import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_HOUR
 import com.emikhalets.mydates.utils.enums.DEFAULT_NOTIFICATION_MINUTE
 import com.emikhalets.mydates.utils.enums.Theme
-import com.emikhalets.mydates.utils.launchMainScope
+import com.emikhalets.mydates.utils.extentions.launchMainScope
 
 class MyDatesApp : Application() {
 
