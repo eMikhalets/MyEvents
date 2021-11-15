@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Dialog"
+    style="?attr/appDialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/btn_no"
-        style="@style/ButtonText"
+        style="?attr/appTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_very_large"
@@ -31,7 +31,7 @@
 
     <Button
         android:id="@+id/btn_yes"
-        style="@style/ButtonText"
+        style="?attr/appTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_normal"
