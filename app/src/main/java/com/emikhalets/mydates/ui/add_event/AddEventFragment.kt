@@ -11,12 +11,12 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
+import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import com.emikhalets.mydates.utils.extentions.formatDate
 import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
-import com.emikhalets.mydates.utils.navigateBack
 import com.emikhalets.mydates.utils.extentions.setDateText
 import com.emikhalets.mydates.utils.extentions.setDrawableStart
 import com.emikhalets.mydates.utils.extentions.toast
@@ -92,7 +92,7 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
                 binding.layInputName.error = getString(R.string.required_field)
             }
             AddEventState.Added -> {
-                navigateBack()
+                AppNavigationManager.back(this)
             }
             AddEventState.Init -> {
             }

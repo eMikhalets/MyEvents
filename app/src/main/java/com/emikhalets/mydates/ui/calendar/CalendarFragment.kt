@@ -14,8 +14,7 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentCalendarBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
-import com.emikhalets.mydates.utils.navigateCalendarToEvent
-import com.emikhalets.mydates.utils.navigateCalendarToSettings
+import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.extentions.toCalendar
 import com.emikhalets.mydates.utils.extentions.toast
 import com.emikhalets.mydates.utils.extentions.year
@@ -48,7 +47,9 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_settings -> navigateCalendarToSettings()
+            R.id.menu_settings -> {
+                AppNavigationManager.toSettings(this)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -86,7 +87,7 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
     }
 
     private fun onEventClick(event: Event) {
-        navigateCalendarToEvent(event)
+        AppNavigationManager.toEventDetails(this, event)
     }
 
     private fun renderState(state: CalendarState) {

@@ -11,11 +11,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
 import com.emikhalets.mydates.utils.AppDialogManager
+import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.Language
 import com.emikhalets.mydates.utils.extentions.launchMainScope
-import com.emikhalets.mydates.utils.navigateEventsToAddEvent
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -74,10 +74,10 @@ class MainActivity : AppCompatActivity() {
             AppDialogManager.showAddEventDialog(this) { eventType ->
                 when (eventType) {
                     EventType.ANNIVERSARY -> {
-                        navController.navigateEventsToAddEvent(EventType.ANNIVERSARY)
+                        AppNavigationManager.toAddEvent(navController, EventType.ANNIVERSARY)
                     }
                     EventType.BIRTHDAY -> {
-                        navController.navigateEventsToAddEvent(EventType.BIRTHDAY)
+                        AppNavigationManager.toAddEvent(navController, EventType.BIRTHDAY)
                     }
                 }
             }

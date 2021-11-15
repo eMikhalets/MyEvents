@@ -13,13 +13,13 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
+import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImageLarge
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import com.emikhalets.mydates.utils.extentions.formatDate
 import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
-import com.emikhalets.mydates.utils.navigateBack
 import com.emikhalets.mydates.utils.extentions.setDateText
 import com.emikhalets.mydates.utils.extentions.setDrawableTop
 import com.emikhalets.mydates.utils.extentions.toast
@@ -178,7 +178,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                 binding.layInputName.error = getString(R.string.required_field)
             }
             EventDetailsState.Deleted -> {
-                navigateBack()
+                AppNavigationManager.back(this)
             }
             EventDetailsState.Saved -> {
                 toast(R.string.event_saved)

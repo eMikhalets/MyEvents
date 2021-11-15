@@ -12,10 +12,9 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.extentions.launchMainScope
-import com.emikhalets.mydates.utils.navigateEventsToEventDetails
-import com.emikhalets.mydates.utils.navigateEventsToSettings
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -47,7 +46,9 @@ class EventsListFragment : BaseFragment(R.layout.fragment_events_list) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_settings -> navigateEventsToSettings()
+            R.id.menu_settings -> {
+                AppNavigationManager.toSettings(this)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -87,6 +88,6 @@ class EventsListFragment : BaseFragment(R.layout.fragment_events_list) {
     }
 
     private fun onDateClick(item: Event) {
-        navigateEventsToEventDetails(item)
+        AppNavigationManager.toEventDetails(this, item)
     }
 }
