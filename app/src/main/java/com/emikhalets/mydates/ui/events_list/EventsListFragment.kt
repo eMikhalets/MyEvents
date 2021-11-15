@@ -5,25 +5,23 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventsListBinding
-import com.emikhalets.mydates.utils.Preferences
-import com.emikhalets.mydates.utils.navigateEventsToEventDetails
-import com.emikhalets.mydates.utils.navigateEventsToSettings
-import dagger.hilt.android.AndroidEntryPoint
+import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.di.appComponent
+import com.emikhalets.mydates.utils.extentions.launchMainScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class EventsListFragment : Fragment(R.layout.fragment_events_list) {
+class EventsListFragment : BaseFragment(R.layout.fragment_events_list) {
 
     private val binding by viewBinding(FragmentEventsListBinding::bind)
-    private val viewModel: EventsListVM by viewModels()
+    private val viewModel by viewModels<EventsListVM> { viewModelFactory }
     private lateinit var eventsAdapter: EventsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +33,10 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadAllEvents(Preferences.getEventsLastUpdateTime(requireContext()))
+        launchMainScope {
+            val lastUpdateTimestamp = appComponent.appPreferences.getEventsLastUpdateTime()
+            viewModel.loadAllEvents(lastUpdateTimestamp)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -45,7 +46,9 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_settings -> navigateEventsToSettings()
+            R.id.menu_settings -> {
+                AppNavigationManager.toSettings(this)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -85,6 +88,6 @@ class EventsListFragment : Fragment(R.layout.fragment_events_list) {
     }
 
     private fun onDateClick(item: Event) {
-        navigateEventsToEventDetails(item)
+        AppNavigationManager.toEventDetails(this, item)
     }
 }

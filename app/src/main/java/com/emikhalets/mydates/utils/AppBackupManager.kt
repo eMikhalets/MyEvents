@@ -7,7 +7,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 
-object BackupHandler {
+object AppBackupManager {
 
     private const val ID = "id"
     private const val EVENT_TYPE = "event_type"

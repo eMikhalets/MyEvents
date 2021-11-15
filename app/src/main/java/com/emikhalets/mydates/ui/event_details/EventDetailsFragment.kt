@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -12,20 +11,25 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
-import com.emikhalets.mydates.utils.*
+import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.AppDialogManager
+import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImageLarge
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
-import dagger.hilt.android.AndroidEntryPoint
+import com.emikhalets.mydates.utils.extentions.formatDate
+import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
+import com.emikhalets.mydates.utils.extentions.setDateText
+import com.emikhalets.mydates.utils.extentions.setDrawableTop
+import com.emikhalets.mydates.utils.extentions.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
+class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
     private val binding by viewBinding(FragmentEventDetailsBinding::bind)
-    private val viewModel: EventDetailsVM by viewModels()
+    private val viewModel by viewModels<EventDetailsVM> { viewModelFactory }
     private val args: EventDetailsFragmentArgs by navArgs()
 
     private lateinit var event: Event
@@ -54,7 +58,7 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
             inputName.setText(event.name)
             inputLastname.setText(event.lastName)
             inputMiddleName.setText(event.middleName)
-            inputDate.setDate(event.date, event.withoutYear)
+            inputDate.setDateText(event.date, event.withoutYear)
             checkYear.isChecked = event.withoutYear
             if (event.withoutYear) textAge.visibility = View.GONE
             else textAge.visibility = View.VISIBLE
@@ -65,9 +69,9 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
     private fun clickListeners() {
         binding.apply {
             inputDate.setOnClickListener {
-                startDatePickerDialog(event.date) { timestamp ->
+                AppDialogManager.showDatePickerDialog(requireContext(), event.date) { timestamp ->
                     applyNewDate(timestamp)
-                    binding.inputDate.setDate(event.date, binding.checkYear.isChecked)
+                    binding.inputDate.setDateText(event.date, binding.checkYear.isChecked)
                     btnSave.isEnabled = true
                 }
             }
@@ -75,11 +79,14 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
                 if (isChecked) textAge.visibility = View.GONE
                 else textAge.visibility = View.VISIBLE
                 event.withoutYear = isChecked
-                binding.inputDate.setDate(event.date, isChecked)
+                binding.inputDate.setDateText(event.date, isChecked)
                 btnSave.isEnabled = true
             }
             btnDelete.setOnClickListener {
-                startDeleteDialog(getString(R.string.dialog_delete_event)) {
+                AppDialogManager.showDeleteDialog(
+                    requireContext(),
+                    getString(R.string.dialog_delete_event)
+                ) {
                     viewModel.deleteEvent(event)
                 }
             }
@@ -171,7 +178,7 @@ class EventDetailsFragment : Fragment(R.layout.fragment_event_details) {
                 binding.layInputName.error = getString(R.string.required_field)
             }
             EventDetailsState.Deleted -> {
-                navigateBack()
+                AppNavigationManager.back(this)
             }
             EventDetailsState.Saved -> {
                 toast(R.string.event_saved)

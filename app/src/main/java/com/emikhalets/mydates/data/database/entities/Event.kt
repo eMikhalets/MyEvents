@@ -6,7 +6,12 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.emikhalets.mydates.utils.enums.EventType
+import com.emikhalets.mydates.utils.extentions.day
+import com.emikhalets.mydates.utils.extentions.dayOfYear
+import com.emikhalets.mydates.utils.extentions.month
+import com.emikhalets.mydates.utils.extentions.year
 import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 @Entity(tableName = "events_table")
@@ -97,4 +102,40 @@ data class Event(
         "",
         withoutYear
     )
+
+    fun monthNumber(): Int {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = this.date
+        return calendar.month()
+    }
+
+    fun calculateParameters(): Event {
+        val now = Calendar.getInstance()
+        val date = Calendar.getInstance()
+        date.timeInMillis = this.date
+
+        this.age = now.year() - date.year()
+        date.set(Calendar.YEAR, now.year())
+        this.daysLeft = date.dayOfYear() - now.dayOfYear()
+
+        when {
+            date.month() < now.month() -> {
+                this.age++
+                date.set(Calendar.YEAR, now.year() + 1)
+                this.daysLeft += now.getActualMaximum(Calendar.DAY_OF_YEAR)
+            }
+            date.month() == now.month() -> {
+                if (date.day() < now.day()) {
+                    this.age++
+                    date.set(Calendar.YEAR, now.year() + 1)
+                    this.daysLeft += now.getActualMaximum(Calendar.DAY_OF_YEAR)
+                }
+            }
+        }
+
+        return this
+    }
+
+    companion object {
+    }
 }

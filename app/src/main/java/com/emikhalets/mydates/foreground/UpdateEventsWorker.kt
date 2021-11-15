@@ -6,8 +6,8 @@ import androidx.work.WorkerParameters
 import com.emikhalets.mydates.data.database.AppDatabase
 import com.emikhalets.mydates.data.database.CompleteResult
 import com.emikhalets.mydates.data.repositories.RoomRepositoryImpl
-import com.emikhalets.mydates.utils.Preferences
-import com.emikhalets.mydates.utils.sendErrorUpdateNotification
+import com.emikhalets.mydates.utils.AppNotificationManager
+import com.emikhalets.mydates.utils.di.appComponent
 import java.util.*
 
 class UpdateEventsWorker(context: Context, parameters: WorkerParameters) :
@@ -19,10 +19,10 @@ class UpdateEventsWorker(context: Context, parameters: WorkerParameters) :
 
         when (repo.updateEvents()) {
             is CompleteResult.Error -> {
-                sendErrorUpdateNotification(applicationContext)
+                AppNotificationManager.sendErrorUpdateNotification(applicationContext)
             }
             CompleteResult.Complete -> {
-                Preferences.setEventsLastUpdateTime(applicationContext, Date().time)
+                applicationContext.appComponent.appPreferences.setEventsLastUpdateTime(Date().time)
             }
         }
 

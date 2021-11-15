@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -14,17 +13,19 @@ import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentCalendarBinding
-import com.emikhalets.mydates.utils.*
-import dagger.hilt.android.AndroidEntryPoint
+import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.extentions.toCalendar
+import com.emikhalets.mydates.utils.extentions.toast
+import com.emikhalets.mydates.utils.extentions.year
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
 
-@AndroidEntryPoint
-class CalendarFragment : Fragment(R.layout.fragment_calendar) {
+class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
 
     private val binding by viewBinding(FragmentCalendarBinding::bind)
-    private val viewModel: CalendarVM by viewModels()
+    private val viewModel by viewModels<CalendarVM> { viewModelFactory }
     private lateinit var eventsAdapter: DayEventsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +47,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_settings -> navigateCalendarToSettings()
+            R.id.menu_settings -> {
+                AppNavigationManager.toSettings(this)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -84,7 +87,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
     }
 
     private fun onEventClick(event: Event) {
-        navigateCalendarToEvent(event)
+        AppNavigationManager.toEventDetails(this, event)
     }
 
     private fun renderState(state: CalendarState) {

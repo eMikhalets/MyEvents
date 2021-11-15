@@ -11,7 +11,7 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.ItemEventBinding
 import com.emikhalets.mydates.databinding.ItemEventDividerBinding
 import com.emikhalets.mydates.utils.enums.EventType
-import com.emikhalets.mydates.utils.formatDate
+import com.emikhalets.mydates.utils.extentions.formatDate
 
 class EventsAdapter(private val click: (Event) -> Unit) :
     ListAdapter<Event, RecyclerView.ViewHolder>(DatesDiffCallback()) {

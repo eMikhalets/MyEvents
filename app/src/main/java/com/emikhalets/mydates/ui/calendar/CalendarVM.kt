@@ -4,15 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.repositories.DatabaseRepository
-import com.emikhalets.mydates.utils.dayOfYear
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.emikhalets.mydates.utils.extentions.dayOfYear
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-@HiltViewModel
 class CalendarVM @Inject constructor(
     private val repository: DatabaseRepository,
 ) : ViewModel() {

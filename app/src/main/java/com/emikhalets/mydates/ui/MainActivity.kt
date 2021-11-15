@@ -1,6 +1,5 @@
 package com.emikhalets.mydates.ui
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,15 +10,14 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
-import com.emikhalets.mydates.utils.Preferences
+import com.emikhalets.mydates.utils.AppDialogManager
+import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.Language
-import com.emikhalets.mydates.utils.navigateEventsToAddEvent
-import com.emikhalets.mydates.utils.startAddEventDialog
-import dagger.hilt.android.AndroidEntryPoint
+import com.emikhalets.mydates.utils.extentions.launchMainScope
 import java.util.*
 
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -40,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        appComponent.inject(this)
         if (savedInstanceState == null) checkLanguage()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -71,31 +70,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setOnAddEventClick() {
-        binding.btnAddEvent.setOnClickListener { v ->
-            startAddEventDialog { eventType ->
+        binding.btnAddEvent.setOnClickListener {
+            AppDialogManager.showAddEventDialog(this) { eventType ->
                 when (eventType) {
-                    EventType.ANNIVERSARY -> navController.navigateEventsToAddEvent(EventType.ANNIVERSARY)
-                    EventType.BIRTHDAY -> navController.navigateEventsToAddEvent(EventType.BIRTHDAY)
+                    EventType.ANNIVERSARY -> {
+                        AppNavigationManager.toAddEvent(navController, EventType.ANNIVERSARY)
+                    }
+                    EventType.BIRTHDAY -> {
+                        AppNavigationManager.toAddEvent(navController, EventType.BIRTHDAY)
+                    }
                 }
             }
-
         }
     }
 
     private fun checkLanguage() {
-        val language = Preferences.getLanguage(this)
-        val locale = Locale(language)
-        Locale.setDefault(locale)
-        resources.configuration.setLocale(locale)
-        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+        launchMainScope {
+            val language = appComponent.appPreferences.getLanguage()
+            val locale = Locale(language)
+            Locale.setDefault(locale)
+            resources.configuration.setLocale(locale)
+            resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+        }
     }
 
     fun setLanguage(language: Language) {
-        val locale = Locale(language.value)
-        Locale.setDefault(locale)
-        resources.configuration.setLocale(locale)
-        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
-        Preferences.setLanguage(this, language.value)
-        recreate()
+        launchMainScope {
+            val locale = Locale(language.value)
+            Locale.setDefault(locale)
+            resources.configuration.setLocale(locale)
+            resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+            appComponent.appPreferences.setLanguage(language.value)
+            recreate()
+        }
     }
 }

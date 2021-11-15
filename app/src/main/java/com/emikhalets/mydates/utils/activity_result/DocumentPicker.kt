@@ -9,7 +9,7 @@ import androidx.lifecycle.LifecycleOwner
 class DocumentPicker(
     registry: ActivityResultRegistry,
     lifecycleOwner: LifecycleOwner,
-    private val onResult: (uri: Uri) -> Unit
+    private val onResult: (uri: Uri) -> Unit,
 ) {
 
     private val openDocument: ActivityResultLauncher<Array<String>> =

@@ -3,26 +3,30 @@ package com.emikhalets.mydates.ui.add_event
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
-import com.emikhalets.mydates.utils.*
+import com.emikhalets.mydates.ui.base.BaseFragment
+import com.emikhalets.mydates.utils.AppDialogManager
+import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
-import dagger.hilt.android.AndroidEntryPoint
+import com.emikhalets.mydates.utils.extentions.formatDate
+import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
+import com.emikhalets.mydates.utils.extentions.setDateText
+import com.emikhalets.mydates.utils.extentions.setDrawableStart
+import com.emikhalets.mydates.utils.extentions.toast
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class AddEventFragment : Fragment(R.layout.fragment_add_event) {
+class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
 
     private val binding by viewBinding(FragmentAddEventBinding::bind)
-    private val viewModel: AddEventVM by viewModels()
+    private val viewModel by viewModels<AddEventVM> { viewModelFactory }
     private val args: AddEventFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,13 +44,13 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
     @SuppressLint("ClickableViewAccessibility")
     private fun clickListeners() {
         binding.inputDate.setOnClickListener {
-            startDatePickerDialog(viewModel.date) { timestamp ->
+            AppDialogManager.showDatePickerDialog(requireContext(), viewModel.date) { timestamp ->
                 viewModel.date = timestamp
-                binding.inputDate.setDate(viewModel.date, binding.checkYear.isChecked)
+                binding.inputDate.setDateText(viewModel.date, binding.checkYear.isChecked)
             }
         }
         binding.checkYear.setOnCheckedChangeListener { _, isChecked ->
-            binding.inputDate.setDate(viewModel.date, isChecked)
+            binding.inputDate.setDateText(viewModel.date, isChecked)
         }
         binding.btnSave.setOnClickListener {
             onSaveClick()
@@ -88,7 +92,7 @@ class AddEventFragment : Fragment(R.layout.fragment_add_event) {
                 binding.layInputName.error = getString(R.string.required_field)
             }
             AddEventState.Added -> {
-                navigateBack()
+                AppNavigationManager.back(this)
             }
             AddEventState.Init -> {
             }

@@ -13,7 +13,7 @@ import java.util.*
 class DocumentCreator(
     registry: ActivityResultRegistry,
     lifecycleOwner: LifecycleOwner,
-    private val onResult: (uri: Uri) -> Unit
+    private val onResult: (uri: Uri) -> Unit,
 ) {
 
     private val createDocument: ActivityResultLauncher<String> =
@@ -30,19 +30,19 @@ class DocumentCreator(
     private companion object {
         const val DOCUMENT_CREATOR = "DocumentCreator"
     }
-}
 
-class CreateFileContract : ActivityResultContract<String, Uri?>() {
+    class CreateFileContract : ActivityResultContract<String, Uri?>() {
 
-    override fun createIntent(context: Context, input: String): Intent {
-        return Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            type = "*/json"
-            putExtra(Intent.EXTRA_TITLE, "MyEvents_backup_${Date().time}.json")
+        override fun createIntent(context: Context, input: String): Intent {
+            return Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                type = "*/json"
+                putExtra(Intent.EXTRA_TITLE, "MyEvents_backup_${Date().time}.json")
+            }
         }
-    }
 
-    override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
-        if (intent == null || resultCode != Activity.RESULT_OK) return null
-        return intent.data
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
+            if (intent == null || resultCode != Activity.RESULT_OK) return null
+            return intent.data
+        }
     }
 }

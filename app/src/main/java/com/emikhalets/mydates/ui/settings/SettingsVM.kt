@@ -6,14 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.ListResult
 import com.emikhalets.mydates.data.repositories.DatabaseRepository
-import com.emikhalets.mydates.utils.BackupHandler
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.emikhalets.mydates.utils.AppBackupManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class SettingsVM @Inject constructor(
     private val repository: DatabaseRepository,
 ) : ViewModel() {
@@ -28,7 +26,7 @@ class SettingsVM @Inject constructor(
             when (val result = repository.getAllEvents()) {
                 is ListResult.Error -> _state.value = SettingsState.Error(result.exception)
                 is ListResult.Success -> {
-                    val complete = BackupHandler.fillCreatedFile(context, uri, result.data)
+                    val complete = AppBackupManager.fillCreatedFile(context, uri, result.data)
                     _state.value = if (complete) SettingsState.Exported
                     else SettingsState.ExportingError
                 }
@@ -40,7 +38,7 @@ class SettingsVM @Inject constructor(
         _state.value = SettingsState.Init
         viewModelScope.launch {
             _state.value = SettingsState.Loading
-            val complete = BackupHandler.readFileAndCreateEventsList(context, uri)
+            val complete = AppBackupManager.readFileAndCreateEventsList(context, uri)
             _state.value = if (complete.isNotEmpty()) {
                 repository.dropEvents()
                 repository.insertAllEvents(complete)

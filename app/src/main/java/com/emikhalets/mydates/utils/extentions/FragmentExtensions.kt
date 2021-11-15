@@ -1,4 +1,4 @@
-package com.emikhalets.mydates.utils
+package com.emikhalets.mydates.utils.extentions
 
 import android.app.Activity
 import android.view.inputmethod.InputMethodManager
@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import com.emikhalets.mydates.ui.MainActivity
 import com.emikhalets.mydates.utils.enums.Language
 
-fun Fragment.toast(@StringRes resource: Int) =
+fun Fragment.toast(@StringRes resource: Int) {
     Toast.makeText(requireContext(), resource, Toast.LENGTH_SHORT).show()
+}
 
-fun Fragment.toast(message: String) =
+fun Fragment.toast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+}
 
 fun Fragment.hideSoftKeyboard() {
     val inputMethodManager =
