@@ -70,10 +70,7 @@ object AppBackupManager {
                 }
             }
             createEventsList(json)
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-            emptyList()
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
             emptyList()
         }

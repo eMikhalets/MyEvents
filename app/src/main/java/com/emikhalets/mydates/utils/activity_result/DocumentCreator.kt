@@ -35,7 +35,7 @@ class DocumentCreator(
 
         override fun createIntent(context: Context, input: String): Intent {
             return Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-                type = "*/json"
+                type = "application/json"
                 putExtra(Intent.EXTRA_TITLE, "MyEvents_backup_${Date().time}.json")
             }
         }
