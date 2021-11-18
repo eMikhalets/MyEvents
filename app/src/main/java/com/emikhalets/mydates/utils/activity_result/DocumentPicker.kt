@@ -20,7 +20,12 @@ class DocumentPicker(
         ) { uri: Uri? -> uri?.let(onResult) }
 
     fun openFile() {
-        openDocument.launch(arrayOf("*/json"))
+        openDocument.launch(
+            arrayOf(
+                "application/json",
+                "text/plain",
+            )
+        )
     }
 
     private companion object {
