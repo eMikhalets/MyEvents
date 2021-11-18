@@ -3,21 +3,15 @@ package com.emikhalets.mydates.utils.enums
 import android.content.Context
 import com.emikhalets.mydates.R
 
-enum class Language(val value: String) {
+enum class Language(val langCode: String) {
     RUSSIAN("ru"),
     ENGLISH("en");
 
     companion object {
+        private val langCodeMap = values().associateBy(Language::langCode)
+        fun get(langCode: String): Language = langCodeMap[langCode] ?: RUSSIAN
 
-        fun get(value: String): Language {
-            return when (value) {
-                "ru" -> RUSSIAN
-                "en" -> ENGLISH
-                else -> RUSSIAN
-            }
-        }
-
-        fun Language.getLanguageName(context: Context): String {
+        fun Language.getName(context: Context): String {
             return when (this) {
                 RUSSIAN -> context.getString(R.string.settings_language_ru)
                 ENGLISH -> context.getString(R.string.settings_language_en)

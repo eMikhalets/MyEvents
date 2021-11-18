@@ -48,6 +48,7 @@
     <string name="notification_text_day">Завтра:</string>
     <string name="notification_text_today">Сегодня:</string>
 
+    <string name="settings_sections">Разделы</string>
     <string name="settings_general">Основные</string>
     <string name="settings_language">Язык</string>
     <string name="settings_language_ru">Русский</string>
@@ -65,9 +66,13 @@
     <string name="settings_notifications_day">Уведомлять о событиях за день</string>
     <string name="settings_notifications_today">Уведомлять о событиях утром</string>
     <string name="settings_restart_notifications">Перезапустить ежедневные уведомления и обновления событий</string>
+    <string name="settings_alarm_updates">Состояние обновлений:</string>
+    <string name="settings_alarm_events">Состояние уведомлений:</string>
     <string name="settings_backup">Резервные копии</string>
     <string name="settings_backup_import">Импорт событий</string>
     <string name="settings_backup_export">Экспорт событий</string>
+    <string name="settings_on">Включены</string>
+    <string name="settings_off">Выключены</string>
 
     <!-- Variable -->
     <string name="birthday_date">День рождения %s</string>

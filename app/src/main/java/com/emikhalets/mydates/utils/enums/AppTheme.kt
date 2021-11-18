@@ -11,7 +11,7 @@ enum class AppTheme(val themeRes: Int) {
         private val themesResMap = values().associateBy(AppTheme::themeRes)
         fun get(themeRes: Int): AppTheme = themesResMap[themeRes] ?: LIGHT
 
-        fun AppTheme.getThemeName(context: Context): String {
+        fun AppTheme.getName(context: Context): String {
             return when (this) {
                 LIGHT -> context.getString(R.string.settings_theme_light)
                 DARK -> context.getString(R.string.settings_theme_dark)

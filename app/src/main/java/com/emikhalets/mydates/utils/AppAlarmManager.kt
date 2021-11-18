@@ -31,6 +31,17 @@ object AppAlarmManager {
         }
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
+    fun isEventAlarmRunning(context: Context): Boolean {
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            EVENTS_ALARM_REQUEST_CODE,
+            Intent(context, EventsReceiver::class.java),
+            PendingIntent.FLAG_NO_CREATE
+        )
+        return pendingIntent != null
+    }
+
     fun scheduleUpdatingAlarm(context: Context) {
         setRepeatingAlarm(
             context = context,
@@ -39,6 +50,17 @@ object AppAlarmManager {
             receiver = UpdateEventsReceiver::class.java,
             requestCode = UPDATING_ALARM_REQUEST_CODE
         )
+    }
+
+    @SuppressLint("UnspecifiedImmutableFlag")
+    fun isUpdatingAlarmRunning(context: Context): Boolean {
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            UPDATING_ALARM_REQUEST_CODE,
+            Intent(context, UpdateEventsReceiver::class.java),
+            PendingIntent.FLAG_NO_CREATE
+        )
+        return pendingIntent != null
     }
 
     fun scheduleAllAlarms(context: Context) {

@@ -49,6 +49,7 @@
     <string name="notification_text_day">Tomorrow:</string>
     <string name="notification_text_today">Today:</string>
 
+    <string name="settings_sections">Sections</string>
     <string name="settings_general">General</string>
     <string name="settings_language">Language</string>
     <string name="settings_language_ru">Russian</string>
@@ -66,9 +67,13 @@
     <string name="settings_notifications_day">Notify about daily events</string>
     <string name="settings_notifications_today">Notify about events in the morning</string>
     <string name="settings_restart_notifications">Restart daily notifications and event updates</string>
+    <string name="settings_alarm_updates">Updates state:</string>
+    <string name="settings_alarm_events">Notifications state:</string>
     <string name="settings_backup">Backups</string>
     <string name="settings_backup_import">Importing events</string>
     <string name="settings_backup_export">Export events</string>
+    <string name="settings_on">On</string>
+    <string name="settings_off">Off</string>
 
     <!-- Variable -->
     <string name="birthday_date">Birthday %s</string>

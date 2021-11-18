@@ -12,39 +12,39 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SettingsVM @Inject constructor(
+class SettingsBackupsVM @Inject constructor(
     private val repository: DatabaseRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<SettingsState>(SettingsState.Init)
-    val state: StateFlow<SettingsState> = _state
+    private val _state = MutableStateFlow<SettingsBackupsState>(SettingsBackupsState.Init)
+    val state: StateFlow<SettingsBackupsState> = _state
 
     fun getAllEventsAndFillFile(context: Context, uri: Uri) {
-        _state.value = SettingsState.Init
+        _state.value = SettingsBackupsState.Init
         viewModelScope.launch {
-            _state.value = SettingsState.Loading
+            _state.value = SettingsBackupsState.Loading
             when (val result = repository.getAllEvents()) {
-                is ListResult.Error -> _state.value = SettingsState.Error(result.exception)
+                is ListResult.Error -> _state.value = SettingsBackupsState.Error(result.exception)
                 is ListResult.Success -> {
                     val complete = AppBackupManager.fillCreatedFile(context, uri, result.data)
-                    _state.value = if (complete) SettingsState.Exported
-                    else SettingsState.ExportingError
+                    _state.value = if (complete) SettingsBackupsState.Exported
+                    else SettingsBackupsState.ExportingError
                 }
             }
         }
     }
 
     fun readFileAndRecreateEventsTable(context: Context, uri: Uri) {
-        _state.value = SettingsState.Init
+        _state.value = SettingsBackupsState.Init
         viewModelScope.launch {
-            _state.value = SettingsState.Loading
+            _state.value = SettingsBackupsState.Loading
             val complete = AppBackupManager.readFileAndCreateEventsList(context, uri)
             _state.value = if (complete.isNotEmpty()) {
                 repository.dropEvents()
                 repository.insertAllEvents(complete)
-                SettingsState.Imported
+                SettingsBackupsState.Imported
             } else {
-                SettingsState.ImportingError
+                SettingsBackupsState.ImportingError
             }
         }
     }
