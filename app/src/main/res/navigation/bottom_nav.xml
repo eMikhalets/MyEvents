@@ -78,6 +78,46 @@
         android:id="@+id/settingsFragment"
         android:name="com.emikhalets.mydates.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settings_to_settingsGeneral"
+            app:destination="@id/settingsGeneralFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_pop_in"
+            app:popExitAnim="@anim/slide_pop_out" />
+        <action
+            android:id="@+id/action_settings_to_settingsNotifications"
+            app:destination="@id/settingsNotificationsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_pop_in"
+            app:popExitAnim="@anim/slide_pop_out" />
+        <action
+            android:id="@+id/action_settings_to_settingsBackups"
+            app:destination="@id/settingsBackupsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_pop_in"
+            app:popExitAnim="@anim/slide_pop_out" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsGeneralFragment"
+        android:name="com.emikhalets.mydates.ui.settings.SettingsGeneralFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings_general" />
+
+    <fragment
+        android:id="@+id/settingsNotificationsFragment"
+        android:name="com.emikhalets.mydates.ui.settings.SettingsNotificationsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings_notifications" />
+
+    <fragment
+        android:id="@+id/settingsBackupsFragment"
+        android:name="com.emikhalets.mydates.ui.settings.SettingsBackupsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings_backups" />
 
 </navigation>

@@ -6,7 +6,7 @@ import com.emikhalets.mydates.ui.add_event.AddEventVM
 import com.emikhalets.mydates.ui.calendar.CalendarVM
 import com.emikhalets.mydates.ui.event_details.EventDetailsVM
 import com.emikhalets.mydates.ui.events_list.EventsListVM
-import com.emikhalets.mydates.ui.settings.SettingsVM
+import com.emikhalets.mydates.ui.settings.SettingsBackupsVM
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -39,6 +39,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(SettingsVM::class)
-    abstract fun bindSettingsVM(viewModel: SettingsVM): ViewModel
+    @ViewModelKey(SettingsBackupsVM::class)
+    abstract fun bindSettingsVM(viewModel: SettingsBackupsVM): ViewModel
 }

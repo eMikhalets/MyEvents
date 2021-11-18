@@ -99,11 +99,11 @@ class MainActivity : AppCompatActivity() {
 
     fun setLanguage(language: Language) {
         launchMainScope {
-            val locale = Locale(language.value)
+            val locale = Locale(language.langCode)
             Locale.setDefault(locale)
             resources.configuration.setLocale(locale)
             resources.updateConfiguration(resources.configuration, resources.displayMetrics)
-            appComponent.appPreferences.setLanguage(language.value)
+            appComponent.appPreferences.setLanguage(language.langCode)
             recreate()
         }
     }

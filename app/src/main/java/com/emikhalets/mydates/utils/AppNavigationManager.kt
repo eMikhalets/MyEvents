@@ -8,6 +8,8 @@ import com.emikhalets.mydates.ui.calendar.CalendarFragment
 import com.emikhalets.mydates.ui.calendar.CalendarFragmentDirections
 import com.emikhalets.mydates.ui.events_list.EventsListFragment
 import com.emikhalets.mydates.ui.events_list.EventsListFragmentDirections
+import com.emikhalets.mydates.ui.settings.SettingsFragment
+import com.emikhalets.mydates.ui.settings.SettingsFragmentDirections
 import com.emikhalets.mydates.utils.enums.EventType
 
 object AppNavigationManager {
@@ -38,6 +40,21 @@ object AppNavigationManager {
 
     fun toSettings(fragment: CalendarFragment) {
         val action = CalendarFragmentDirections.actionCalendarToSettings()
+        fragment.findNavController().navigate(action)
+    }
+
+    fun toSettingsGeneral(fragment: SettingsFragment) {
+        val action = SettingsFragmentDirections.actionSettingsToSettingsGeneral()
+        fragment.findNavController().navigate(action)
+    }
+
+    fun toSettingsNotifications(fragment: SettingsFragment) {
+        val action = SettingsFragmentDirections.actionSettingsToSettingsNotifications()
+        fragment.findNavController().navigate(action)
+    }
+
+    fun toSettingsBackups(fragment: SettingsFragment) {
+        val action = SettingsFragmentDirections.actionSettingsToSettingsBackups()
         fragment.findNavController().navigate(action)
     }
 }
