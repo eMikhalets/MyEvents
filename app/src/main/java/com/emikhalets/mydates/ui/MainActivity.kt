@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -48,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         setupBottomBar()
-        navController.addOnDestinationChangedListener(destinationChangeListener)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBottomBar() {
-        navController = findNavController(R.id.nav_host)
+        val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        navController = navHost.navController
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.bottom_home,
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.bottomNav.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener(destinationChangeListener)
     }
 
     private fun setOnAddEventClick() {

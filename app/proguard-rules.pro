@@ -19,3 +19,8 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keepnames class * extends android.os.Parcelable
+-keepnames class androidx.navigation.fragment.NavHostFragment
+
+-keep class com.emikhalets.mydates.data.database.entities.Event
+-keep class com.emikhalets.mydates.utils.enums.EventType
