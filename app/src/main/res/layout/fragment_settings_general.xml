@@ -41,6 +41,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="@string/settings_language" />
 
                 <TextView
@@ -62,9 +64,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:paddingStart="24dp"
-                android:paddingTop="@dimen/space_small"
-                android:paddingEnd="@dimen/space_normal"
-                android:paddingBottom="@dimen/space_small"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp"
                 android:text="@string/settings_language_ru"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -78,9 +80,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:paddingStart="24dp"
-                android:paddingTop="@dimen/space_small"
-                android:paddingEnd="@dimen/space_normal"
-                android:paddingBottom="@dimen/space_small"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="16dp"
                 android:text="@string/settings_language_en"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -101,6 +103,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="@string/settings_theme" />
 
                 <TextView
@@ -122,9 +126,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:paddingStart="24dp"
-                android:paddingTop="@dimen/space_small"
+                android:paddingTop="16dp"
                 android:paddingEnd="@dimen/space_normal"
-                android:paddingBottom="@dimen/space_small"
+                android:paddingBottom="16dp"
                 android:text="@string/settings_theme_light"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -138,9 +142,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:paddingStart="24dp"
-                android:paddingTop="@dimen/space_small"
+                android:paddingTop="16dp"
                 android:paddingEnd="@dimen/space_normal"
-                android:paddingBottom="@dimen/space_small"
+                android:paddingBottom="16dp"
                 android:text="@string/settings_theme_dark"
                 android:visibility="gone"
                 tools:visibility="visible" />

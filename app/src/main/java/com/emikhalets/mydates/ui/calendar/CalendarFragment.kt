@@ -9,15 +9,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.applandeo.materialcalendarview.EventDay
+import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentCalendarBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppNavigationManager
-import com.emikhalets.mydates.utils.extentions.toCalendar
-import com.emikhalets.mydates.utils.extentions.toast
-import com.emikhalets.mydates.utils.extentions.year
+import com.emikhalets.mydates.utils.extentions.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.*
@@ -27,6 +26,16 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
     private val binding by viewBinding(FragmentCalendarBinding::bind)
     private val viewModel by viewModels<CalendarVM> { viewModelFactory }
     private lateinit var eventsAdapter: DayEventsAdapter
+
+    private var currentMinDay = Calendar.getInstance()
+    private var currentMaxDay = Calendar.getInstance()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val now = Calendar.getInstance()
+        currentMinDay.set(now.year(), now.month() - 1, 1)
+        currentMaxDay.set(now.year(), now.month() + 1, now.nextMonthMaxDay())
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,13 +65,8 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
 
     private fun init() {
         binding.calendar.apply {
-            val min = Calendar.getInstance()
-            val now = Calendar.getInstance()
-            val max = Calendar.getInstance()
-            min.set(now.year(), Calendar.JANUARY, 0)
-            max.set(now.year(), Calendar.DECEMBER, 31)
-            setMinimumDate(min)
-            setMaximumDate(max)
+            setMinimumDate(currentMinDay)
+            setMaximumDate(currentMaxDay)
             setCalendarDayLayout(R.layout.layout_calendar_day)
             setDate(viewModel.selectedDate)
         }
@@ -72,6 +76,16 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
     }
 
     private fun listeners() {
+        binding.calendar.setOnForwardPageChangeListener(object : OnCalendarPageChangeListener {
+            override fun onChange() {
+                binding.calendar.setMaximumDate(currentMaxDay.plusMonthAndLastDay())
+            }
+        })
+        binding.calendar.setOnPreviousPageChangeListener(object : OnCalendarPageChangeListener {
+            override fun onChange() {
+                binding.calendar.setMinimumDate(currentMinDay.minusMonthAndFirstDay())
+            }
+        })
         binding.calendar.setOnDayClickListener(object : OnDayClickListener {
             override fun onDayClick(eventDay: EventDay) {
                 viewModel.selectedDate = eventDay.calendar

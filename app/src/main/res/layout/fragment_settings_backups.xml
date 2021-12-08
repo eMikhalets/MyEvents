@@ -31,9 +31,9 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
                 android:paddingStart="@dimen/space_normal"
-                android:paddingTop="@dimen/space_small"
+                android:paddingTop="16dp"
                 android:paddingEnd="@dimen/space_normal"
-                android:paddingBottom="@dimen/space_small"
+                android:paddingBottom="16dp"
                 android:text="@string/settings_backup_import" />
 
             <TextView
@@ -43,9 +43,9 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
                 android:paddingStart="@dimen/space_normal"
-                android:paddingTop="@dimen/space_small"
+                android:paddingTop="16dp"
                 android:paddingEnd="@dimen/space_normal"
-                android:paddingBottom="@dimen/space_small"
+                android:paddingBottom="16dp"
                 android:text="@string/settings_backup_export" />
 
         </LinearLayout>
