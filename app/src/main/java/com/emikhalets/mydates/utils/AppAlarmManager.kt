@@ -6,6 +6,7 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import com.emikhalets.mydates.foreground.EventsReceiver
 import com.emikhalets.mydates.foreground.UpdateEventsReceiver
 import com.emikhalets.mydates.utils.di.appComponent
@@ -83,11 +84,26 @@ object AppAlarmManager {
             Intent(context, receiver),
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-        alarmManager.setExact(
-            AlarmManager.RTC,
-            getScheduleTimestamp(hour, minute),
-            pendingIntent
-        )
+//        alarmManager.setAlarmClock(
+//            AlarmManager.AlarmClockInfo(
+//                getScheduleTimestamp(hour, minute),
+//                pendingIntent
+//            ),
+//            pendingIntent
+//        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC,
+                getScheduleTimestamp(hour, minute),
+                pendingIntent
+            )
+        } else {
+            alarmManager.setExact(
+                AlarmManager.RTC,
+                getScheduleTimestamp(hour, minute),
+                pendingIntent
+            )
+        }
     }
 
     private fun getScheduleTimestamp(hour: Int, minute: Int): Long {
