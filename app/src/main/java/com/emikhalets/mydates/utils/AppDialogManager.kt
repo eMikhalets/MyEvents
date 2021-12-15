@@ -5,12 +5,10 @@ import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.emikhalets.mydates.databinding.DialogAddEventBinding
-import com.emikhalets.mydates.databinding.DialogConfirmBinding
-import com.emikhalets.mydates.databinding.DialogDatePickerBinding
-import com.emikhalets.mydates.databinding.DialogTimePickerBinding
+import com.emikhalets.mydates.databinding.*
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.EventType
+import com.emikhalets.mydates.utils.enums.PhotoPickerType
 import com.emikhalets.mydates.utils.extentions.launchMainScope
 import java.util.*
 
@@ -128,6 +126,31 @@ object AppDialogManager {
         binding.btnYes.setOnClickListener {
             callback.invoke()
             dialog.dismiss()
+        }
+
+        dialog.show()
+        val window = dialog.window
+        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
+    fun showPhotoPicker(context: Context, callback: (PhotoPickerType) -> Unit) {
+        val dialog = Dialog(context)
+        val binding = DialogPhotoPickerBinding.inflate(LayoutInflater.from(context))
+        binding.root.alpha = 0f
+        dialog.setContentView(binding.root)
+        dialog.setCanceledOnTouchOutside(false)
+        binding.root.animate().alpha(1f).setDuration(300).start()
+
+        binding.apply {
+            btnTakePhoto.setOnClickListener {
+                callback.invoke(PhotoPickerType.TAKE_PHOTO)
+                dialog.dismiss()
+            }
+
+            btnSelectImage.setOnClickListener {
+                callback.invoke(PhotoPickerType.SELECT_IMAGE)
+                dialog.dismiss()
+            }
         }
 
         dialog.show()

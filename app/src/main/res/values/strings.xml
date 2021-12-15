@@ -31,6 +31,8 @@
     <string name="birthday">Birthday</string>
     <string name="anniversary">Anniversary</string>
     <string name="required_field">Required</string>
+    <string name="take_photo">Take a photo</string>
+    <string name="select_photo">Select image</string>
 
     <string name="dialog_import_alert">Importing dates will delete all existing records and create new ones from the selected file. Continue?</string>
     <string name="dialog_delete_event">Delete this event?</string>

@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.LifecycleOwner
 import java.util.*
 
+// TODO сделать автосоздание документа через резолвер и выбор формата (жсон и ексель)
 class DocumentCreator(
     registry: ActivityResultRegistry,
     lifecycleOwner: LifecycleOwner,

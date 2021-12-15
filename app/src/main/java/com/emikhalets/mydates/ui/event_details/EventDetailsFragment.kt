@@ -16,9 +16,11 @@ import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.activity_result.ImagePicker
+import com.emikhalets.mydates.utils.activity_result.PhotoTaker
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
+import com.emikhalets.mydates.utils.enums.PhotoPickerType
 import com.emikhalets.mydates.utils.extentions.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -29,6 +31,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
     private val viewModel by viewModels<EventDetailsVM> { viewModelFactory }
     private val args: EventDetailsFragmentArgs by navArgs()
     private lateinit var imagePicker: ImagePicker
+    private lateinit var photoTaker: PhotoTaker
 
     private lateinit var event: Event
 
@@ -43,6 +46,15 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
     private fun initActivityResult() {
         imagePicker = ImagePicker(
+            registry = requireActivity().activityResultRegistry,
+            lifecycleOwner = viewLifecycleOwner,
+            contentResolver = requireActivity().contentResolver,
+            onResult = { uri ->
+                event.imageUri = uri.toString()
+                binding.imagePhoto.setImageURI(uri)
+            }
+        )
+        photoTaker = PhotoTaker(
             registry = requireActivity().activityResultRegistry,
             lifecycleOwner = viewLifecycleOwner,
             contentResolver = requireActivity().contentResolver,
@@ -83,7 +95,12 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
     private fun clickListeners() {
         binding.apply {
             cardPhoto.setOnClickListener {
-                imagePicker.getImage()
+                AppDialogManager.showPhotoPicker(requireContext()) {
+                    when (it) {
+                        PhotoPickerType.TAKE_PHOTO -> photoTaker.takePhoto()
+                        PhotoPickerType.SELECT_IMAGE -> imagePicker.getImage()
+                    }
+                }
             }
             inputDate.setOnClickListener {
                 AppDialogManager.showDatePickerDialog(requireContext(), event.date) { timestamp ->

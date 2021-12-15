@@ -13,14 +13,12 @@ import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
 import com.emikhalets.mydates.utils.activity_result.ImagePicker
+import com.emikhalets.mydates.utils.activity_result.PhotoTaker
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
-import com.emikhalets.mydates.utils.extentions.formatDate
-import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
-import com.emikhalets.mydates.utils.extentions.setDateText
-import com.emikhalets.mydates.utils.extentions.setDrawableStart
-import com.emikhalets.mydates.utils.extentions.toast
+import com.emikhalets.mydates.utils.enums.PhotoPickerType
+import com.emikhalets.mydates.utils.extentions.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -31,6 +29,7 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
     private val args: AddEventFragmentArgs by navArgs()
     private var imageUri: String = ""
     private lateinit var imagePicker: ImagePicker
+    private lateinit var photoTaker: PhotoTaker
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,6 +49,15 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
                 binding.imagePhoto.setImageURI(uri)
             }
         )
+        photoTaker = PhotoTaker(
+            registry = requireActivity().activityResultRegistry,
+            lifecycleOwner = viewLifecycleOwner,
+            contentResolver = requireActivity().contentResolver,
+            onResult = { uri ->
+                imageUri = uri.toString()
+                binding.imagePhoto.setImageURI(uri)
+            }
+        )
     }
 
     private fun prepareEventData() {
@@ -60,7 +68,12 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
     @SuppressLint("ClickableViewAccessibility")
     private fun clickListeners() {
         binding.cardPhoto.setOnClickListener {
-            imagePicker.getImage()
+            AppDialogManager.showPhotoPicker(requireContext()) {
+                when (it) {
+                    PhotoPickerType.TAKE_PHOTO -> photoTaker.takePhoto()
+                    PhotoPickerType.SELECT_IMAGE -> imagePicker.getImage()
+                }
+            }
         }
         binding.inputDate.setOnClickListener {
             AppDialogManager.showDatePickerDialog(requireContext(), viewModel.date) { timestamp ->
