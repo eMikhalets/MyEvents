@@ -15,4 +15,5 @@
     <attr name="appColorCloseIcon" format="color"/>
     <attr name="appColorSearchIcon" format="color"/>
     <attr name="appColorSettingsIcon" format="color"/>
+    <attr name="appColorImageIcon" format="color"/>
 </resources>

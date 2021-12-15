@@ -20,6 +20,7 @@ object AppBackupManager {
     private const val GROUP = "group"
     private const val NOTES = "notes"
     private const val WITHOUT_YEAR = "without_year"
+    private const val IMAGE_URI = "image_uri"
 
     fun fillCreatedFile(context: Context, uri: Uri, events: List<Event>): Boolean {
         val list = mutableListOf<JSONObject>()
@@ -55,6 +56,7 @@ object AppBackupManager {
             item.put(GROUP, event.group)
             item.put(NOTES, event.notes)
             item.put(WITHOUT_YEAR, event.withoutYear)
+            item.put(IMAGE_URI, event.imageUri)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -92,7 +94,8 @@ object AppBackupManager {
                     eventType = array.getJSONObject(i).getInt(EVENT_TYPE),
                     group = array.getJSONObject(i).getString(GROUP),
                     notes = array.getJSONObject(i).getString(NOTES),
-                    withoutYear = array.getJSONObject(i).getBoolean(WITHOUT_YEAR)
+                    withoutYear = array.getJSONObject(i).getBoolean(WITHOUT_YEAR),
+                    imageUri = array.getJSONObject(i).getString(IMAGE_URI)
                 )
             )
         }

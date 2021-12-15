@@ -26,7 +26,8 @@ data class Event(
     @ColumnInfo(name = "event_type") var eventType: Int,
     @ColumnInfo(name = "group") var group: String,
     @ColumnInfo(name = "notes") var notes: String,
-    @ColumnInfo(name = "without_year") var withoutYear: Boolean
+    @ColumnInfo(name = "without_year") var withoutYear: Boolean,
+    @ColumnInfo(name = "image_uri") var imageUri: String,
 ) : Parcelable {
 
     fun fullName(): String {
@@ -60,14 +61,16 @@ data class Event(
         0,
         "",
         "",
-        false
+        false,
+        ""
     )
 
     @Ignore
     constructor(
         name: String,
         date: Long,
-        withoutYear: Boolean
+        withoutYear: Boolean,
+        imageUri: String
     ) : this(
         0,
         name,
@@ -79,7 +82,8 @@ data class Event(
         EventType.ANNIVERSARY.value,
         "",
         "",
-        withoutYear
+        withoutYear,
+        imageUri
     )
 
     @Ignore
@@ -88,7 +92,8 @@ data class Event(
         lastName: String,
         middleName: String,
         date: Long,
-        withoutYear: Boolean
+        withoutYear: Boolean,
+        imageUri: String
     ) : this(
         0,
         name,
@@ -100,7 +105,8 @@ data class Event(
         EventType.BIRTHDAY.value,
         "",
         "",
-        withoutYear
+        withoutYear,
+        imageUri
     )
 
     fun monthNumber(): Int {
@@ -134,8 +140,5 @@ data class Event(
         }
 
         return this
-    }
-
-    companion object {
     }
 }

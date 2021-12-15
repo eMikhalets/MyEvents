@@ -27,6 +27,7 @@ class AddEventVM @Inject constructor(
         lastname: String,
         middleName: String,
         withoutYear: Boolean,
+        imageUri: String
     ) {
         _state.value = AddEventState.Init
         if (name.isEmpty()) {
@@ -36,8 +37,8 @@ class AddEventVM @Inject constructor(
 
         viewModelScope.launch {
             val event = when (eventType) {
-                EventType.ANNIVERSARY -> Event(name, date, withoutYear)
-                EventType.BIRTHDAY -> Event(name, lastname, middleName, date, withoutYear)
+                EventType.ANNIVERSARY -> Event(name, date, withoutYear, imageUri)
+                EventType.BIRTHDAY -> Event(name, lastname, middleName, date, withoutYear, imageUri)
             }
             event.calculateParameters()
             when (val result = repository.insertEvent(event)) {

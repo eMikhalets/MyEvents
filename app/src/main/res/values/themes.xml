@@ -21,6 +21,7 @@
         <item name="appColorCloseIcon">@color/eclipse</item>
         <item name="appColorSearchIcon">@color/white</item>
         <item name="appColorSettingsIcon">@color/white</item>
+        <item name="appColorImageIcon">@color/jacksons_purple</item>
     </style>
 
     <style name="Theme.MyDates_Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -44,5 +45,6 @@
         <item name="appColorCloseIcon">@color/whisper</item>
         <item name="appColorSearchIcon">@color/whisper</item>
         <item name="appColorSettingsIcon">@color/whisper</item>
+        <item name="appColorImageIcon">@color/peach_orange</item>
     </style>
 </resources>

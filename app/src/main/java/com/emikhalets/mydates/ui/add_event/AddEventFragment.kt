@@ -12,6 +12,7 @@ import com.emikhalets.mydates.databinding.FragmentAddEventBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.activity_result.ImagePicker
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
@@ -28,12 +29,27 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
     private val binding by viewBinding(FragmentAddEventBinding::bind)
     private val viewModel by viewModels<AddEventVM> { viewModelFactory }
     private val args: AddEventFragmentArgs by navArgs()
+    private var imageUri: String = ""
+    private lateinit var imagePicker: ImagePicker
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initActivityResult()
         prepareEventData()
         clickListeners()
         observe()
+    }
+
+    private fun initActivityResult() {
+        imagePicker = ImagePicker(
+            registry = requireActivity().activityResultRegistry,
+            lifecycleOwner = viewLifecycleOwner,
+            contentResolver = requireActivity().contentResolver,
+            onResult = { uri ->
+                imageUri = uri.toString()
+                binding.imagePhoto.setImageURI(uri)
+            }
+        )
     }
 
     private fun prepareEventData() {
@@ -43,6 +59,9 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun clickListeners() {
+        binding.cardPhoto.setOnClickListener {
+            imagePicker.getImage()
+        }
         binding.inputDate.setOnClickListener {
             AppDialogManager.showDatePickerDialog(requireContext(), viewModel.date) { timestamp ->
                 viewModel.date = timestamp
@@ -79,7 +98,8 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
             name = name,
             lastname = lastname,
             middleName = middleName,
-            withoutYear = withoutYear
+            withoutYear = withoutYear,
+            imageUri = imageUri
         )
     }
 

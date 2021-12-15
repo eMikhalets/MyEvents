@@ -1,8 +1,8 @@
 package com.emikhalets.mydates.ui.calendar
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +11,7 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.ItemEventBinding
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.extentions.formatDate
+import com.emikhalets.mydates.utils.extentions.setImageUri
 
 class DayEventsAdapter(
     private val click: (Event) -> Unit
@@ -31,40 +32,38 @@ class DayEventsAdapter(
 
         fun bind(item: Event) {
             with(binding) {
-                var info = 0
-                when (item.eventType) {
-                    EventType.ANNIVERSARY.value -> {
-                        info = R.string.anniversary_date
-                        imagePhoto.setImageResource(R.drawable.ic_anniversary)
-                    }
-                    EventType.BIRTHDAY.value -> {
-                        info = R.string.birthday_date
-                        imagePhoto.setImageResource(R.drawable.ic_birthday)
-                    }
-                }
+                imagePhoto.setImageUri(item.imageUri, root.context.contentResolver)
 
-                if (item.withoutYear) textAge.visibility = View.GONE
-                else textAge.visibility = View.VISIBLE
+                textAge.isGone = item.withoutYear
 
                 textName.text = item.fullName()
-                textDate.text = root.context.getString(
-                    info, item.date.formatDate("d MMMM")
-                )
+
+                val date = item.date.formatDate("d MMMM")
+                textDate.text = when (item.eventType) {
+                    EventType.ANNIVERSARY.value ->
+                        root.context.getString(R.string.anniversary_date, date)
+                    EventType.BIRTHDAY.value ->
+                        root.context.getString(R.string.birthday_date, date)
+                    else -> date
+                }
+
                 textAge.text = root.context.resources.getQuantityString(
                     R.plurals.age,
                     item.age, item.age
                 )
 
-                when (item.daysLeft) {
-                    0 -> textDaysLeft.text = root.context.getString(R.string.today)
-                    1 -> textDaysLeft.text = root.context.getString(R.string.tomorrow)
-                    else -> textDaysLeft.text = root.context.resources.getQuantityString(
+                textDaysLeft.text = when (item.daysLeft) {
+                    0 -> root.context.getString(R.string.today)
+                    1 -> root.context.getString(R.string.tomorrow)
+                    else -> root.context.resources.getQuantityString(
                         R.plurals.days_left,
                         item.daysLeft, item.daysLeft
                     )
                 }
 
-                if (item.eventType != 0) root.setOnClickListener { click.invoke(item) }
+                if (item.eventType != 0) {
+                    root.setOnClickListener { click.invoke(item) }
+                }
             }
         }
     }

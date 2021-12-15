@@ -3,6 +3,7 @@ package com.emikhalets.mydates.ui.event_details
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,15 +15,11 @@ import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.activity_result.ImagePicker
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
-import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImageLarge
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
-import com.emikhalets.mydates.utils.extentions.formatDate
-import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
-import com.emikhalets.mydates.utils.extentions.setDateText
-import com.emikhalets.mydates.utils.extentions.setDrawableTop
-import com.emikhalets.mydates.utils.extentions.toast
+import com.emikhalets.mydates.utils.extentions.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -31,26 +28,44 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
     private val binding by viewBinding(FragmentEventDetailsBinding::bind)
     private val viewModel by viewModels<EventDetailsVM> { viewModelFactory }
     private val args: EventDetailsFragmentArgs by navArgs()
+    private lateinit var imagePicker: ImagePicker
 
     private lateinit var event: Event
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initActivityResult()
         insertEventData()
         clickListeners()
         textWatchers()
         observe()
     }
 
+    private fun initActivityResult() {
+        imagePicker = ImagePicker(
+            registry = requireActivity().activityResultRegistry,
+            lifecycleOwner = viewLifecycleOwner,
+            contentResolver = requireActivity().contentResolver,
+            onResult = { uri ->
+                event.imageUri = uri.toString()
+                binding.imagePhoto.setImageURI(uri)
+            }
+        )
+    }
+
     private fun insertEventData() {
         event = args.event
         binding.apply {
             setViewsForEventType(EventType.get(event.eventType))
+            imagePhoto.setImageUri(event.imageUri, requireActivity().contentResolver)
             textFullName.text = event.fullName()
-            if (event.daysLeft == 0) textDaysLeft.text = getString(R.string.today)
-            else textDaysLeft.text = resources.getQuantityString(
-                R.plurals.days_left, event.daysLeft, event.daysLeft
-            )
+            textDaysLeft.text = if (event.daysLeft == 0) {
+                getString(R.string.today)
+            } else {
+                resources.getQuantityString(
+                    R.plurals.days_left, event.daysLeft, event.daysLeft
+                )
+            }
             textAge.text = resources.getQuantityString(
                 R.plurals.age, event.age, event.age
             )
@@ -60,14 +75,16 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             inputMiddleName.setText(event.middleName)
             inputDate.setDateText(event.date, event.withoutYear)
             checkYear.isChecked = event.withoutYear
-            if (event.withoutYear) textAge.visibility = View.GONE
-            else textAge.visibility = View.VISIBLE
+            textDate.isGone = event.withoutYear
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun clickListeners() {
         binding.apply {
+            cardPhoto.setOnClickListener {
+                imagePicker.getImage()
+            }
             inputDate.setOnClickListener {
                 AppDialogManager.showDatePickerDialog(requireContext(), event.date) { timestamp ->
                     applyNewDate(timestamp)
@@ -156,10 +173,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
     private fun setViewsForEventType(eventType: EventType) {
         binding.textDate.text = eventType.getTypeDate(requireContext(), event.date)
-        binding.textFullName.apply {
-            text = eventType.getTypeName(requireContext())
-            setDrawableTop(eventType.getTypeImageLarge())
-        }
+        binding.textFullName.text = eventType.getTypeName(requireContext())
 
         if (eventType == EventType.ANNIVERSARY) {
             binding.apply {
