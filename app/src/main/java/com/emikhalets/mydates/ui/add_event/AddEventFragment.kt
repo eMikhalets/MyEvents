@@ -43,6 +43,7 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
         imagePicker = ImagePicker(
             registry = requireActivity().activityResultRegistry,
             lifecycleOwner = viewLifecycleOwner,
+            context = requireContext(),
             contentResolver = requireActivity().contentResolver,
             onResult = { uri ->
                 imageUri = uri.toString()
@@ -52,6 +53,7 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
         photoTaker = PhotoTaker(
             registry = requireActivity().activityResultRegistry,
             lifecycleOwner = viewLifecycleOwner,
+            context = requireContext(),
             contentResolver = requireActivity().contentResolver,
             onResult = { uri ->
                 imageUri = uri.toString()

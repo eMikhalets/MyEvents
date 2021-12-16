@@ -1,6 +1,7 @@
 package com.emikhalets.mydates.utils.activity_result
 
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
@@ -11,6 +12,7 @@ import androidx.lifecycle.LifecycleOwner
 class ImagePicker(
     registry: ActivityResultRegistry,
     lifecycleOwner: LifecycleOwner,
+    private val context: Context,
     private val contentResolver: ContentResolver,
     private val onResult: (uri: Uri) -> Unit,
 ) {
@@ -23,7 +25,9 @@ class ImagePicker(
         ) { uri: Uri? ->
             uri?.let {
                 contentResolver.takePersistableUriPermission(uri, getPermissionFlag())
-                onResult(uri)
+                CacheImageHelper.saveCachePhoto(uri, context, contentResolver)?.let {
+                    onResult(it)
+                }
             }
         }
 
