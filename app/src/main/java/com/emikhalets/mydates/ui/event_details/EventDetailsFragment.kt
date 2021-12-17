@@ -1,6 +1,7 @@
 package com.emikhalets.mydates.ui.event_details
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
@@ -50,20 +52,14 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             lifecycleOwner = viewLifecycleOwner,
             context = requireContext(),
             contentResolver = requireActivity().contentResolver,
-            onResult = { uri ->
-                event.imageUri = uri.toString()
-                binding.imagePhoto.setImageURI(uri)
-            }
+            onResult = { uri -> insertImage(uri) }
         )
         photoTaker = PhotoTaker(
             registry = requireActivity().activityResultRegistry,
             lifecycleOwner = viewLifecycleOwner,
             context = requireContext(),
             contentResolver = requireActivity().contentResolver,
-            onResult = { uri ->
-                event.imageUri = uri.toString()
-                binding.imagePhoto.setImageURI(uri)
-            }
+            onResult = { uri -> insertImage(uri) }
         )
     }
 
@@ -218,6 +214,13 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             }
             EventDetailsState.Init -> {
             }
+        }
+    }
+
+    private fun insertImage(uri: Uri) {
+        lifecycleScope.launchWhenCreated {
+            event.imageUri = uri.toString()
+            binding.imagePhoto.load(uri)
         }
     }
 }

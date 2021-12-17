@@ -7,6 +7,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.LifecycleOwner
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class PhotoTaker(
     registry: ActivityResultRegistry,
@@ -25,8 +29,12 @@ class PhotoTaker(
             ActivityResultContracts.TakePicture()
         ) { success ->
             if (success && originalUri != null) {
-                CacheImageHelper.saveCachePhoto(originalUri!!, context, contentResolver)?.let {
-                    onResult(it)
+                CoroutineScope(Dispatchers.IO).launch {
+                    CacheImageHelper.saveCachePhoto(originalUri!!, context, contentResolver)?.let {
+                        withContext(Dispatchers.Main) {
+                            onResult(it)
+                        }
+                    }
                 }
             }
         }

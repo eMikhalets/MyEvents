@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import coil.load
 import com.emikhalets.mydates.R
 import java.io.FileNotFoundException
 
@@ -26,7 +27,7 @@ fun ImageView.setImageUri(uri: String?, contentResolver: ContentResolver) {
             val validUri = Uri.parse(uri)
             val stream = contentResolver.openInputStream(validUri)
             stream?.close()
-            setImageURI(validUri)
+            load(validUri)
         } catch (ex: FileNotFoundException) {
             setImageResource(R.drawable.ic_photo)
         }

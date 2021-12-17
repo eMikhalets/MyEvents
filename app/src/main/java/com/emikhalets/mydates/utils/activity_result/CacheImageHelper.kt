@@ -15,7 +15,6 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-// TODO need to test
 object CacheImageHelper {
 
     fun getNewImageUri(contentResolver: ContentResolver): Uri? {
@@ -23,7 +22,7 @@ object CacheImageHelper {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val contentValues = ContentValues().apply {
                 put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
-                put(MediaStore.MediaColumns.MIME_TYPE, "image/png")
+                put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
                 put(MediaStore.MediaColumns.RELATIVE_PATH, getPhotosDirectory())
             }
             contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
@@ -40,7 +39,7 @@ object CacheImageHelper {
 
         val bytes = ByteArrayOutputStream().run {
             getBitmapByUri(originalUri, contentResolver)
-                .compress(Bitmap.CompressFormat.JPEG, 50, this)
+                .compress(Bitmap.CompressFormat.JPEG, 10, this)
             this.toByteArray()
         }
 
@@ -64,7 +63,9 @@ object CacheImageHelper {
 
     private fun getPhotoFileName(): String {
         val formatter = SimpleDateFormat("yyyy_MM_dd_hh_mm_ss", Locale.getDefault())
-        return "PNG_${formatter.format(Date())}.png"
+        val name = "IMAGE_${formatter.format(Date())}"
+        val suffix = ".jpg"
+        return "$name$suffix"
     }
 
     private fun getPhotosDirectory(): String {

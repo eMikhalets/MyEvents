@@ -1,12 +1,14 @@
 package com.emikhalets.mydates.ui.add_event
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
+import coil.load
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
@@ -45,20 +47,14 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
             lifecycleOwner = viewLifecycleOwner,
             context = requireContext(),
             contentResolver = requireActivity().contentResolver,
-            onResult = { uri ->
-                imageUri = uri.toString()
-                binding.imagePhoto.setImageURI(uri)
-            }
+            onResult = { uri -> insertImage(uri) }
         )
         photoTaker = PhotoTaker(
             registry = requireActivity().activityResultRegistry,
             lifecycleOwner = viewLifecycleOwner,
             context = requireContext(),
             contentResolver = requireActivity().contentResolver,
-            onResult = { uri ->
-                imageUri = uri.toString()
-                binding.imagePhoto.setImageURI(uri)
-            }
+            onResult = { uri -> insertImage(uri) }
         )
     }
 
@@ -154,5 +150,10 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
             inputLastname.clearFocus()
             inputMiddleName.clearFocus()
         }
+    }
+
+    private fun insertImage(uri: Uri) {
+        imageUri = uri.toString()
+        binding.imagePhoto.load(uri)
     }
 }
