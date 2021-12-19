@@ -28,6 +28,7 @@ data class Event(
     @ColumnInfo(name = "notes") var notes: String,
     @ColumnInfo(name = "without_year") var withoutYear: Boolean,
     @ColumnInfo(name = "image_uri") var imageUri: String,
+    @ColumnInfo(name = "contacts") var contacts: List<String>,
 ) : Parcelable {
 
     fun fullName(): String {
@@ -62,7 +63,8 @@ data class Event(
         "",
         "",
         false,
-        ""
+        "",
+        emptyList()
     )
 
     @Ignore
@@ -70,7 +72,8 @@ data class Event(
         name: String,
         date: Long,
         withoutYear: Boolean,
-        imageUri: String
+        imageUri: String,
+        contacts: List<String>
     ) : this(
         0,
         name,
@@ -83,7 +86,8 @@ data class Event(
         "",
         "",
         withoutYear,
-        imageUri
+        imageUri,
+        contacts
     )
 
     @Ignore
@@ -93,7 +97,8 @@ data class Event(
         middleName: String,
         date: Long,
         withoutYear: Boolean,
-        imageUri: String
+        imageUri: String,
+        contacts: List<String>
     ) : this(
         0,
         name,
@@ -106,7 +111,8 @@ data class Event(
         "",
         "",
         withoutYear,
-        imageUri
+        imageUri,
+        contacts
     )
 
     fun monthNumber(): Int {

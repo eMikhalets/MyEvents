@@ -11,7 +11,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
-import com.emikhalets.mydates.ui.adapters.ContactsAdapter
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
@@ -40,10 +39,10 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.state.observe(viewLifecycleOwner) { renderState(it) }
         initActivityResult()
         prepareEventData()
         clickListeners()
-        observe()
     }
 
     private fun initActivityResult() {
@@ -74,9 +73,7 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
         setViewsForEventType(args.eventType)
 
         contactsAdapter = ContactsAdapter(
-            phoneClick = {},
-            smsClick = {},
-            deleteClick = { viewModel.removeContact(it) },
+            deleteClick = { viewModel.removeContact(it) }
         )
         binding.layoutContacts.listContacts.adapter = contactsAdapter
     }
@@ -119,12 +116,6 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
         }
     }
 
-    private fun observe() {
-        lifecycleScope.launch {
-            viewModel.state.collect { renderState(it) }
-        }
-    }
-
     private fun onSaveClick() {
         binding.layInputName.error = null
         val name = binding.inputName.text.toString()
@@ -155,8 +146,12 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
             AddEventState.Init -> {
             }
             AddEventState.ContactAlreadyAdded -> toast(R.string.contact_already_added)
-            is AddEventState.ContactsChanged -> contactsAdapter.submitList(state.contacts)
+            is AddEventState.ContactsChanged -> onContactsChanged(state.contacts)
         }
+    }
+
+    private fun onContactsChanged(contacts: List<String>) {
+        contactsAdapter.submitList(contacts)
     }
 
     private fun setViewsForEventType(eventType: EventType) {

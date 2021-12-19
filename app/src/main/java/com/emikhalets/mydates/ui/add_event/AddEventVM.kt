@@ -1,5 +1,7 @@
 package com.emikhalets.mydates.ui.add_event
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emikhalets.mydates.data.database.CompleteResult
@@ -16,8 +18,8 @@ class AddEventVM @Inject constructor(
     private val repository: DatabaseRepository,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow<AddEventState>(AddEventState.Init)
-    val state: StateFlow<AddEventState> = _state
+    private val _state = MutableLiveData<AddEventState>(AddEventState.Init)
+    val state: LiveData<AddEventState> = _state
 
     private val contacts = mutableListOf<String>()
     var date = Date().time
@@ -38,8 +40,8 @@ class AddEventVM @Inject constructor(
 
         viewModelScope.launch {
             val event = when (eventType) {
-                EventType.ANNIVERSARY -> Event(name, date, withoutYear, imageUri)
-                EventType.BIRTHDAY -> Event(name, lastname, middleName, date, withoutYear, imageUri)
+                EventType.ANNIVERSARY -> Event(name, date, withoutYear, imageUri, contacts)
+                EventType.BIRTHDAY -> Event(name, lastname, middleName, date, withoutYear, imageUri, contacts)
             }
             event.calculateParameters()
             when (val result = repository.insertEvent(event)) {

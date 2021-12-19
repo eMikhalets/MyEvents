@@ -1,184 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/space_small">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/text_title"
-        style="@style/TextTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_normal"
-        android:drawablePadding="@dimen/space_small"
-        android:gravity="center"
-        app:drawableStartCompat="@drawable/ic_birthday"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="День рождения" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_photo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_title">
-
-        <ImageView
-            android:id="@+id/image_photo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="?attr/selectableItemBackground"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_photo"
-            tools:ignore="ContentDescription" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_name"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_small"
-        android:layout_marginTop="@dimen/space_normal"
-        android:layout_marginEnd="@dimen/space_small"
-        app:layout_constraintTop_toBottomOf="@+id/card_photo">
+        android:padding="@dimen/space_small">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lay_input_name"
-            style="?attr/appTextInputLayout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/TextTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/name">
+            android:layout_marginStart="@dimen/space_normal"
+            android:drawablePadding="@dimen/space_small"
+            android:gravity="center"
+            app:drawableStartCompat="@drawable/ic_birthday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="День рождения" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_name"
-                style="?attr/appEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_title">
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_lastname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_small"
-        android:layout_marginTop="@dimen/space_normal"
-        android:layout_marginEnd="@dimen/space_small"
-        app:layout_constraintTop_toBottomOf="@+id/card_name">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lay_input_lastname"
-            style="?attr/appTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/lastname">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_lastname"
-                style="?attr/appEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_middle_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_small"
-        android:layout_marginTop="@dimen/space_normal"
-        android:layout_marginEnd="@dimen/space_small"
-        app:layout_constraintTop_toBottomOf="@+id/card_lastname">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lay_input_middle_name"
-            style="?attr/appTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/middle_name">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_middle_name"
-                style="?attr/appEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_small"
-        android:layout_marginTop="@dimen/space_normal"
-        android:layout_marginEnd="@dimen/space_small"
-        app:layout_constraintTop_toBottomOf="@+id/card_middle_name">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lay_input_date"
-            style="?attr/appTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/date">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/input_date"
-                style="?attr/appEditText"
+            <ImageView
+                android:id="@+id/image_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:cursorVisible="false"
-                android:drawableEnd="@drawable/ic_calendar"
-                android:focusable="false" />
+                android:background="?attr/selectableItemBackground"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_photo"
+                tools:ignore="ContentDescription" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
 
-    </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginEnd="@dimen/space_small"
+            app:layout_constraintTop_toBottomOf="@+id/card_photo">
 
-    <CheckBox
-        android:id="@+id/check_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_normal"
-        android:layout_marginTop="@dimen/space_small"
-        android:buttonTint="@color/jacksons_purple"
-        android:text="@string/not_remember_year"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_date" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lay_input_name"
+                style="?attr/appTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name">
 
-    <include
-        android:id="@+id/layout_contacts"
-        layout="@layout/layout_event_contacts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintTop_toBottomOf="@id/check_year" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_name"
+                    style="?attr/appEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/btn_save"
-        style="?attr/appButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="40dp"
-        android:text="@string/save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_contacts" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginEnd="@dimen/space_small"
+            app:layout_constraintTop_toBottomOf="@+id/card_name">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lay_input_lastname"
+                style="?attr/appTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lastname">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_lastname"
+                    style="?attr/appEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_middle_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginEnd="@dimen/space_small"
+            app:layout_constraintTop_toBottomOf="@+id/card_lastname">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lay_input_middle_name"
+                style="?attr/appTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/middle_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_middle_name"
+                    style="?attr/appEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_normal"
+            android:layout_marginEnd="@dimen/space_small"
+            app:layout_constraintTop_toBottomOf="@+id/card_middle_name">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lay_input_date"
+                style="?attr/appTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_date"
+                    style="?attr/appEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:cursorVisible="false"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:focusable="false" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <CheckBox
+            android:id="@+id/check_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_normal"
+            android:layout_marginTop="@dimen/space_small"
+            android:buttonTint="@color/jacksons_purple"
+            android:text="@string/not_remember_year"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_date" />
+
+        <include
+            android:id="@+id/layout_contacts"
+            layout="@layout/layout_event_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintTop_toBottomOf="@id/check_year" />
+
+        <Button
+            android:id="@+id/btn_save"
+            style="?attr/appButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="40dp"
+            android:text="@string/save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_contacts" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

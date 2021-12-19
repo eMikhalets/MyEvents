@@ -1,15 +1,14 @@
-package com.emikhalets.mydates.ui.adapters
+package com.emikhalets.mydates.ui.add_event
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.emikhalets.mydates.databinding.ItemContactBinding
 
 class ContactsAdapter(
-    private val phoneClick: (String) -> Unit,
-    private val smsClick: (String) -> Unit,
     private val deleteClick: (String) -> Unit,
 ) : ListAdapter<String, ContactsAdapter.ContactViewHolder>(DatesDiffCallback()) {
 
@@ -29,8 +28,8 @@ class ContactsAdapter(
         fun bind(item: String) {
             with(binding) {
                 textContact.text = item
-                imagePhone.setOnClickListener { phoneClick.invoke(item) }
-                imageSms.setOnClickListener { smsClick.invoke(item) }
+                imagePhone.isGone = true
+                imageSms.isGone = true
                 imageDelete.setOnClickListener { deleteClick.invoke(item) }
             }
         }
@@ -39,7 +38,7 @@ class ContactsAdapter(
     class DatesDiffCallback : DiffUtil.ItemCallback<String>() {
 
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean =
-            oldItem.hashCode() == newItem.hashCode()
+            oldItem == newItem
 
         override fun areContentsTheSame(oldItem: String, newItem: String): Boolean =
             oldItem == newItem

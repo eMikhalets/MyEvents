@@ -1,6 +1,7 @@
 package com.emikhalets.mydates.ui.event_details
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -17,8 +18,10 @@ import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.activity_result.ContactPicker
 import com.emikhalets.mydates.utils.activity_result.ImagePicker
 import com.emikhalets.mydates.utils.activity_result.PhotoTaker
+import com.emikhalets.mydates.utils.enums.ContactPickerType
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
@@ -34,16 +37,18 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
     private val args: EventDetailsFragmentArgs by navArgs()
     private lateinit var imagePicker: ImagePicker
     private lateinit var photoTaker: PhotoTaker
+    private lateinit var contactPicker: ContactPicker
+    private lateinit var contactsAdapter: ContactsAdapter
 
     private lateinit var event: Event
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.state.observe(viewLifecycleOwner) { renderState(it) }
         initActivityResult()
         insertEventData()
         clickListeners()
         textWatchers()
-        observe()
     }
 
     private fun initActivityResult() {
@@ -60,6 +65,12 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             context = requireContext(),
             contentResolver = requireActivity().contentResolver,
             onResult = { uri -> insertImage(uri) }
+        )
+        contactPicker = ContactPicker(
+            registry = requireActivity().activityResultRegistry,
+            lifecycleOwner = viewLifecycleOwner,
+            contentResolver = requireActivity().contentResolver,
+            onResult = { contact -> viewModel.addContact(contact) }
         )
     }
 
@@ -86,6 +97,17 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             inputDate.setDateText(event.date, event.withoutYear)
             checkYear.isChecked = event.withoutYear
             textDate.isGone = event.withoutYear
+
+            contactsAdapter = ContactsAdapter(
+                phoneClick = { invokePhoneCall(it) },
+                smsClick = { invokeSendSms(it) },
+                deleteClick = { viewModel.removeContact(it) },
+            )
+            layoutContacts.listContacts.adapter = contactsAdapter
+            if (event.contacts.isNotEmpty()) {
+                contactsAdapter.submitList(event.contacts)
+                viewModel.contacts.addAll(event.contacts)
+            }
         }
     }
 
@@ -131,6 +153,15 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                 clearFocus()
                 false
             }
+
+            binding.layoutContacts.textAddContact.setOnClickListener {
+                AppDialogManager.showContactPicker(requireContext()) { type, contact ->
+                    when (type) {
+                        ContactPickerType.SELF_INPUT -> viewModel.addContact(contact)
+                        ContactPickerType.SELECTION -> contactPicker.pickContact()
+                    }
+                }
+            }
         }
     }
 
@@ -152,12 +183,6 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                 event.middleName = it.toString()
                 btnSave.isEnabled = true
             }
-        }
-    }
-
-    private fun observe() {
-        lifecycleScope.launch {
-            viewModel.state.collect { renderState(it) }
         }
     }
 
@@ -214,6 +239,18 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             }
             EventDetailsState.Init -> {
             }
+            EventDetailsState.ContactAlreadyAdded -> toast(R.string.contact_already_added)
+            is EventDetailsState.ContactsChanged -> onContactChanged(state.contacts)
+        }
+    }
+
+    private fun onContactChanged(contacts: List<String>) {
+        if (contacts.isEmpty()) {
+            contactsAdapter.submitList(null)
+            event.contacts = emptyList()
+        } else {
+            contactsAdapter.submitList(contacts)
+            event.contacts = contacts
         }
     }
 
@@ -221,6 +258,27 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
         lifecycleScope.launchWhenCreated {
             event.imageUri = uri.toString()
             binding.imagePhoto.load(uri)
+        }
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun invokePhoneCall(phone: String) {
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$phone")
+        }
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(intent)
+        }
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    private fun invokeSendSms(phone: String) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            data = Uri.parse("address:$phone")
+            type = "vnd.android-dir/mms-sms"
+        }
+        if (intent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivity(intent)
         }
     }
 }

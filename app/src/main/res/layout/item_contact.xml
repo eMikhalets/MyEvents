@@ -9,6 +9,7 @@
         android:id="@+id/image_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:padding="12dp"
         android:src="@drawable/ic_phone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,6 +22,7 @@
         android:id="@+id/image_sms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:padding="12dp"
         android:src="@drawable/ic_sms"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +36,7 @@
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
+        android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/image_delete"
         app:layout_constraintStart_toEndOf="@id/image_sms"
@@ -45,6 +47,7 @@
         android:id="@+id/image_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:padding="12dp"
         android:src="@drawable/ic_close"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,6 +64,6 @@
         android:background="?attr/appColorCloseIcon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/image_sms"
-        app:layout_constraintTop_toBottomOf="@id/image_phone" />
+        app:layout_constraintTop_toBottomOf="@id/text_contact" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
