@@ -33,6 +33,10 @@
     <string name="required_field">Required</string>
     <string name="take_photo">Take a photo</string>
     <string name="select_photo">Select image</string>
+    <string name="add_contact">Add contact</string>
+    <string name="contact">Contact</string>
+    <string name="select_contact">Select from contacts</string>
+    <string name="contact_already_added">Contact already added</string>
 
     <string name="dialog_import_alert">Importing dates will delete all existing records and create new ones from the selected file. Continue?</string>
     <string name="dialog_delete_event">Delete this event?</string>

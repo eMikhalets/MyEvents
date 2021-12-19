@@ -19,6 +19,7 @@ class AddEventVM @Inject constructor(
     private val _state = MutableStateFlow<AddEventState>(AddEventState.Init)
     val state: StateFlow<AddEventState> = _state
 
+    private val contacts = mutableListOf<String>()
     var date = Date().time
 
     fun saveNewEvent(
@@ -45,6 +46,24 @@ class AddEventVM @Inject constructor(
                 CompleteResult.Complete -> _state.value = AddEventState.Added
                 is CompleteResult.Error -> AddEventState.Error(result.exception)
             }
+        }
+    }
+
+    fun addContact(contact: String) {
+        viewModelScope.launch {
+            if (contacts.contains(contact)) {
+                _state.value = AddEventState.ContactAlreadyAdded
+            } else {
+                contacts.add(contact)
+                _state.value = AddEventState.ContactsChanged(contacts)
+            }
+        }
+    }
+
+    fun removeContact(contact: String) {
+        viewModelScope.launch {
+            contacts.remove(contact)
+            _state.value = AddEventState.ContactsChanged(contacts)
         }
     }
 }

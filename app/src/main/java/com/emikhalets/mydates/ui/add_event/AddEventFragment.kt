@@ -11,11 +11,14 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.FragmentAddEventBinding
+import com.emikhalets.mydates.ui.adapters.ContactsAdapter
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.activity_result.ContactPicker
 import com.emikhalets.mydates.utils.activity_result.ImagePicker
 import com.emikhalets.mydates.utils.activity_result.PhotoTaker
+import com.emikhalets.mydates.utils.enums.ContactPickerType
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
@@ -32,6 +35,8 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
     private var imageUri: String = ""
     private lateinit var imagePicker: ImagePicker
     private lateinit var photoTaker: PhotoTaker
+    private lateinit var contactPicker: ContactPicker
+    private lateinit var contactsAdapter: ContactsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,11 +61,24 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
             contentResolver = requireActivity().contentResolver,
             onResult = { uri -> insertImage(uri) }
         )
+        contactPicker = ContactPicker(
+            registry = requireActivity().activityResultRegistry,
+            lifecycleOwner = viewLifecycleOwner,
+            contentResolver = requireActivity().contentResolver,
+            onResult = { contact -> viewModel.addContact(contact) }
+        )
     }
 
     private fun prepareEventData() {
         binding.inputDate.setText(viewModel.date.formatDate())
         setViewsForEventType(args.eventType)
+
+        contactsAdapter = ContactsAdapter(
+            phoneClick = {},
+            smsClick = {},
+            deleteClick = { viewModel.removeContact(it) },
+        )
+        binding.layoutContacts.listContacts.adapter = contactsAdapter
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -89,6 +107,15 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
             hideSoftKeyboard()
             clearFocus()
             false
+        }
+
+        binding.layoutContacts.textAddContact.setOnClickListener {
+            AppDialogManager.showContactPicker(requireContext()) { type, contact ->
+                when (type) {
+                    ContactPickerType.SELF_INPUT -> viewModel.addContact(contact)
+                    ContactPickerType.SELECTION -> contactPicker.pickContact()
+                }
+            }
         }
     }
 
@@ -127,6 +154,8 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
             }
             AddEventState.Init -> {
             }
+            AddEventState.ContactAlreadyAdded -> toast(R.string.contact_already_added)
+            is AddEventState.ContactsChanged -> contactsAdapter.submitList(state.contacts)
         }
     }
 

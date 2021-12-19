@@ -5,8 +5,10 @@ import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.*
 import com.emikhalets.mydates.utils.di.appComponent
+import com.emikhalets.mydates.utils.enums.ContactPickerType
 import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.PhotoPickerType
 import com.emikhalets.mydates.utils.extentions.launchMainScope
@@ -149,6 +151,38 @@ object AppDialogManager {
 
             btnSelectImage.setOnClickListener {
                 callback.invoke(PhotoPickerType.SELECT_IMAGE)
+                dialog.dismiss()
+            }
+        }
+
+        dialog.show()
+        val window = dialog.window
+        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
+    fun showContactPicker(context: Context, callback: (ContactPickerType, String) -> Unit) {
+        val dialog = Dialog(context)
+        val binding = DialogEventContactBinding.inflate(LayoutInflater.from(context))
+        binding.root.alpha = 0f
+        dialog.setContentView(binding.root)
+        dialog.setCanceledOnTouchOutside(false)
+        binding.root.animate().alpha(1f).setDuration(300).start()
+
+        binding.apply {
+            btnApply.setOnClickListener {
+                layInputContact.error = null
+                // TODO: add phone validator
+                val contact = inputContact.text?.toString()
+                if (contact.isNullOrEmpty()) {
+                    layInputContact.error = context.getString(R.string.required_field)
+                } else {
+                    callback.invoke(ContactPickerType.SELF_INPUT, contact)
+                    dialog.dismiss()
+                }
+            }
+
+            btnSelectContact.setOnClickListener {
+                callback.invoke(ContactPickerType.SELECTION, "")
                 dialog.dismiss()
             }
         }
