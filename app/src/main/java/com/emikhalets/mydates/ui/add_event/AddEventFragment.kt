@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
@@ -23,8 +22,6 @@ import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import com.emikhalets.mydates.utils.enums.PhotoPickerType
 import com.emikhalets.mydates.utils.extentions.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
 
@@ -69,7 +66,7 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
     }
 
     private fun prepareEventData() {
-        binding.inputDate.setText(viewModel.date.formatDate())
+        binding.inputDate.text = viewModel.date.formatDate()
         setViewsForEventType(args.eventType)
 
         contactsAdapter = ContactsAdapter(
@@ -117,10 +114,10 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
     }
 
     private fun onSaveClick() {
-        binding.layInputName.error = null
-        val name = binding.inputName.text.toString()
-        val lastname = binding.inputLastname.text.toString()
-        val middleName = binding.inputMiddleName.text.toString()
+        binding.inputName.error = null
+        val name = binding.inputName.text
+        val lastname = binding.inputLastname.text
+        val middleName = binding.inputMiddleName.text
         val withoutYear = binding.checkYear.isChecked
         viewModel.saveNewEvent(
             eventType = args.eventType,
@@ -138,7 +135,7 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
                 toast(state.message)
             }
             AddEventState.EmptyNameError -> {
-                binding.layInputName.error = getString(R.string.required_field)
+                binding.inputName.error = getString(R.string.required_field)
             }
             AddEventState.Added -> {
                 AppNavigationManager.back(this)
@@ -162,8 +159,8 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
 
         if (eventType == EventType.ANNIVERSARY) {
             binding.apply {
-                cardLastname.visibility = View.GONE
-                cardMiddleName.visibility = View.GONE
+                inputLastname.visibility = View.GONE
+                inputMiddleName.visibility = View.GONE
             }
         }
     }

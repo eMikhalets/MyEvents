@@ -5,16 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_contacts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="3"
             tools:listitem="@layout/item_contact" />
@@ -24,6 +23,7 @@
             style="@style/TextPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/list_contacts"
             android:background="?attr/selectableItemBackground"
             android:drawablePadding="16dp"
             android:padding="12dp"
@@ -31,6 +31,6 @@
             app:drawableStartCompat="@drawable/ic_add"
             app:drawableTint="?attr/appColorCloseIcon" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

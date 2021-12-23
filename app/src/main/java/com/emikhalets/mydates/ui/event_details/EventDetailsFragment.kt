@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -27,8 +26,6 @@ import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import com.emikhalets.mydates.utils.enums.PhotoPickerType
 import com.emikhalets.mydates.utils.extentions.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
@@ -90,10 +87,10 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             textAge.text = resources.getQuantityString(
                 R.plurals.age, event.age, event.age
             )
-            inputNotes.setText(event.notes)
-            inputName.setText(event.name)
-            inputLastname.setText(event.lastName)
-            inputMiddleName.setText(event.middleName)
+            inputNotes.text = event.notes
+            inputName.text = event.name
+            inputLastname.text = event.lastName
+            inputMiddleName.text = event.middleName
             inputDate.setDateText(event.date, event.withoutYear)
             checkYear.isChecked = event.withoutYear
             textDate.isGone = event.withoutYear
@@ -145,7 +142,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                 }
             }
             btnSave.setOnClickListener {
-                binding.layInputName.error = null
+                binding.inputName.error = null
                 viewModel.updateEvent(event)
             }
             root.setOnTouchListener { _, _ ->
@@ -190,7 +187,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
         event.date = ts
         event.calculateParameters()
         binding.apply {
-            inputDate.setText(ts.formatDate("d MMMM YYYY"))
+            inputDate.text = ts.formatDate("d MMMM YYYY")
             if (event.daysLeft == 0) textDaysLeft.text = getString(R.string.today)
             else textDaysLeft.text = resources.getQuantityString(
                 R.plurals.days_left, event.daysLeft, event.daysLeft
@@ -217,8 +214,8 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
         if (eventType == EventType.ANNIVERSARY) {
             binding.apply {
-                cardLastname.visibility = View.GONE
-                cardMiddleName.visibility = View.GONE
+                inputLastname.visibility = View.GONE
+                inputMiddleName.visibility = View.GONE
             }
         }
     }
@@ -229,7 +226,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                 toast(state.message)
             }
             is EventDetailsState.EmptyNameError -> {
-                binding.layInputName.error = getString(R.string.required_field)
+                binding.inputName.error = getString(R.string.required_field)
             }
             EventDetailsState.Deleted -> {
                 AppNavigationManager.back(this)
@@ -245,13 +242,8 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
     }
 
     private fun onContactChanged(contacts: List<String>) {
-        if (contacts.isEmpty()) {
-            contactsAdapter.submitList(null)
-            event.contacts = emptyList()
-        } else {
-            contactsAdapter.submitList(contacts)
-            event.contacts = contacts
-        }
+        contactsAdapter.submitList(contacts)
+        event.contacts = contacts
     }
 
     private fun insertImage(uri: Uri) {
