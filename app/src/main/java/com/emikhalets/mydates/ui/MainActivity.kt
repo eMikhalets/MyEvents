@@ -2,9 +2,9 @@ package com.emikhalets.mydates.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -13,6 +13,7 @@ import com.emikhalets.mydates.R
 import com.emikhalets.mydates.databinding.ActivityMainBinding
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.AppPermissionManager
 import com.emikhalets.mydates.utils.di.appComponent
 import com.emikhalets.mydates.utils.enums.AppTheme
 import com.emikhalets.mydates.utils.enums.EventType
@@ -26,6 +27,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private val contactsRequestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (!it) {
+                requestContactsPermission()
+            }
+        }
 
     private val destinationChangeListener =
         NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -49,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         setupBottomBar()
+        requestContactsPermission()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -114,6 +122,12 @@ class MainActivity : AppCompatActivity() {
         runBlocking {
             val savedTheme = appComponent.appPreferences.getTheme()
             setTheme(AppTheme.get(savedTheme).themeRes)
+        }
+    }
+
+    private fun requestContactsPermission() {
+        if (!AppPermissionManager.isContactsGranted(this)) {
+            AppPermissionManager.requestContactsPermission(contactsRequestPermission)
         }
     }
 }

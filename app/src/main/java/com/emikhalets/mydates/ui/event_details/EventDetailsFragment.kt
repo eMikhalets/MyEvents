@@ -17,6 +17,7 @@ import com.emikhalets.mydates.databinding.FragmentEventDetailsBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.AppPermissionManager
 import com.emikhalets.mydates.utils.activity_result.ContactPicker
 import com.emikhalets.mydates.utils.activity_result.ImagePicker
 import com.emikhalets.mydates.utils.activity_result.PhotoTaker
@@ -26,6 +27,7 @@ import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import com.emikhalets.mydates.utils.enums.PhotoPickerType
 import com.emikhalets.mydates.utils.extentions.*
+import com.emikhalets.mydates.utils.views.CardEditText
 
 class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
@@ -49,26 +51,9 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
     }
 
     private fun initActivityResult() {
-        imagePicker = ImagePicker(
-            registry = requireActivity().activityResultRegistry,
-            lifecycleOwner = viewLifecycleOwner,
-            context = requireContext(),
-            contentResolver = requireActivity().contentResolver,
-            onResult = { uri -> insertImage(uri) }
-        )
-        photoTaker = PhotoTaker(
-            registry = requireActivity().activityResultRegistry,
-            lifecycleOwner = viewLifecycleOwner,
-            context = requireContext(),
-            contentResolver = requireActivity().contentResolver,
-            onResult = { uri -> insertImage(uri) }
-        )
-        contactPicker = ContactPicker(
-            registry = requireActivity().activityResultRegistry,
-            lifecycleOwner = viewLifecycleOwner,
-            contentResolver = requireActivity().contentResolver,
-            onResult = { contact -> viewModel.addContact(contact) }
-        )
+        imagePicker = ImagePicker(this) { uri -> insertImage(uri) }
+        photoTaker = PhotoTaker(this) { uri -> insertImage(uri) }
+        contactPicker = ContactPicker(this) { contact -> viewModel.addContact(contact) }
     }
 
     private fun insertEventData() {
@@ -151,11 +136,20 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                 false
             }
 
-            binding.layoutContacts.textAddContact.setOnClickListener {
+            layoutContacts.textAddContact.setOnClickListener {
                 AppDialogManager.showContactPicker(requireContext()) { type, contact ->
                     when (type) {
-                        ContactPickerType.SELF_INPUT -> viewModel.addContact(contact)
-                        ContactPickerType.SELECTION -> contactPicker.pickContact()
+                        ContactPickerType.SELF_INPUT -> {
+                            viewModel.addContact(contact)
+                        }
+                        ContactPickerType.SELECTION -> {
+                            if (AppPermissionManager.isContactsGranted(requireContext())) {
+                                contactPicker.pickContact()
+                            } else {
+                                // TODO move to strings
+                                toast("Нет разрешения на чтение контактов")
+                            }
+                        }
                     }
                 }
             }
@@ -222,27 +216,22 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
     private fun renderState(state: EventDetailsState) {
         when (state) {
-            is EventDetailsState.Error -> {
-                toast(state.message)
-            }
-            is EventDetailsState.EmptyNameError -> {
-                binding.inputName.error = getString(R.string.required_field)
-            }
-            EventDetailsState.Deleted -> {
-                AppNavigationManager.back(this)
-            }
-            EventDetailsState.Saved -> {
-                toast(R.string.event_saved)
-            }
-            EventDetailsState.Init -> {
-            }
+            EventDetailsState.Init -> Unit
+            is EventDetailsState.Error -> toast(state.message)
+            is EventDetailsState.EmptyNameError -> setEmptyError(binding.inputName)
+            EventDetailsState.Deleted -> AppNavigationManager.back(this)
+            EventDetailsState.Saved -> toast(R.string.event_saved)
             EventDetailsState.ContactAlreadyAdded -> toast(R.string.contact_already_added)
             is EventDetailsState.ContactsChanged -> onContactChanged(state.contacts)
         }
     }
 
+    private fun setEmptyError(view: CardEditText) {
+        view.error = getString(R.string.required_field)
+    }
+
     private fun onContactChanged(contacts: List<String>) {
-        contactsAdapter.submitList(contacts)
+        contactsAdapter.submitList(contacts.toMutableList())
         event.contacts = contacts
     }
 

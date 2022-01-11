@@ -170,11 +170,10 @@ object AppDialogManager {
 
         binding.apply {
             btnApply.setOnClickListener {
-                layInputContact.error = null
-                // TODO: add phone validator
-                val contact = inputContact.text?.toString()
-                if (contact.isNullOrEmpty()) {
-                    layInputContact.error = context.getString(R.string.required_field)
+                inputContact.error = null
+                val contact = inputContact.text
+                if (contact.isEmpty()) {
+                    inputContact.error = context.getString(R.string.required_field)
                 } else {
                     callback.invoke(ContactPickerType.SELF_INPUT, contact)
                     dialog.dismiss()

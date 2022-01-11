@@ -13,6 +13,7 @@ import com.emikhalets.mydates.databinding.FragmentAddEventBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppDialogManager
 import com.emikhalets.mydates.utils.AppNavigationManager
+import com.emikhalets.mydates.utils.AppPermissionManager
 import com.emikhalets.mydates.utils.activity_result.ContactPicker
 import com.emikhalets.mydates.utils.activity_result.ImagePicker
 import com.emikhalets.mydates.utils.activity_result.PhotoTaker
@@ -22,6 +23,7 @@ import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeImage
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import com.emikhalets.mydates.utils.enums.PhotoPickerType
 import com.emikhalets.mydates.utils.extentions.*
+import com.emikhalets.mydates.utils.views.CardEditText
 
 class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
 
@@ -36,43 +38,32 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.state.observe(viewLifecycleOwner) { renderState(it) }
-        initActivityResult()
-        prepareEventData()
-        clickListeners()
-    }
 
-    private fun initActivityResult() {
-        imagePicker = ImagePicker(
-            registry = requireActivity().activityResultRegistry,
-            lifecycleOwner = viewLifecycleOwner,
-            context = requireContext(),
-            contentResolver = requireActivity().contentResolver,
-            onResult = { uri -> insertImage(uri) }
-        )
-        photoTaker = PhotoTaker(
-            registry = requireActivity().activityResultRegistry,
-            lifecycleOwner = viewLifecycleOwner,
-            context = requireContext(),
-            contentResolver = requireActivity().contentResolver,
-            onResult = { uri -> insertImage(uri) }
-        )
-        contactPicker = ContactPicker(
-            registry = requireActivity().activityResultRegistry,
-            lifecycleOwner = viewLifecycleOwner,
-            contentResolver = requireActivity().contentResolver,
-            onResult = { contact -> viewModel.addContact(contact) }
-        )
-    }
+        imagePicker = ImagePicker(this) { uri -> insertImage(uri) }
+        photoTaker = PhotoTaker(this) { uri -> insertImage(uri) }
+        contactPicker = ContactPicker(this) { contact -> viewModel.addContact(contact) }
 
-    private fun prepareEventData() {
         binding.inputDate.text = viewModel.date.formatDate()
-        setViewsForEventType(args.eventType)
+        binding.textTitle.apply {
+            text = args.eventType.getTypeName(requireContext())
+            setDrawableStart(args.eventType.getTypeImage())
+        }
+
+        if (args.eventType == EventType.ANNIVERSARY) {
+            binding.apply {
+                inputLastname.visibility = View.GONE
+                inputMiddleName.visibility = View.GONE
+            }
+        }
 
         contactsAdapter = ContactsAdapter(
             deleteClick = { viewModel.removeContact(it) }
         )
         binding.layoutContacts.listContacts.adapter = contactsAdapter
+
+        clickListeners()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -85,18 +76,30 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
                 }
             }
         }
+
         binding.inputDate.setOnClickListener {
             AppDialogManager.showDatePickerDialog(requireContext(), viewModel.date) { timestamp ->
                 viewModel.date = timestamp
                 binding.inputDate.setDateText(viewModel.date, binding.checkYear.isChecked)
             }
         }
+
         binding.checkYear.setOnCheckedChangeListener { _, isChecked ->
             binding.inputDate.setDateText(viewModel.date, isChecked)
         }
+
         binding.btnSave.setOnClickListener {
-            onSaveClick()
+            binding.inputName.error = null
+            viewModel.saveNewEvent(
+                eventType = args.eventType,
+                name = binding.inputName.text,
+                lastname = binding.inputLastname.text,
+                middleName = binding.inputMiddleName.text,
+                withoutYear = binding.checkYear.isChecked,
+                imageUri = imageUri
+            )
         }
+
         binding.root.setOnTouchListener { _, _ ->
             hideSoftKeyboard()
             clearFocus()
@@ -106,63 +109,39 @@ class AddEventFragment : BaseFragment(R.layout.fragment_add_event) {
         binding.layoutContacts.textAddContact.setOnClickListener {
             AppDialogManager.showContactPicker(requireContext()) { type, contact ->
                 when (type) {
-                    ContactPickerType.SELF_INPUT -> viewModel.addContact(contact)
-                    ContactPickerType.SELECTION -> contactPicker.pickContact()
+                    ContactPickerType.SELF_INPUT -> {
+                        viewModel.addContact(contact)
+                    }
+                    ContactPickerType.SELECTION -> {
+                        if (AppPermissionManager.isContactsGranted(requireContext())) {
+                            contactPicker.pickContact()
+                        } else {
+                            // TODO move to strings
+                            toast("Нет разрешения на чтение контактов")
+                        }
+                    }
                 }
             }
         }
     }
 
-    private fun onSaveClick() {
-        binding.inputName.error = null
-        val name = binding.inputName.text
-        val lastname = binding.inputLastname.text
-        val middleName = binding.inputMiddleName.text
-        val withoutYear = binding.checkYear.isChecked
-        viewModel.saveNewEvent(
-            eventType = args.eventType,
-            name = name,
-            lastname = lastname,
-            middleName = middleName,
-            withoutYear = withoutYear,
-            imageUri = imageUri
-        )
-    }
-
     private fun renderState(state: AddEventState) {
         when (state) {
-            is AddEventState.Error -> {
-                toast(state.message)
-            }
-            AddEventState.EmptyNameError -> {
-                binding.inputName.error = getString(R.string.required_field)
-            }
-            AddEventState.Added -> {
-                AppNavigationManager.back(this)
-            }
-            AddEventState.Init -> {
-            }
+            AddEventState.Init -> Unit
+            AddEventState.Added -> AppNavigationManager.back(this)
             AddEventState.ContactAlreadyAdded -> toast(R.string.contact_already_added)
-            is AddEventState.ContactsChanged -> onContactsChanged(state.contacts)
+            is AddEventState.ContactsChanged -> setNewContactsList(state.contacts)
+            is AddEventState.Error -> toast(state.message)
+            AddEventState.EmptyNameError -> setEmptyError(binding.inputName)
         }
     }
 
-    private fun onContactsChanged(contacts: List<String>) {
-        contactsAdapter.submitList(contacts)
+    private fun setNewContactsList(contacts: List<String>) {
+        contactsAdapter.submitList(contacts.toMutableList())
     }
 
-    private fun setViewsForEventType(eventType: EventType) {
-        binding.textTitle.apply {
-            text = eventType.getTypeName(requireContext())
-            setDrawableStart(eventType.getTypeImage())
-        }
-
-        if (eventType == EventType.ANNIVERSARY) {
-            binding.apply {
-                inputLastname.visibility = View.GONE
-                inputMiddleName.visibility = View.GONE
-            }
-        }
+    private fun setEmptyError(view: CardEditText) {
+        view.error = getString(R.string.required_field)
     }
 
     private fun clearFocus() {

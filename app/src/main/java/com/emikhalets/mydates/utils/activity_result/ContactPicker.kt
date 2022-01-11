@@ -1,37 +1,50 @@
 package com.emikhalets.mydates.utils.activity_result
 
-import android.content.ContentResolver
 import android.provider.ContactsContract
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.Fragment
 
 class ContactPicker(
-    registry: ActivityResultRegistry,
-    lifecycleOwner: LifecycleOwner,
-    private val contentResolver: ContentResolver,
+    private val fragment: Fragment,
     private val onResult: (contact: String) -> Unit,
 ) {
 
     private val getContent: ActivityResultLauncher<Void?> =
-        registry.register(
-            "take_photo",
-            lifecycleOwner,
+        fragment.requireActivity().activityResultRegistry.register(
+            "pick_contact",
+            fragment.viewLifecycleOwner,
             ActivityResultContracts.PickContact()
         ) { uri ->
             uri?.let {
-                val projection = arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                val cursor = contentResolver
-                    .query(uri, projection, null, null, null)
-                cursor?.moveToFirst()
+                val uriId = uri.toString().split("/").last()
+                val idTag = ContactsContract.CommonDataKinds.Phone.CONTACT_ID
+                val numberTag = ContactsContract.CommonDataKinds.Phone.NUMBER
+                val contentResolver = fragment.requireActivity().contentResolver
+                val projection = arrayOf(idTag, numberTag)
+                val cursor = contentResolver.query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    projection,
+                    null,
+                    null,
+                    null
+                )
 
-                if (cursor?.moveToNext() == true) {
-                    val phoneIndex = cursor
-                        .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                    val phone = cursor.getString(phoneIndex)
-                    onResult(phone)
+                cursor?.moveToFirst()
+                while (cursor?.isAfterLast == false) {
+                    val idIndex = cursor.getColumnIndex(idTag)
+                    val contactId = cursor.getString(idIndex)
+
+                    if (contactId == uriId) {
+                        val phoneIndex = cursor.getColumnIndex(numberTag)
+                        val phone = cursor.getString(phoneIndex)
+                        onResult(phone)
+                        break
+                    }
+
+                    cursor.moveToNext()
                 }
+                cursor?.close()
             }
         }
 
