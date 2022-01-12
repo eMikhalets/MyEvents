@@ -84,17 +84,12 @@ object AppAlarmManager {
             Intent(context, receiver),
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-//        alarmManager.setAlarmClock(
-//            AlarmManager.AlarmClockInfo(
-//                getScheduleTimestamp(hour, minute),
-//                pendingIntent
-//            ),
-//            pendingIntent
-//        )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC,
-                getScheduleTimestamp(hour, minute),
+            alarmManager.setAlarmClock(
+                AlarmManager.AlarmClockInfo(
+                    getScheduleTimestamp(hour, minute),
+                    pendingIntent
+                ),
                 pendingIntent
             )
         } else {
