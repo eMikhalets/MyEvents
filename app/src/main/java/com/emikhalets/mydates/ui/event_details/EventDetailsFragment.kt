@@ -26,7 +26,11 @@ import com.emikhalets.mydates.utils.enums.EventType
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeDate
 import com.emikhalets.mydates.utils.enums.EventType.Companion.getTypeName
 import com.emikhalets.mydates.utils.enums.PhotoPickerType
-import com.emikhalets.mydates.utils.extentions.*
+import com.emikhalets.mydates.utils.extentions.formatDate
+import com.emikhalets.mydates.utils.extentions.hideSoftKeyboard
+import com.emikhalets.mydates.utils.extentions.setDateText
+import com.emikhalets.mydates.utils.extentions.setImageUri
+import com.emikhalets.mydates.utils.extentions.toast
 import com.emikhalets.mydates.utils.views.CardEditText
 
 class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
@@ -43,17 +47,15 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.state.observe(viewLifecycleOwner) { renderState(it) }
-        initActivityResult()
-        insertEventData()
-        clickListeners()
-        textWatchers()
-    }
 
-    private fun initActivityResult() {
+        viewModel.state.observe(viewLifecycleOwner) { renderState(it) }
+
         imagePicker = ImagePicker(this) { uri -> insertImage(uri) }
         photoTaker = PhotoTaker(this) { uri -> insertImage(uri) }
         contactPicker = ContactPicker(this) { contact -> viewModel.addContact(contact) }
+
+        insertEventData()
+        listeners()
     }
 
     private fun insertEventData() {
@@ -62,13 +64,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
             setViewsForEventType(EventType.get(event.eventType))
             imagePhoto.setImageUri(event.imageUri, requireActivity().contentResolver)
             textFullName.text = event.fullName()
-            textDaysLeft.text = if (event.daysLeft == 0) {
-                getString(R.string.today)
-            } else {
-                resources.getQuantityString(
-                    R.plurals.days_left, event.daysLeft, event.daysLeft
-                )
-            }
+            textDaysLeft.text = setDaysLeft(event.daysLeft)
             textAge.text = resources.getQuantityString(
                 R.plurals.age, event.age, event.age
             )
@@ -93,9 +89,28 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun clickListeners() {
+    private fun listeners() {
         binding.apply {
+            inputNotes.doAfterTextChanged {
+                event.notes = it.toString()
+                btnSave.isEnabled = true
+            }
+
+            inputName.doAfterTextChanged {
+                event.name = it.toString()
+                btnSave.isEnabled = true
+            }
+
+            inputLastname.doAfterTextChanged {
+                event.lastName = it.toString()
+                btnSave.isEnabled = true
+            }
+
+            inputMiddleName.doAfterTextChanged {
+                event.middleName = it.toString()
+                btnSave.isEnabled = true
+            }
+
             cardPhoto.setOnClickListener {
                 AppDialogManager.showPhotoPicker(requireContext()) {
                     when (it) {
@@ -104,36 +119,21 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                     }
                 }
             }
+
             inputDate.setOnClickListener {
-                AppDialogManager.showDatePickerDialog(requireContext(), event.date) { timestamp ->
+                AppDialogManager.showDatePicker(requireContext(), event.date) { timestamp ->
                     applyNewDate(timestamp)
-                    binding.inputDate.setDateText(event.date, binding.checkYear.isChecked)
+                    inputDate.setDateText(event.date, checkYear.isChecked)
                     btnSave.isEnabled = true
                 }
             }
+
             checkYear.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) textAge.visibility = View.GONE
                 else textAge.visibility = View.VISIBLE
                 event.withoutYear = isChecked
-                binding.inputDate.setDateText(event.date, isChecked)
+                inputDate.setDateText(event.date, isChecked)
                 btnSave.isEnabled = true
-            }
-            btnDelete.setOnClickListener {
-                AppDialogManager.showDeleteDialog(
-                    requireContext(),
-                    getString(R.string.dialog_delete_event)
-                ) {
-                    viewModel.deleteEvent(event)
-                }
-            }
-            btnSave.setOnClickListener {
-                binding.inputName.error = null
-                viewModel.updateEvent(event)
-            }
-            root.setOnTouchListener { _, _ ->
-                hideSoftKeyboard()
-                clearFocus()
-                false
             }
 
             layoutContacts.textAddContact.setOnClickListener {
@@ -146,33 +146,26 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
                             if (AppPermissionManager.isContactsGranted(requireContext())) {
                                 contactPicker.pickContact()
                             } else {
-                                // TODO move to strings
-                                toast("Нет разрешения на чтение контактов")
+                                toast(getString(R.string.no_contacts_permission))
                             }
                         }
                     }
                 }
             }
-        }
-    }
 
-    private fun textWatchers() {
-        binding.apply {
-            inputNotes.doAfterTextChanged {
-                event.notes = it.toString()
-                btnSave.isEnabled = true
+            btnSave.setOnClickListener {
+                hideSoftKeyboard()
+                inputName.error = null
+                viewModel.updateEvent(event)
             }
-            inputName.doAfterTextChanged {
-                event.name = it.toString()
-                btnSave.isEnabled = true
-            }
-            inputLastname.doAfterTextChanged {
-                event.lastName = it.toString()
-                btnSave.isEnabled = true
-            }
-            inputMiddleName.doAfterTextChanged {
-                event.middleName = it.toString()
-                btnSave.isEnabled = true
+
+            btnDelete.setOnClickListener {
+                hideSoftKeyboard()
+                AppDialogManager.showDeleteEvent(
+                    context = requireContext(),
+                    content = getString(R.string.dialog_delete_event),
+                    callback = { viewModel.deleteEvent(event) }
+                )
             }
         }
     }
@@ -182,10 +175,7 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
         event.calculateParameters()
         binding.apply {
             inputDate.text = ts.formatDate("d MMMM YYYY")
-            if (event.daysLeft == 0) textDaysLeft.text = getString(R.string.today)
-            else textDaysLeft.text = resources.getQuantityString(
-                R.plurals.days_left, event.daysLeft, event.daysLeft
-            )
+            textDaysLeft.text = setDaysLeft(event.daysLeft)
             textAge.text = resources.getQuantityString(
                 R.plurals.age, event.age, event.age
             )
@@ -193,12 +183,11 @@ class EventDetailsFragment : BaseFragment(R.layout.fragment_event_details) {
         }
     }
 
-    private fun clearFocus() {
-        binding.apply {
-            inputName.clearFocus()
-            inputLastname.clearFocus()
-            inputMiddleName.clearFocus()
-            inputNotes.clearFocus()
+    private fun setDaysLeft(daysLeft: Int): String {
+        return if (daysLeft == 0) {
+            getString(R.string.today)
+        } else {
+            resources.getQuantityString(R.plurals.days_left, daysLeft, daysLeft)
         }
     }
 

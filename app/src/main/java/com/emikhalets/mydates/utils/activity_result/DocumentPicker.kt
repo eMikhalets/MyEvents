@@ -2,20 +2,18 @@ package com.emikhalets.mydates.utils.activity_result
 
 import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.Fragment
 
 class DocumentPicker(
-    registry: ActivityResultRegistry,
-    lifecycleOwner: LifecycleOwner,
+    fragment: Fragment,
     private val onResult: (uri: Uri) -> Unit,
 ) {
 
     private val openDocument: ActivityResultLauncher<Array<String>> =
-        registry.register(
+        fragment.requireActivity().activityResultRegistry.register(
             "pick_document",
-            lifecycleOwner,
+            fragment.viewLifecycleOwner,
             ActivityResultContracts.OpenDocument()
         ) { uri: Uri? -> uri?.let(onResult) }
 

@@ -5,22 +5,20 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
 import java.util.*
 
 class DocumentCreator(
-    registry: ActivityResultRegistry,
-    lifecycleOwner: LifecycleOwner,
+    fragment: Fragment,
     private val onResult: (uri: Uri) -> Unit,
 ) {
 
     private val createDocument: ActivityResultLauncher<String> =
-        registry.register(
+        fragment.requireActivity().activityResultRegistry.register(
             "create_document",
-            lifecycleOwner,
+            fragment.viewLifecycleOwner,
             CreateFileContract()
         ) { uri: Uri? -> uri?.let(onResult) }
 

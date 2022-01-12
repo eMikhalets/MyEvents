@@ -14,17 +14,16 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        clickListeners()
-    }
 
-    private fun clickListeners() {
         binding.apply {
             textGeneral.setOnClickListener {
                 AppNavigationManager.toSettingsGeneral(this@SettingsFragment)
             }
+
             textNotifications.setOnClickListener {
                 AppNavigationManager.toSettingsNotifications(this@SettingsFragment)
             }
+
             textBackups.setOnClickListener {
                 AppNavigationManager.toSettingsBackups(this@SettingsFragment)
             }

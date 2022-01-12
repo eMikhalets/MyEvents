@@ -27,8 +27,12 @@ class EventsListFragment : BaseFragment(R.layout.fragment_events_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+
+        lifecycleScope.launch {
+            viewModel.state.collect { renderState(it) }
+        }
+
         initEventsAdapter()
-        observe()
     }
 
     override fun onResume() {
@@ -61,30 +65,19 @@ class EventsListFragment : BaseFragment(R.layout.fragment_events_list) {
         }
     }
 
-    private fun observe() {
-        lifecycleScope.launch {
-            viewModel.state.collect { renderState(it) }
+    private fun renderState(state: EventsListState) {
+        when (state) {
+            EventsListState.Init -> Unit
+            EventsListState.Loading -> binding.loader.root.visibility = View.VISIBLE
+            EventsListState.EmptyEvents -> binding.loader.root.visibility = View.GONE
+            is EventsListState.Events -> setEvents(state.events)
+            is EventsListState.Error -> binding.loader.root.visibility = View.GONE
         }
     }
 
-    private fun renderState(state: EventsListState) {
-        when (state) {
-            is EventsListState.Error -> {
-                binding.loader.root.visibility = View.GONE
-            }
-            EventsListState.EmptyEvents -> {
-                binding.loader.root.visibility = View.GONE
-            }
-            is EventsListState.Events -> {
-                binding.loader.root.visibility = View.GONE
-                eventsAdapter.submitList(state.events)
-            }
-            EventsListState.Loading -> {
-                binding.loader.root.visibility = View.VISIBLE
-            }
-            EventsListState.Init -> {
-            }
-        }
+    private fun setEvents(events: List<Event>) {
+        binding.loader.root.visibility = View.GONE
+        eventsAdapter.submitList(events)
     }
 
     private fun onDateClick(item: Event) {

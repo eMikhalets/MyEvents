@@ -16,7 +16,7 @@ import java.util.*
 
 object AppDialogManager {
 
-    fun showAddEventDialog(context: Context, callback: (EventType) -> Unit) {
+    fun showAddEvent(context: Context, callback: (EventType) -> Unit) {
         val dialog = Dialog(context)
         val binding = DialogAddEventBinding.inflate(LayoutInflater.from(context))
         binding.root.alpha = 0f
@@ -43,7 +43,7 @@ object AppDialogManager {
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    fun showDatePickerDialog(context: Context, init: Long, callback: (Long) -> Unit) {
+    fun showDatePicker(context: Context, init: Long, callback: (Long) -> Unit) {
         val dialog = Dialog(context)
         val binding = DialogDatePickerBinding.inflate(LayoutInflater.from(context))
         binding.root.alpha = 0f
@@ -73,7 +73,7 @@ object AppDialogManager {
         dialog.show()
     }
 
-    fun showTimePickerDialog(context: Context, callback: (hour: Int, minute: Int) -> Unit) {
+    fun showTimePicker(context: Context, callback: (hour: Int, minute: Int) -> Unit) {
         val dialog = Dialog(context)
         val binding = DialogTimePickerBinding.inflate(LayoutInflater.from(context))
         binding.root.alpha = 0f
@@ -115,7 +115,7 @@ object AppDialogManager {
         dialog.show()
     }
 
-    fun showDeleteDialog(context: Context, content: String, callback: () -> Unit) {
+    fun showDeleteEvent(context: Context, content: String, callback: () -> Unit) {
         val dialog = Dialog(context)
         val binding = DialogConfirmBinding.inflate(LayoutInflater.from(context))
         binding.root.alpha = 0f

@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOnAddEventClick() {
         binding.btnAddEvent.setOnClickListener {
-            AppDialogManager.showAddEventDialog(this) { eventType ->
+            AppDialogManager.showAddEvent(this) { eventType ->
                 when (eventType) {
                     EventType.ANNIVERSARY -> {
                         AppNavigationManager.toAddEvent(navController, EventType.ANNIVERSARY)

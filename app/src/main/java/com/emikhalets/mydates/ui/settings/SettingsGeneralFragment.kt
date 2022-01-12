@@ -24,11 +24,7 @@ class SettingsGeneralFragment : BaseFragment(R.layout.fragment_settings_general)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepareSettings()
-        clickListeners()
-    }
 
-    private fun prepareSettings() {
         launchMainScope {
             binding.apply {
                 val language = Language.get(appComponent.appPreferences.getLanguage())
@@ -37,9 +33,11 @@ class SettingsGeneralFragment : BaseFragment(R.layout.fragment_settings_general)
                 textTheme.text = theme.getName(requireContext())
             }
         }
+
+        listeners()
     }
 
-    private fun clickListeners() {
+    private fun listeners() {
         binding.apply {
             layLanguage.setOnClickListener {
                 setLanguagesVisibility(!isLanguageExpanded)

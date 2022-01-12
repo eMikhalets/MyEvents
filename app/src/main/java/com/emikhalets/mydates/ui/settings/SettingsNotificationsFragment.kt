@@ -24,6 +24,7 @@ class SettingsNotificationsFragment : BaseFragment(R.layout.fragment_settings_no
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         prepareSettings()
         clickListeners()
     }
@@ -33,20 +34,14 @@ class SettingsNotificationsFragment : BaseFragment(R.layout.fragment_settings_no
             binding.apply {
                 val hour = appComponent.appPreferences.getNotificationHour()
                 val minute = appComponent.appPreferences.getNotificationMinute()
-                binding.textTime.text = formatTime(hour, minute)
+                textTime.text = formatTime(hour, minute)
 
-                switchAllNotifications.isChecked =
-                    appComponent.appPreferences.getNotificationAll()
-                switchMonthNotifications.isChecked =
-                    appComponent.appPreferences.getNotificationMonth()
-                switchWeekNotifications.isChecked =
-                    appComponent.appPreferences.getNotificationWeek()
-                switchTwoDayNotifications.isChecked =
-                    appComponent.appPreferences.getNotificationTwoDay()
-                switchDayNotifications.isChecked =
-                    appComponent.appPreferences.getNotificationDay()
-                switchTodayNotifications.isChecked =
-                    appComponent.appPreferences.getNotificationToday()
+                switchAllNotifications.isChecked = appComponent.appPreferences.getNotificationAll()
+                switchMonthNotifications.isChecked = appComponent.appPreferences.getNotificationMonth()
+                switchWeekNotifications.isChecked = appComponent.appPreferences.getNotificationWeek()
+                switchTwoDayNotifications.isChecked = appComponent.appPreferences.getNotificationTwoDay()
+                switchDayNotifications.isChecked = appComponent.appPreferences.getNotificationDay()
+                switchTodayNotifications.isChecked = appComponent.appPreferences.getNotificationToday()
 
                 switchAllNotifications.isChecked.apply {
                     layTime.isGone = this
@@ -65,8 +60,8 @@ class SettingsNotificationsFragment : BaseFragment(R.layout.fragment_settings_no
     private fun clickListeners() {
         binding.apply {
             layTime.setOnClickListener {
-                AppDialogManager.showTimePickerDialog(requireContext()) { hour, minute ->
-                    binding.textTime.text = formatTime(hour, minute)
+                AppDialogManager.showTimePicker(requireContext()) { hour, minute ->
+                    textTime.text = formatTime(hour, minute)
                     saveNotificationsTime(hour, minute)
                 }
             }

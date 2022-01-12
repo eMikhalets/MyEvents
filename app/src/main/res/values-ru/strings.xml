@@ -36,6 +36,7 @@
     <string name="contact">Контакт</string>
     <string name="select_contact">Выбрать из контактов</string>
     <string name="contact_already_added">Контакт уже добавлен</string>
+    <string name="no_contacts_permission">Нет разрешения на чтение контактов</string>
 
     <string name="dialog_import_alert">Импорт дат удалит все существующие записи и создаст новые из выбранного файла. Продолжить?</string>
     <string name="dialog_delete_event">Удалить это событие?</string>

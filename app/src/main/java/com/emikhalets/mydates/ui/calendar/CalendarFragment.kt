@@ -16,17 +16,22 @@ import com.emikhalets.mydates.data.database.entities.Event
 import com.emikhalets.mydates.databinding.FragmentCalendarBinding
 import com.emikhalets.mydates.ui.base.BaseFragment
 import com.emikhalets.mydates.utils.AppNavigationManager
-import com.emikhalets.mydates.utils.extentions.*
+import com.emikhalets.mydates.utils.extentions.minusMonthAndFirstDay
+import com.emikhalets.mydates.utils.extentions.month
+import com.emikhalets.mydates.utils.extentions.nextMonthMaxDay
+import com.emikhalets.mydates.utils.extentions.plusMonthAndLastDay
+import com.emikhalets.mydates.utils.extentions.toCalendar
+import com.emikhalets.mydates.utils.extentions.toast
+import com.emikhalets.mydates.utils.extentions.year
+import java.util.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.util.*
 
 class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
 
     private val binding by viewBinding(FragmentCalendarBinding::bind)
     private val viewModel by viewModels<CalendarVM> { viewModelFactory }
     private lateinit var eventsAdapter: DayEventsAdapter
-
     private var currentMinDay = Calendar.getInstance()
     private var currentMaxDay = Calendar.getInstance()
 
@@ -40,9 +45,11 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        init()
+
+        prepareViews()
         listeners()
         observe()
+
         if (savedInstanceState == null) {
             renderState(CalendarState.Init)
             viewModel.loadAllEvents()
@@ -56,42 +63,47 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_settings -> {
-                AppNavigationManager.toSettings(this)
-            }
+            R.id.menu_settings -> AppNavigationManager.toSettings(this)
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun init() {
-        binding.calendar.apply {
-            setMinimumDate(currentMinDay)
-            setMaximumDate(currentMaxDay)
-            setCalendarDayLayout(R.layout.layout_calendar_day)
-            setDate(viewModel.selectedDate)
+    private fun prepareViews() {
+        binding.apply {
+            calendar.apply {
+                setMinimumDate(currentMinDay)
+                setMaximumDate(currentMaxDay)
+                setCalendarDayLayout(R.layout.layout_calendar_day)
+                setDate(viewModel.selectedDate)
+            }
+
+            eventsAdapter = DayEventsAdapter { onEventClick(it) }
+            listDates.adapter = eventsAdapter
+            listDates.setHasFixedSize(true)
         }
-        eventsAdapter = DayEventsAdapter { onEventClick(it) }
-        binding.listDates.adapter = eventsAdapter
-        binding.listDates.setHasFixedSize(true)
     }
 
     private fun listeners() {
-        binding.calendar.setOnForwardPageChangeListener(object : OnCalendarPageChangeListener {
-            override fun onChange() {
-                binding.calendar.setMaximumDate(currentMaxDay.plusMonthAndLastDay())
-            }
-        })
-        binding.calendar.setOnPreviousPageChangeListener(object : OnCalendarPageChangeListener {
-            override fun onChange() {
-                binding.calendar.setMinimumDate(currentMinDay.minusMonthAndFirstDay())
-            }
-        })
-        binding.calendar.setOnDayClickListener(object : OnDayClickListener {
-            override fun onDayClick(eventDay: EventDay) {
-                viewModel.selectedDate = eventDay.calendar
-                viewModel.getDayEvents(eventDay.calendar)
-            }
-        })
+        binding.apply {
+            calendar.setOnForwardPageChangeListener(object : OnCalendarPageChangeListener {
+                override fun onChange() {
+                    calendar.setMaximumDate(currentMaxDay.plusMonthAndLastDay())
+                }
+            })
+
+            calendar.setOnPreviousPageChangeListener(object : OnCalendarPageChangeListener {
+                override fun onChange() {
+                    calendar.setMinimumDate(currentMinDay.minusMonthAndFirstDay())
+                }
+            })
+
+            calendar.setOnDayClickListener(object : OnDayClickListener {
+                override fun onDayClick(eventDay: EventDay) {
+                    viewModel.selectedDate = eventDay.calendar
+                    viewModel.getDayEvents(eventDay.calendar)
+                }
+            })
+        }
     }
 
     private fun observe() {
@@ -106,22 +118,12 @@ class CalendarFragment : BaseFragment(R.layout.fragment_calendar) {
 
     private fun renderState(state: CalendarState) {
         when (state) {
-            is CalendarState.Error -> {
-                toast(state.message)
-            }
-            is CalendarState.AllEvents -> {
-                setCalendarEvents(state.events)
-            }
-            is CalendarState.DayEvents -> {
-                eventsAdapter.submitList(state.events)
-            }
-            CalendarState.EmptyAllEvents -> {
-            }
-            CalendarState.EmptyDayEvents -> {
-                eventsAdapter.submitList(null)
-            }
-            CalendarState.Init -> {
-            }
+            CalendarState.Init,
+            CalendarState.EmptyAllEvents -> Unit
+            CalendarState.EmptyDayEvents -> eventsAdapter.submitList(null)
+            is CalendarState.DayEvents -> eventsAdapter.submitList(state.events)
+            is CalendarState.AllEvents -> setCalendarEvents(state.events)
+            is CalendarState.Error -> toast(state.message)
         }
     }
 
