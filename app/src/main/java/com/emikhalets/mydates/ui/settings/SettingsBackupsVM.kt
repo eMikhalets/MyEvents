@@ -26,7 +26,7 @@ class SettingsBackupsVM @Inject constructor(
             when (val result = repository.getAllEvents()) {
                 is ListResult.Error -> _state.value = SettingsBackupsState.Error(result.exception)
                 is ListResult.Success -> {
-                    val complete = AppBackupManager.fillCreatedFile(context, uri, result.data)
+                    val complete = AppBackupManager.export(context, uri, result.data)
                     _state.value = if (complete) SettingsBackupsState.Exported
                     else SettingsBackupsState.ExportingError
                 }
@@ -38,7 +38,7 @@ class SettingsBackupsVM @Inject constructor(
         _state.value = SettingsBackupsState.Init
         viewModelScope.launch {
             _state.value = SettingsBackupsState.Loading
-            val complete = AppBackupManager.readFileAndCreateEventsList(context, uri)
+            val complete = AppBackupManager.import(context, uri)
             _state.value = if (complete.isNotEmpty()) {
                 repository.dropEvents()
                 repository.insertAllEvents(complete)

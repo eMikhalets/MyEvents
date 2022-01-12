@@ -8,9 +8,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.lifecycle.LifecycleOwner
+import java.text.SimpleDateFormat
 import java.util.*
 
-// TODO сделать автосоздание документа через резолвер и выбор формата (жсон и ексель)
 class DocumentCreator(
     registry: ActivityResultRegistry,
     lifecycleOwner: LifecycleOwner,
@@ -19,7 +19,7 @@ class DocumentCreator(
 
     private val createDocument: ActivityResultLauncher<String> =
         registry.register(
-            DOCUMENT_CREATOR,
+            "create_document",
             lifecycleOwner,
             CreateFileContract()
         ) { uri: Uri? -> uri?.let(onResult) }
@@ -28,22 +28,25 @@ class DocumentCreator(
         createDocument.launch("")
     }
 
-    private companion object {
-        const val DOCUMENT_CREATOR = "DocumentCreator"
-    }
-
     class CreateFileContract : ActivityResultContract<String, Uri?>() {
 
         override fun createIntent(context: Context, input: String): Intent {
             return Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
                 type = "application/json"
-                putExtra(Intent.EXTRA_TITLE, "MyEvents_backup_${Date().time}.json")
+                putExtra(Intent.EXTRA_TITLE, getFileName())
             }
         }
 
         override fun parseResult(resultCode: Int, intent: Intent?): Uri? {
             if (intent == null || resultCode != Activity.RESULT_OK) return null
             return intent.data
+        }
+
+        private fun getFileName(): String {
+            val formatter = SimpleDateFormat("yyyy_MM_dd_hh_mm_ss", Locale.getDefault())
+            val name = "MyEvents_Backup_${formatter.format(Date())}"
+            val suffix = ".json"
+            return "$name$suffix"
         }
     }
 }

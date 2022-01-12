@@ -14,7 +14,7 @@ class DocumentPicker(
 
     private val openDocument: ActivityResultLauncher<Array<String>> =
         registry.register(
-            DOCUMENT_PICKER,
+            "pick_document",
             lifecycleOwner,
             ActivityResultContracts.OpenDocument()
         ) { uri: Uri? -> uri?.let(onResult) }
@@ -26,9 +26,5 @@ class DocumentPicker(
                 "text/plain",
             )
         )
-    }
-
-    private companion object {
-        const val DOCUMENT_PICKER = "DocumentPicker"
     }
 }
